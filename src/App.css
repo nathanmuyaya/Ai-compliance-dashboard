@@ -1,0 +1,306 @@
+.app-shell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.app-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.app-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.app-subtitle {
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Stat tiles */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.stat-tile {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px 18px;
+}
+
+.stat-tile-critical {
+  border-color: color-mix(in srgb, var(--status-critical) 45%, var(--border));
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 600;
+  font-variant-numeric: proportional-nums;
+}
+
+.stat-delta {
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.stat-delta-up {
+  color: var(--status-good);
+}
+
+.stat-delta-down {
+  color: var(--status-critical);
+}
+
+/* Chart grid */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (max-width: 900px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.panel-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Range toggle */
+.range-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.range-toggle-btn {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.range-toggle-btn + .range-toggle-btn {
+  border-left: 1px solid var(--border);
+}
+
+.range-toggle-btn-active {
+  background: var(--series-1);
+  color: #fff;
+}
+
+/* Chart tooltip */
+.chart-tooltip {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  min-width: 160px;
+}
+
+.chart-tooltip-label {
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.chart-tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: space-between;
+}
+
+.chart-tooltip-row-muted {
+  color: var(--text-muted);
+}
+
+.chart-tooltip-swatch {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--series-1);
+  margin-right: -2px;
+}
+
+/* Filters */
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-select {
+  background: var(--surface-1);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* Risk table */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.risk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.risk-table th {
+  text-align: left;
+  font-weight: 500;
+  color: var(--text-muted);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--gridline);
+  white-space: nowrap;
+}
+
+.risk-table td {
+  padding: 10px;
+  border-bottom: 1px solid var(--gridline);
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.risk-table td:nth-child(2) {
+  white-space: normal;
+  min-width: 260px;
+}
+
+.col-muted {
+  color: var(--text-secondary);
+}
+
+.col-right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.empty-row {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 24px !important;
+}
+
+/* Severity badges */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-critical {
+  color: var(--status-critical);
+  background: color-mix(in srgb, var(--status-critical) 14%, transparent);
+}
+
+.badge-serious {
+  color: var(--status-serious);
+  background: color-mix(in srgb, var(--status-serious) 16%, transparent);
+}
+
+.badge-warning {
+  color: color-mix(in srgb, var(--status-warning) 70%, var(--text-primary) 30%);
+  background: color-mix(in srgb, var(--status-warning) 20%, transparent);
+}
+
+.badge-good {
+  color: var(--status-good);
+  background: color-mix(in srgb, var(--status-good) 14%, transparent);
+}
+
+/* Status pills */
+.status-pill {
+  font-size: 12px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  text-transform: capitalize;
+}
+
+.status-pill-open {
+  color: var(--status-critical);
+  border-color: color-mix(in srgb, var(--status-critical) 40%, var(--border));
+}
+
+.status-pill-investigating {
+  color: color-mix(in srgb, var(--status-warning) 70%, var(--text-primary) 30%);
+  border-color: color-mix(in srgb, var(--status-warning) 40%, var(--border));
+}
+
+.status-pill-resolved {
+  color: var(--status-good);
+  border-color: color-mix(in srgb, var(--status-good) 40%, var(--border));
+}
