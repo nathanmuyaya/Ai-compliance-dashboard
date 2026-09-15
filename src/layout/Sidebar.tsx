@@ -12,7 +12,12 @@ import {
 import { useSalesStats } from "../data/useSalesStats";
 
 const NAV_ITEMS = [
-  { to: "/", label: "Overview", icon: OverviewIcon, end: true },
+  {
+    to: "/",
+    label: "Overview",
+    icon: OverviewIcon,
+    end: true,
+  },
   {
     to: "/reports",
     label: "Compliance Reports",
@@ -66,46 +71,58 @@ export default function Sidebar({ collapsed }: SidebarProps) {
 
   return (
     <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-      <div className="sidebar-brand">
-        <span className="sidebar-brand-mark">CD</span>
 
-        {!collapsed && (
-          <span className="sidebar-brand-name">
-            Compliance Dashboard
-          </span>
-        )}
+      {/* BRAND */}
+      <div className="sidebar-brand">
+
+        <span className="sidebar-brand-mark">
+          CD
+        </span>
+
+        <span className="sidebar-brand-name">
+          Compliance Dashboard
+        </span>
+
       </div>
 
-      <nav className="sidebar-nav">
-        {NAV_ITEMS.map(({ to, label, icon: Icon, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) =>
-              `sidebar-link ${
-                isActive ? "sidebar-link-active" : ""
-              }`
-            }
-          >
-            <Icon className="sidebar-link-icon" />
 
-            {!collapsed && (
+      {/* NAVIGATION */}
+      <nav className="sidebar-nav">
+
+        {NAV_ITEMS.map(
+          ({ to, label, icon: Icon, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) =>
+                `sidebar-link ${
+                  isActive
+                    ? "sidebar-link-active"
+                    : ""
+                }`
+              }
+            >
+
+              <Icon className="sidebar-link-icon" />
+
               <span className="sidebar-link-label">
                 {label}
               </span>
-            )}
 
-            {!collapsed &&
-              label === "Flagged risks" &&
-              openRisks.length > 0 && (
-                <span className="sidebar-badge">
-                  {openRisks.length}
-                </span>
-              )}
-          </NavLink>
-        ))}
+              {label === "Flagged risks" &&
+                openRisks.length > 0 && (
+                  <span className="sidebar-badge">
+                    {openRisks.length}
+                  </span>
+                )}
+
+            </NavLink>
+          )
+        )}
+
       </nav>
+
     </aside>
   );
 }

@@ -24,7 +24,7 @@ export default function App() {
 
         <Route path="policies" element={<PoliciesPage />} />
 
-        <Route path="audits" element={<AuditsPage />} />
+        <Route path="/audits" element={<AuditsPage />} />
 
         <Route path="alerts" element={<AlertsPage />} />
 

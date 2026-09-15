@@ -1,0 +1,719 @@
+.audits-page {
+  padding: 30px 26px 50px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.audits-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 28px;
+}
+
+.audits-header h1 {
+  margin: 0 0 7px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.audits-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.schedule-button {
+  border: none;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.schedule-button:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* STAT CARDS */
+
+.audit-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.audit-stat-card {
+  min-width: 0;
+  box-sizing: border-box;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.audit-stat-card span {
+  display: block;
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.audit-stat-card strong {
+  display: block;
+  font-size: 27px;
+  color: #0f172a;
+  margin-bottom: 5px;
+}
+
+.audit-stat-card small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.warning-number {
+  color: #dc2626 !important;
+}
+
+/* AUDIT PANEL */
+
+.audits-panel {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.audits-panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 22px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.audits-panel-header h2 {
+  margin: 0 0 5px;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.audits-panel-header p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.audit-filter {
+  border: 1px solid #dbe1ea;
+  border-radius: 8px;
+  background: white;
+  padding: 9px 30px 9px 11px;
+  color: #334155;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* TABLE */
+
+.audit-table-container {
+  overflow-x: auto;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.audit-table th {
+  text-align: left;
+  padding: 14px 22px;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.audit-table td {
+  padding: 17px 22px;
+  border-top: 1px solid #eef2f7;
+  color: #475569;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.audit-table tbody tr {
+  transition: background 0.15s ease;
+}
+
+.audit-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.audit-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.audit-title strong {
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.audit-title span {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+/* STATUS */
+
+.audit-status {
+  display: inline-flex;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.audit-status.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.audit-status.in-progress {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+.audit-status.scheduled {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+/* FINDINGS */
+
+.finding-count {
+  color: #dc2626;
+  font-weight: 700;
+}
+
+.finding-clear {
+  color: #16a34a;
+  font-weight: 600;
+}
+
+/* SCORE */
+
+.audit-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.audit-score strong {
+  color: #0f172a;
+  font-size: 13px;
+  min-width: 34px;
+}
+
+.score-bar {
+  width: 70px;
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.score-progress {
+  height: 100%;
+  background: #2563eb;
+  border-radius: 10px;
+}
+
+.score-empty {
+  color: #94a3b8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .audit-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .audits-header {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .audits-page {
+    padding: 20px 16px 40px;
+  }
+
+  .audits-header {
+    flex-direction: column;
+  }
+
+  .audit-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .schedule-button {
+    width: 100%;
+  }
+}
+
+/* =========================
+   SCHEDULE AUDIT MODAL
+========================= */
+
+.audit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.audit-modal {
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.2);
+}
+
+.audit-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 22px 24px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.audit-modal-header h2 {
+  margin: 0 0 5px;
+  color: #0f172a;
+  font-size: 20px;
+}
+
+.audit-modal-header p {
+  margin: 0;
+  color: #94a3b8;
+  font-size: 13px;
+}
+
+.close-modal {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 7px;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  background: #e2e8f0;
+}
+
+.audit-modal form {
+  padding: 24px;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 7px;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #dbe1ea;
+  border-radius: 8px;
+  background: white;
+  color: #0f172a;
+  padding: 11px 12px;
+  font-family: inherit;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cancel-button,
+.save-audit-button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 17px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.cancel-button:hover {
+  background: #e2e8f0;
+}
+
+.save-audit-button {
+  background: #2563eb;
+  color: white;
+}
+
+.save-audit-button:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .audit-modal {
+    max-height: 95vh;
+  }
+}
+
+/* =========================================
+   DARK MODE - AUDITS PAGE
+========================================= */
+
+:root[data-theme="dark"] .audits-page {
+  color: #e5e7eb;
+}
+
+/* Page heading */
+
+:root[data-theme="dark"] .audits-header h1 {
+  color: #f8fafc;
+}
+
+:root[data-theme="dark"] .audits-header p {
+  color: #94a3b8;
+}
+
+/* Schedule button */
+
+:root[data-theme="dark"] .schedule-button {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .schedule-button:hover {
+  background: #3b82f6;
+}
+
+/* =========================================
+   STAT CARDS
+========================================= */
+
+:root[data-theme="dark"] .audit-stat-card {
+  background: #111c2d;
+  border: 1px solid #26364d;
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .audit-stat-card span {
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .audit-stat-card strong {
+  color: #f8fafc;
+}
+
+:root[data-theme="dark"] .audit-stat-card small {
+  color: #718096;
+}
+
+:root[data-theme="dark"] .audit-stat-card .warning-number {
+  color: #f87171 !important;
+}
+
+/* =========================================
+   RECENT AUDITS PANEL
+========================================= */
+
+:root[data-theme="dark"] .audits-panel {
+  background: #0f1928;
+  border: 1px solid #26364d;
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .audits-panel-header {
+  border-bottom: 1px solid #26364d;
+}
+
+:root[data-theme="dark"] .audits-panel-header h2 {
+  color: #f8fafc;
+}
+
+:root[data-theme="dark"] .audits-panel-header p {
+  color: #8190a5;
+}
+
+/* =========================================
+   FILTER
+========================================= */
+
+:root[data-theme="dark"] .audit-filter {
+  background: #111c2d;
+  border: 1px solid #33445d;
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .audit-filter:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
+/* =========================================
+   TABLE
+========================================= */
+
+:root[data-theme="dark"] .audit-table th {
+  background: #142135;
+  color: #8fa3bd;
+  border-bottom: 1px solid #26364d;
+}
+
+:root[data-theme="dark"] .audit-table td {
+  color: #b8c5d6;
+  border-top: 1px solid #1f2d40;
+}
+
+:root[data-theme="dark"] .audit-table tbody tr:hover {
+  background: #142235;
+}
+
+/* Audit name */
+
+:root[data-theme="dark"] .audit-title strong {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .audit-title span {
+  color: #718096;
+}
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+:root[data-theme="dark"] .audit-status.completed {
+  background: rgba(34, 197, 94, 0.14);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+:root[data-theme="dark"] .audit-status.in-progress {
+  background: rgba(245, 158, 11, 0.14);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+:root[data-theme="dark"] .audit-status.scheduled {
+  background: rgba(59, 130, 246, 0.14);
+  color: #60a5fa;
+  border: 1px solid rgba(96, 165, 250, 0.2);
+}
+
+/* =========================================
+   FINDINGS
+========================================= */
+
+:root[data-theme="dark"] .finding-count {
+  color: #f87171;
+}
+
+:root[data-theme="dark"] .finding-clear {
+  color: #4ade80;
+}
+
+/* =========================================
+   SCORE
+========================================= */
+
+:root[data-theme="dark"] .audit-score strong {
+  color: #f1f5f9;
+}
+
+:root[data-theme="dark"] .score-bar {
+  background: #26364d;
+}
+
+:root[data-theme="dark"] .score-progress {
+  background: #3b82f6;
+}
+
+:root[data-theme="dark"] .score-empty {
+  color: #64748b;
+}
+
+/* =========================================
+   DARK MODE MODAL
+========================================= */
+
+:root[data-theme="dark"] .audit-modal-overlay {
+  background: rgba(2, 8, 23, 0.72);
+}
+
+:root[data-theme="dark"] .audit-modal {
+  background: #111c2d;
+  border: 1px solid #26364d;
+}
+
+:root[data-theme="dark"] .audit-modal-header {
+  border-bottom: 1px solid #26364d;
+}
+
+:root[data-theme="dark"] .audit-modal-header h2 {
+  color: #f8fafc;
+}
+
+:root[data-theme="dark"] .audit-modal-header p {
+  color: #8190a5;
+}
+
+:root[data-theme="dark"] .close-modal {
+  background: #1c2a3d;
+  color: #94a3b8;
+}
+
+:root[data-theme="dark"] .close-modal:hover {
+  background: #26364d;
+  color: #ffffff;
+}
+
+/* Form */
+
+:root[data-theme="dark"] .form-group label {
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .form-group input,
+:root[data-theme="dark"] .form-group select,
+:root[data-theme="dark"] .form-group textarea {
+  background: #0b1524;
+  border: 1px solid #33445d;
+  color: #e5e7eb;
+}
+
+:root[data-theme="dark"] .form-group input::placeholder,
+:root[data-theme="dark"] .form-group textarea::placeholder {
+  color: #64748b;
+}
+
+:root[data-theme="dark"] .form-group input:focus,
+:root[data-theme="dark"] .form-group select:focus,
+:root[data-theme="dark"] .form-group textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+:root[data-theme="dark"] .form-actions {
+  border-top: 1px solid #26364d;
+}
+
+:root[data-theme="dark"] .cancel-button {
+  background: #1c2a3d;
+  color: #cbd5e1;
+}
+
+:root[data-theme="dark"] .cancel-button:hover {
+  background: #26364d;
+}
+
+:root[data-theme="dark"] .save-audit-button {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+:root[data-theme="dark"] .save-audit-button:hover {
+  background: #3b82f6;
+}
+
+/* =========================================
+   RESPONSIVE KPI CARDS
+========================================= */
+
+/* Tablets and smaller laptops */
+@media (max-width: 1100px) {
+  .audit-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .audit-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .audit-stat-card {
+    padding: 17px;
+  }
+
+  .audit-stat-card strong {
+    font-size: 24px;
+  }
+}
