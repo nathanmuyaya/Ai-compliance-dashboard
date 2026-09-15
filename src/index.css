@@ -65,3 +65,42 @@ body {
 #root {
   min-height: 100svh;
 }
+
+:root {
+  --surface-1: #ffffff;
+  --surface-2: #f5f5f5;
+  --page-plane: #f8fafc;
+
+  --text-primary: #111827;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+
+  --border: #e5e7eb;
+
+  --accent: #2563eb;
+
+  [data-theme="dark"] {
+  --surface-1: #161616;
+  --surface-2: #222222;
+  --page-plane: #0b0b0b;
+
+  --text-primary: #f9fafb;
+  --text-secondary: #d1d5db;
+  --text-muted: #9ca3af;
+
+  --border: #333333;
+
+  --accent: #3b82f6;
+}
+}
+
+body {
+  margin: 0;
+
+  background: var(--page-plane);
+  color: var(--text-primary);
+
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
