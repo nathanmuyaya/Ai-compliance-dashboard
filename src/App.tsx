@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-
+import SplashScreen from "./components/SplashScreen";
 import AppLayout from "./layout/AppLayout";
 
 import OverviewPage from "./pages/OverviewPage";
@@ -14,24 +14,28 @@ import SettingsPage from "./pages/SettingsPage";
 
 export default function App() {
   return (
-    <Routes>
-      <Route element={<AppLayout />}>
-        <Route index element={<OverviewPage />} />
+    <>
+      <SplashScreen />
 
-        <Route path="reports" element={<ReportsPage />} />
+      <Routes>
+        <Route element={<AppLayout />}>
+          <Route index element={<OverviewPage />} />
 
-        <Route path="risks" element={<RisksPage />} />
+          <Route path="reports" element={<ReportsPage />} />
 
-        <Route path="policies" element={<PoliciesPage />} />
+          <Route path="risks" element={<RisksPage />} />
 
-        <Route path="/audits" element={<AuditsPage />} />
+          <Route path="policies" element={<PoliciesPage />} />
 
-        <Route path="alerts" element={<AlertsPage />} />
+          <Route path="/audits" element={<AuditsPage />} />
 
-        <Route path="users" element={<UsersPage />} />
+          <Route path="alerts" element={<AlertsPage />} />
 
-        <Route path="settings" element={<SettingsPage />} />
-      </Route>
-    </Routes>
+          <Route path="users" element={<UsersPage />} />
+
+          <Route path="settings" element={<SettingsPage />} />
+        </Route>
+      </Routes>
+    </>
   );
 }

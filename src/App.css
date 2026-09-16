@@ -1487,120 +1487,149 @@ textarea {
 }
 
 /* =========================================
-   MOBILE RESPONSIVE LAYOUT
+   COLLAPSIBLE SIDEBAR - DESKTOP
+========================================= */
+
+.sidebar {
+  transition: width 0.25s ease;
+}
+
+.sidebar.collapsed {
+  width: 76px;
+}
+
+.sidebar.collapsed .sidebar-brand {
+  justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-brand-name {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-link {
+  justify-content: center;
+}
+
+.sidebar.collapsed .sidebar-link-label {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-badge {
+  display: none;
+}
+
+
+/* =========================================
+   MOBILE RESPONSIVE
 ========================================= */
 
 @media (max-width: 768px) {
 
-  /* -----------------------------
-     MAIN SHELL
-  ----------------------------- */
+  /* ---------- PAGE ---------- */
 
-  .shell,
-  .shell.sidebar-collapsed {
-    display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden !important;
+  .shell {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .main {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    overflow-x: hidden;
   }
 
 
-  /* -----------------------------
-     SIDEBAR
-  ----------------------------- */
+  /* ---------- SIDEBAR ---------- */
 
-  .sidebar,
-  .sidebar.collapsed {
-    position: fixed !important;
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
 
-    top: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
 
-    width: 250px !important;
-    min-width: 250px !important;
-    max-width: 250px !important;
+    height: 100vh;
 
-    height: 100vh !important;
+    padding: 20px 14px;
+    box-sizing: border-box;
 
-    z-index: 3000 !important;
+    display: flex;
+    flex-direction: column;
 
-    transform: translateX(-100%) !important;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
 
-    transition: transform 0.25s ease !important;
+    z-index: 5000;
 
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
-
-  /* -----------------------------
-     OPEN SIDEBAR
-  ----------------------------- */
+  /* OPEN SIDEBAR */
 
   .shell.sidebar-collapsed .sidebar {
-    transform: translateX(0) !important;
+    transform: translateX(0);
   }
 
 
-  /* -----------------------------
-     SIDEBAR CONTENT
-  ----------------------------- */
+  /* ---------- SIDEBAR CONTENT ---------- */
 
-  .shell.sidebar-collapsed .sidebar-brand-name,
-  .shell.sidebar-collapsed .sidebar-link-label {
-    display: inline-flex !important;
+  .shell.sidebar-collapsed .sidebar-brand {
+    justify-content: flex-start;
+  }
+
+  .shell.sidebar-collapsed .sidebar-brand-name {
+    display: inline;
+  }
+
+  .shell.sidebar-collapsed .sidebar-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   .shell.sidebar-collapsed .sidebar-link {
-    justify-content: flex-start !important;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    box-sizing: border-box;
+  }
+
+  .shell.sidebar-collapsed .sidebar-link-label {
+    display: inline;
+  }
+
+  .shell.sidebar-collapsed .sidebar-badge {
+    display: inline-flex;
   }
 
 
-  /* -----------------------------
-     MAIN CONTENT
-  ----------------------------- */
-
-  .main,
-  .shell.sidebar-collapsed .main {
-    display: block !important;
-
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: 100% !important;
-
-    margin-left: 0 !important;
-    padding-left: 0 !important;
-
-    overflow-x: hidden !important;
-  }
-
-
-  /* -----------------------------
-     HEADER
-  ----------------------------- */
+  /* ---------- HEADER ---------- */
 
   .header {
-    width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
+    width: 100%;
+    height: 64px;
+    min-height: 64px;
+
+    padding: 0 10px;
 
     box-sizing: border-box;
 
-    padding: 0 12px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
     gap: 8px;
-
-    position: relative;
-    z-index: 1000;
   }
-
 
   .header-left {
     flex: 1 1 auto;
@@ -1609,9 +1638,8 @@ textarea {
     display: flex;
     align-items: center;
 
-    gap: 8px;
+    gap: 6px;
   }
-
 
   .header-actions {
     flex: 0 0 auto;
@@ -1623,826 +1651,157 @@ textarea {
   }
 
 
-  /* -----------------------------
-     MENU BUTTON
-  ----------------------------- */
+  /* ---------- MENU BUTTON ---------- */
 
   .header-left .icon-button {
-    flex: 0 0 38px;
-
     width: 38px;
     height: 38px;
+    flex-shrink: 0;
   }
 
 
-  /* -----------------------------
-     SEARCH
-  ----------------------------- */
+  /* ---------- SEARCH ---------- */
 
   .search-wrapper {
     flex: 1 1 auto;
+
+    width: auto;
     min-width: 0;
     max-width: none;
   }
 
-
   .search-box {
-    width: 100% !important;
-    min-width: 0 !important;
-    max-width: none !important;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+
+    height: 40px;
 
     box-sizing: border-box;
   }
 
-
   .search-box input {
-    min-width: 0 !important;
-    width: 100% !important;
+    width: 100%;
+    min-width: 0;
+
+    font-size: 13px;
   }
 
 
-  .search-box input::placeholder {
+  /* ---------- PROFILE ---------- */
+
+  .profile-info {
+    display: none;
+  }
+
+  .profile-button {
+    padding: 2px;
+  }
+
+  .profile-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  /* ---------- HEADER ICONS ---------- */
+
+  .header-actions .icon-button {
+    width: 36px;
+    height: 36px;
+
+    padding: 0;
+    flex-shrink: 0;
+  }
+
+
+  /* ---------- PAGE CONTENT ---------- */
+
+  .app-shell {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 20px 14px 40px;
+
+    box-sizing: border-box;
+
+    overflow-x: hidden;
+  }
+
+
+  /* ---------- SEARCH RESULTS ---------- */
+
+  .search-results {
+    position: fixed;
+
+    top: 64px;
+    left: 10px;
+    right: 10px;
+
+    width: auto;
+    max-width: none;
+
+    max-height: 70vh;
+
+    overflow-y: auto;
+
+    z-index: 6000;
+  }
+
+
+  /* ---------- DROPDOWNS ---------- */
+
+  .notifications-dropdown {
+    position: fixed;
+
+    top: 64px;
+    right: 10px;
+
+    width: calc(100vw - 20px);
+    max-width: 340px;
+
+    z-index: 6000;
+  }
+
+  .profile-dropdown {
+    position: fixed;
+
+    top: 64px;
+    right: 10px;
+
+    width: calc(100vw - 20px);
+    max-width: 280px;
+
+    z-index: 6000;
+  }
+}
+
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-width: 480px) {
+
+  .header {
+    padding: 0 8px;
+  }
+
+  .header-left {
+    gap: 4px;
+  }
+
+  .search-box {
+    padding: 0 8px;
+  }
+
+  .search-box input {
     font-size: 12px;
   }
 
-
-  /* -----------------------------
-     HEADER ICONS
-  ----------------------------- */
-
-  .header-actions .icon-button {
-    width: 36px !important;
-    height: 36px !important;
-
-    padding: 0 !important;
-
-    flex-shrink: 0;
-  }
-
-
-  /* -----------------------------
-     PROFILE
-  ----------------------------- */
-
-  .profile-button {
-    padding: 3px !important;
-
-    flex-shrink: 0;
-  }
-
-
-  .profile-info {
-    display: none !important;
-  }
-
-
-  .profile-avatar {
-    width: 36px !important;
-    height: 36px !important;
-  }
-
-
-  /* -----------------------------
-     PAGE CONTENT
-  ----------------------------- */
-
   .app-shell {
-    width: 100% !important;
-    max-width: 100% !important;
-
-    box-sizing: border-box;
-
-    padding: 20px 14px 40px !important;
-
-    overflow-x: hidden;
-  }
-
-
-  /* -----------------------------
-     SEARCH RESULTS
-  ----------------------------- */
-
-  .search-results {
-    position: fixed !important;
-
-    top: 64px !important;
-    left: 12px !important;
-    right: 12px !important;
-
-    width: auto !important;
-    max-width: none !important;
-
-    max-height: 70vh;
-
-    overflow-y: auto;
-
-    z-index: 4000;
-  }
-
-
-  /* -----------------------------
-     NOTIFICATION DROPDOWN
-  ----------------------------- */
-
-  .notifications-dropdown {
-    position: fixed !important;
-
-    top: 64px !important;
-    right: 12px !important;
-
-    width: min(340px, calc(100vw - 24px)) !important;
-
-    z-index: 4000;
-  }
-
-
-  /* -----------------------------
-     PROFILE DROPDOWN
-  ----------------------------- */
-
-  .profile-dropdown {
-    position: fixed !important;
-
-    top: 64px !important;
-    right: 12px !important;
-
-    width: min(280px, calc(100vw - 24px)) !important;
-
-    z-index: 4000;
-  }
-}
-/* =========================================
-   MOBILE RESPONSIVE LAYOUT
-========================================= */
-
-@media (max-width: 768px) {
-
-  /* PAGE */
-
-  .shell {
-    display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    overflow-x: hidden !important;
-  }
-
-  .main {
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-  }
-
-
-  /* =====================================
-     SIDEBAR
-  ===================================== */
-
-  .sidebar {
-    position: fixed !important;
-
-    top: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
-
-    width: 250px !important;
-    min-width: 250px !important;
-    height: 100vh !important;
-
-    display: flex !important;
-    flex-direction: column !important;
-
-    transform: translateX(-100%) !important;
-
-    z-index: 3000 !important;
-
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-
-    transition: transform 0.25s ease;
-  }
-
-
-  /* OPEN MOBILE SIDEBAR */
-
-  .shell.sidebar-collapsed .sidebar {
-    transform: translateX(0) !important;
-  }
-
-
-  /* SIDEBAR CONTENT */
-
-  .sidebar-brand {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-  }
-
-  .sidebar-brand-name {
-    display: inline !important;
-  }
-
-  .sidebar-nav {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-  }
-
-  .sidebar-link {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: flex-start !important;
-    width: 100% !important;
-    box-sizing: border-box;
-  }
-
-  .sidebar-link-label {
-    display: inline !important;
-  }
-
-
-  /* =====================================
-     HEADER
-  ===================================== */
-
-  .header {
-    width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    padding: 0 12px !important;
-
-    box-sizing: border-box;
-  }
-
-  .header-left {
-    flex: 1 !important;
-    min-width: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    gap: 8px !important;
-  }
-
-  .header-actions {
-    flex-shrink: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    gap: 4px !important;
-  }
-
-
-  /* MENU */
-
-  .header-left .icon-button {
-    flex-shrink: 0 !important;
-  }
-
-
-  /* SEARCH */
-
-  .search-wrapper {
-    flex: 1 !important;
-    width: auto !important;
-    min-width: 0 !important;
-  }
-
-  .search-box {
-    width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box;
-  }
-
-  .search-box input {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-
-
-  /* PROFILE */
-
-  .profile-info {
-    display: none !important;
-  }
-
-  .profile-button {
-    padding: 3px !important;
-  }
-
-
-  /* =====================================
-     CONTENT
-  ===================================== */
-
-  .app-shell {
-    width: 100% !important;
-    max-width: 100% !important;
-
-    box-sizing: border-box;
-
-    padding: 20px 14px 40px !important;
-
-    overflow-x: hidden;
-  }
-}
-
-/* =========================================
-   FINAL MOBILE RESPONSIVE LAYOUT
-========================================= */
-
-@media (max-width: 768px) {
-
-  /* =========================
-     MAIN PAGE
-  ========================= */
-
-  .shell {
-    display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    overflow-x: hidden !important;
-  }
-
-  .main {
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-  }
-
-
-  /* =========================
-     SIDEBAR
-  ========================= */
-
-  .sidebar {
-    position: fixed !important;
-
-    top: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
-
-    width: 250px !important;
-    min-width: 250px !important;
-    max-width: 250px !important;
-
-    height: 100vh !important;
-
-    display: flex !important;
-    flex-direction: column !important;
-
-    padding: 20px 14px !important;
-
-    transform: translateX(-100%) !important;
-
-    z-index: 5000 !important;
-
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-
-    box-sizing: border-box;
-
-    transition: transform 0.25s ease;
-  }
-
-
-  /* OPEN MENU */
-
-  .shell.sidebar-collapsed .sidebar {
-    transform: translateX(0) !important;
-  }
-
-
-  /* SIDEBAR BRAND */
-
-  .sidebar-brand {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-
-    width: 100%;
-  }
-
-  .sidebar-brand-name {
-    display: inline !important;
-  }
-
-
-  /* SIDEBAR NAV */
-
-  .sidebar-nav {
-    display: flex !important;
-    flex-direction: column !important;
-
-    width: 100% !important;
-    gap: 2px !important;
-  }
-
-  .sidebar-link {
-    display: flex !important;
-    flex-direction: row !important;
-
-    align-items: center !important;
-    justify-content: flex-start !important;
-
-    width: 100% !important;
-    box-sizing: border-box;
-
-    padding: 10px !important;
-  }
-
-  .sidebar-link-label {
-    display: inline !important;
-  }
-
-
-  /* =========================
-     HEADER
-  ========================= */
-
-  .header {
-    width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
-
-    padding: 0 10px !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-
-    box-sizing: border-box;
-  }
-
-
-  .header-left {
-    flex: 1 1 auto !important;
-    min-width: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    gap: 6px !important;
-  }
-
-
-  .header-actions {
-    flex: 0 0 auto !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    gap: 2px !important;
-  }
-
-
-  /* MENU BUTTON */
-
-  .header-left .icon-button {
-    width: 38px !important;
-    height: 38px !important;
-
-    flex-shrink: 0 !important;
-  }
-
-
-  /* SEARCH */
-
-  .search-wrapper {
-    flex: 1 1 auto !important;
-
-    width: auto !important;
-    min-width: 0 !important;
-  }
-
-  .search-box {
-    width: 100% !important;
-    min-width: 0 !important;
-
-    height: 40px !important;
-
-    padding: 0 10px !important;
-
-    box-sizing: border-box;
-  }
-
-  .search-box input {
-    width: 100% !important;
-    min-width: 0 !important;
-
-    font-size: 13px !important;
-  }
-
-
-  /* PROFILE */
-
-  .profile-info {
-    display: none !important;
-  }
-
-  .profile-button {
-    padding: 2px !important;
-  }
-
-  .profile-avatar {
-    width: 36px !important;
-    height: 36px !important;
-  }
-
-
-  /* HEADER ICONS */
-
-  .header-actions .icon-button {
-    width: 36px !important;
-    height: 36px !important;
-  }
-
-
-  /* =========================
-     PAGE CONTENT
-  ========================= */
-
-  .app-shell {
-    width: 100% !important;
-    max-width: 100% !important;
-
-    padding: 20px 14px 40px !important;
-
-    box-sizing: border-box;
-
-    overflow-x: hidden;
-  }
-
-
-  /* =========================
-     SEARCH RESULTS
-  ========================= */
-
-  .search-results {
-    position: fixed !important;
-
-    top: 64px !important;
-    left: 10px !important;
-    right: 10px !important;
-
-    width: auto !important;
-    max-width: none !important;
-
-    max-height: 70vh;
-
-    overflow-y: auto;
-
-    z-index: 6000 !important;
-  }
-
-
-  /* =========================
-     DROPDOWNS
-  ========================= */
-
-  .notifications-dropdown {
-    position: fixed !important;
-
-    top: 64px !important;
-    right: 10px !important;
-
-    width: calc(100vw - 20px) !important;
-    max-width: 340px !important;
-
-    z-index: 6000 !important;
-  }
-
-  .profile-dropdown {
-    position: fixed !important;
-
-    top: 64px !important;
-    right: 10px !important;
-
-    width: calc(100vw - 20px) !important;
-    max-width: 280px !important;
-
-    z-index: 6000 !important;
-  }
-}
-
-/* =========================================
-   MOBILE RESPONSIVE LAYOUT
-========================================= */
-
-@media (max-width: 768px) {
-
-  /* MAIN PAGE */
-
-  .shell {
-    display: block !important;
-    width: 100% !important;
-    min-width: 0 !important;
-    overflow-x: hidden !important;
-  }
-
-  .main {
-    width: 100% !important;
-    min-width: 0 !important;
-    margin: 0 !important;
-  }
-
-
-  /* SIDEBAR */
-
-  .sidebar {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    bottom: 0 !important;
-
-    width: 250px !important;
-    min-width: 250px !important;
-    max-width: 250px !important;
-
-    height: 100vh !important;
-
-    display: flex !important;
-    flex-direction: column !important;
-
-    padding: 20px 14px !important;
-
-    transform: translateX(-100%) !important;
-
-    z-index: 5000 !important;
-
-    overflow-y: auto !important;
-    overflow-x: hidden !important;
-
-    box-sizing: border-box;
-
-    transition: transform 0.25s ease;
-  }
-
-
-  /* OPEN MOBILE SIDEBAR */
-
-  .shell.sidebar-collapsed .sidebar {
-    transform: translateX(0) !important;
-  }
-
-
-  /* SIDEBAR BRAND */
-
-  .sidebar-brand {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-  }
-
-  .shell.sidebar-collapsed .sidebar-brand-name {
-    display: inline !important;
-  }
-
-
-  /* NAVIGATION */
-
-  .sidebar-nav {
-    display: flex !important;
-    flex-direction: column !important;
-    width: 100% !important;
-  }
-
-  .sidebar-link {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-
-    width: 100% !important;
-    box-sizing: border-box;
-  }
-
-  .shell.sidebar-collapsed .sidebar-link-label {
-    display: inline !important;
-  }
-
-  .shell.sidebar-collapsed .sidebar-badge {
-    display: inline-flex !important;
-  }
-
-
-  /* HEADER */
-
-  .header {
-    width: 100% !important;
-    height: 64px !important;
-    min-height: 64px !important;
-
-    padding: 0 10px !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    box-sizing: border-box;
-  }
-
-
-  .header-left {
-    flex: 1 !important;
-    min-width: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    gap: 6px !important;
-  }
-
-
-  .header-actions {
-    flex-shrink: 0 !important;
-
-    display: flex !important;
-    align-items: center !important;
-
-    gap: 2px !important;
-  }
-
-
-  /* SEARCH */
-
-  .search-wrapper {
-    flex: 1 !important;
-    min-width: 0 !important;
-  }
-
-  .search-box {
-    width: 100% !important;
-    min-width: 0 !important;
-    box-sizing: border-box;
-  }
-
-  .search-box input {
-    width: 100% !important;
-    min-width: 0 !important;
-  }
-
-
-  /* PROFILE */
-
-  .profile-info {
-    display: none !important;
-  }
-
-
-  /* CONTENT */
-
-  .app-shell {
-    width: 100% !important;
-    max-width: 100% !important;
-
-    padding: 20px 14px 40px !important;
-
-    box-sizing: border-box;
-
-    overflow-x: hidden;
-  }
-
-}
-
-/* =========================================
-   DESKTOP COLLAPSED SIDEBAR
-========================================= */
-
-@media (min-width: 769px) {
-
-  .sidebar.collapsed {
-    width: 76px !important;
-    min-width: 76px !important;
-  }
-
-  .sidebar.collapsed .sidebar-brand {
-    justify-content: center !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-
-  .sidebar.collapsed .sidebar-brand-name {
-    display: none !important;
-  }
-
-  .sidebar.collapsed .sidebar-link {
-    justify-content: center !important;
-    padding-left: 8px !important;
-    padding-right: 8px !important;
-  }
-
-  .sidebar.collapsed .sidebar-link-label {
-    display: none !important;
-  }
-
-  .sidebar.collapsed .sidebar-badge {
-    display: none !important;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 
 }

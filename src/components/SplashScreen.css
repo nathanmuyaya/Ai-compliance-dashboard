@@ -1,0 +1,226 @@
+.splash-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(42, 120, 214, 0.18),
+      transparent 45%
+    ),
+    #050914;
+
+  animation: splashFadeOut 0.6s ease forwards;
+  animation-delay: 2.8s;
+}
+
+.splash-content {
+  text-align: center;
+  animation: splashAppear 0.8s ease;
+}
+
+/* Logo */
+
+.splash-logo {
+  position: relative;
+
+  width: 110px;
+  height: 110px;
+
+  margin: 0 auto 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 5px solid #2a78d6;
+  border-radius: 32px;
+
+  transform: rotate(-5deg);
+
+  box-shadow:
+    0 0 25px rgba(42, 120, 214, 0.5),
+    0 0 70px rgba(42, 120, 214, 0.25);
+
+  animation:
+    logoBlink 1.3s ease-in-out infinite,
+    logoFloat 2s ease-in-out infinite;
+}
+
+.splash-logo-text {
+  font-size: 34px;
+  font-weight: 800;
+  color: white;
+
+  transform: rotate(5deg);
+}
+
+.splash-shield {
+  position: absolute;
+
+  right: -8px;
+  bottom: -8px;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #2a78d6;
+  color: white;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  box-shadow: 0 0 20px rgba(42, 120, 214, 0.7);
+}
+
+/* Title */
+
+.splash-content h1 {
+  margin: 0;
+
+  font-size: 42px;
+  line-height: 1.1;
+
+  font-weight: 750;
+  letter-spacing: -1px;
+
+  color: white;
+}
+
+.splash-content h1 span {
+  display: block;
+  color: #2a78d6;
+}
+
+.splash-content p {
+  margin: 14px 0 0;
+
+  color: #9ca9bd;
+
+  font-size: 15px;
+}
+
+/* Loading dots */
+
+.splash-loader {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+
+  margin-top: 32px;
+}
+
+.splash-loader span {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+
+  background: #2a78d6;
+
+  animation: loaderPulse 1.2s ease-in-out infinite;
+}
+
+.splash-loader span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.splash-loader span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Animations */
+
+@keyframes splashAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes logoBlink {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow:
+      0 0 25px rgba(42, 120, 214, 0.5),
+      0 0 70px rgba(42, 120, 214, 0.25);
+  }
+
+  50% {
+    opacity: 0.65;
+    box-shadow:
+      0 0 10px rgba(42, 120, 214, 0.25),
+      0 0 30px rgba(42, 120, 214, 0.1);
+  }
+}
+
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-5deg) translateY(-5px);
+  }
+}
+
+@keyframes loaderPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes splashFadeOut {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+  .splash-logo {
+    width: 90px;
+    height: 90px;
+  }
+
+  .splash-content h1 {
+    font-size: 32px;
+  }
+
+  .splash-content p {
+    font-size: 13px;
+  }
+}

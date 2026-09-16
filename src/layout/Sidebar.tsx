@@ -64,17 +64,21 @@ const NAV_ITEMS = [
 
 type SidebarProps = {
   collapsed: boolean;
+  onClose: () => void;
 };
 
-export default function Sidebar({ collapsed }: SidebarProps) {
+export default function Sidebar({
+  collapsed,
+  onClose,
+}: SidebarProps) {
   const { openRisks } = useSalesStats();
 
   return (
-    <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
-
+    <aside
+      className={`sidebar ${collapsed ? "collapsed" : ""}`}
+    >
       {/* BRAND */}
       <div className="sidebar-brand">
-
         <span className="sidebar-brand-mark">
           CD
         </span>
@@ -82,19 +86,17 @@ export default function Sidebar({ collapsed }: SidebarProps) {
         <span className="sidebar-brand-name">
           Compliance Dashboard
         </span>
-
       </div>
-
 
       {/* NAVIGATION */}
       <nav className="sidebar-nav">
-
         {NAV_ITEMS.map(
           ({ to, label, icon: Icon, end }) => (
             <NavLink
               key={to}
               to={to}
               end={end}
+              onClick={onClose}
               className={({ isActive }) =>
                 `sidebar-link ${
                   isActive
@@ -103,7 +105,6 @@ export default function Sidebar({ collapsed }: SidebarProps) {
                 }`
               }
             >
-
               <Icon className="sidebar-link-icon" />
 
               <span className="sidebar-link-label">
@@ -116,13 +117,10 @@ export default function Sidebar({ collapsed }: SidebarProps) {
                     {openRisks.length}
                   </span>
                 )}
-
             </NavLink>
           )
         )}
-
       </nav>
-
     </aside>
   );
 }

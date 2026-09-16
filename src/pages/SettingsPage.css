@@ -1,0 +1,351 @@
+/* ========================================
+   SETTINGS PAGE
+   ======================================== */
+
+.settings-page {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* Header */
+.settings-header {
+  margin-bottom: 32px;
+}
+
+.settings-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.settings-header p {
+  margin: 8px 0 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Sections */
+.settings-section {
+  margin-bottom: 28px;
+}
+
+.settings-section-header {
+  margin-bottom: 12px;
+}
+
+.settings-section-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 650;
+  color: var(--text-primary);
+}
+
+.settings-section-header p {
+  margin: 5px 0 0;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Cards */
+.settings-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* Rows */
+.settings-row {
+  min-height: 72px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.settings-row > div {
+  min-width: 0;
+}
+
+.settings-row strong {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.settings-row span:not(.toggle span) {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* Divider */
+.settings-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0 20px;
+}
+
+/* ========================================
+   TOGGLE
+   ======================================== */
+
+.toggle {
+  position: relative;
+  flex-shrink: 0;
+  width: 46px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--gridline);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.toggle span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--surface-1);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.toggle.active {
+  background: var(--series-1);
+}
+
+.toggle.active span {
+  transform: translateX(20px);
+}
+
+/* ========================================
+   FORM FIELDS
+   ======================================== */
+
+.settings-field {
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-field:last-child {
+  border-bottom: 0;
+}
+
+.settings-field label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.settings-field select {
+  width: 220px;
+  height: 40px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background: var(--page-plane);
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.settings-field select:focus {
+  border-color: var(--series-1);
+}
+
+/* ========================================
+   ACTION BUTTONS
+   ======================================== */
+
+.settings-action-button {
+  flex-shrink: 0;
+  min-width: 90px;
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-action-button:hover {
+  background: var(--page-plane);
+  border-color: var(--series-1);
+}
+
+/* ========================================
+   SAVE BUTTON
+   ======================================== */
+
+.settings-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+.settings-save-button {
+  min-width: 140px;
+  height: 42px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--series-1);
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.2s ease;
+}
+
+.settings-save-button:hover {
+  opacity: 0.9;
+}
+
+.settings-save-button:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   TABLET
+   ======================================== */
+
+@media (max-width: 768px) {
+  .settings-page {
+    max-width: 100%;
+  }
+
+  .settings-header {
+    margin-bottom: 24px;
+  }
+
+  .settings-header h1 {
+    font-size: 24px;
+  }
+
+  .settings-section {
+    margin-bottom: 22px;
+  }
+
+  .settings-row {
+    padding: 16px;
+  }
+
+  .settings-divider {
+    margin: 0 16px;
+  }
+
+  .settings-field {
+    padding: 16px;
+  }
+
+  .settings-field select {
+    width: 200px;
+  }
+}
+
+/* ========================================
+   MOBILE
+   ======================================== */
+
+@media (max-width: 480px) {
+  .settings-page {
+    width: 100%;
+  }
+
+  .settings-header h1 {
+    font-size: 22px;
+  }
+
+  .settings-header p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .settings-section-header h2 {
+    font-size: 17px;
+  }
+
+  .settings-section-header p {
+    font-size: 12px;
+  }
+
+  .settings-row {
+    align-items: flex-start;
+    padding: 15px;
+    gap: 14px;
+  }
+
+  .settings-row strong {
+    font-size: 13px;
+  }
+
+  .settings-row span:not(.toggle span) {
+    font-size: 12px;
+  }
+
+  .settings-divider {
+    margin: 0 15px;
+  }
+
+  .toggle {
+    width: 42px;
+    height: 24px;
+  }
+
+  .toggle span {
+    width: 18px;
+    height: 18px;
+  }
+
+  .toggle.active span {
+    transform: translateX(18px);
+  }
+
+  .settings-field {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 9px;
+    padding: 15px;
+  }
+
+  .settings-field select {
+    width: 100%;
+    height: 42px;
+  }
+
+  .settings-action-button {
+    min-width: 78px;
+    height: 36px;
+    padding: 0 12px;
+  }
+
+  .settings-footer {
+    margin-top: 4px;
+  }
+
+  .settings-save-button {
+    width: 100%;
+    height: 44px;
+  }
+}

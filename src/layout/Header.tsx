@@ -8,11 +8,13 @@ import {
   User,
 } from "lucide-react";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";  
 import { useNavigate } from "react-router-dom";
 
 type HeaderProps = {
   onMenuClick: () => void;
+  darkMode: boolean;
+  onDarkModeToggle: () => void;
 };
 
 const SEARCH_DATA = [
@@ -60,20 +62,18 @@ const SEARCH_DATA = [
   },
 ];
 
-export default function Header({ onMenuClick }: HeaderProps) {
-  const [darkMode, setDarkMode] = useState(false);
+export default function Header({
+  onMenuClick,
+  darkMode,
+  onDarkModeToggle,
+}: HeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    document.documentElement.dataset.theme = darkMode
-      ? "dark"
-      : "light";
-  }, [darkMode]);
-
+  
   const filteredResults = SEARCH_DATA.filter((item) => {
     if (!searchQuery.trim()) {
       return false;
@@ -278,15 +278,20 @@ export default function Header({ onMenuClick }: HeaderProps) {
 
         {/* THEME BUTTON */}
         <button
-          className="icon-button"
-          onClick={() => setDarkMode(!darkMode)}
-          title={
-            darkMode
-              ? "Switch to light mode"
-              : "Switch to dark mode"
-          }
-          type="button"
-        >
+  className="icon-button"
+  onClick={onDarkModeToggle}
+  title={
+    darkMode
+      ? "Switch to light mode"
+      : "Switch to dark mode"
+  }
+  aria-label={
+    darkMode
+      ? "Switch to light mode"
+      : "Switch to dark mode"
+  }
+  type="button"
+>
           {darkMode ? (
             <Sun size={20} />
           ) : (
