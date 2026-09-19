@@ -23,7 +23,7 @@ export default function AppLayout() {
 
   return (
     <div className={`shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
-      <Sidebar collapsed={sidebarCollapsed} />
+      <Sidebar collapsed={sidebarCollapsed} onClose={toggleSidebar} />
 
       <main className="main">
         <Header
