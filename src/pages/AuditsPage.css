@@ -1,89 +1,102 @@
-/* =========================================
+/* =========================================================
    AUDITS PAGE
-========================================= */
+========================================================= */
 
 .audits-page {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1180px;
   margin: 0 auto;
-  padding-bottom: 40px;
+  padding: 0 0 50px;
+  color: var(--text-primary);
+  box-sizing: border-box;
 }
 
-/* =========================================
+/* =========================================================
    HEADER
-========================================= */
+========================================================= */
 
 .audits-header {
   display: flex;
-  align-items: flex-start;
+  align-items: flex-end;
   justify-content: space-between;
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 26px;
+}
+
+.audits-eyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: var(--series-1);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
 }
 
 .audits-header h1 {
   margin: 0;
   color: var(--text-primary);
-  font-size: 28px;
+  font-size: 29px;
   font-weight: 750;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.7px;
 }
 
 .audits-header p {
+  max-width: 650px;
   margin: 7px 0 0;
   color: var(--text-secondary);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
-/* Schedule button */
+/* =========================================================
+   BUTTONS
+========================================================= */
 
-.schedule-button {
+.new-audit-button {
   flex-shrink: 0;
-
-  height: 38px;
-  padding: 0 15px;
-
-  border: 1px solid var(--border);
-  border-radius: 8px;
-
-  background: var(--surface-1);
-  color: var(--text-primary);
-
+  height: 42px;
+  padding: 0 17px;
+  border: 1px solid var(--series-1);
+  border-radius: 9px;
+  background: var(--series-1);
+  color: #ffffff;
   font-size: 13px;
-  font-weight: 600;
-
+  font-weight: 650;
   cursor: pointer;
-
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.15s ease;
+    transform 0.15s ease,
+    opacity 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.schedule-button:hover {
-  border-color: var(--series-1);
-  background: var(--page-plane);
+.new-audit-button:hover {
+  opacity: 0.92;
+  box-shadow: 0 7px 20px rgba(42, 120, 214, 0.18);
 }
 
-.schedule-button:active {
+.new-audit-button:active {
   transform: scale(0.98);
 }
 
-/* =========================================
-   STAT CARDS
-========================================= */
+/* =========================================================
+   KPI CARDS
+========================================================= */
 
-.audit-stats {
+.audit-kpis {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
-.audit-stat-card {
+.audit-kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
   min-height: 112px;
   padding: 18px;
+  box-sizing: border-box;
 
   background: var(--surface-1);
   border: 1px solid var(--border);
@@ -95,111 +108,228 @@
     box-shadow 0.2s ease;
 }
 
-.audit-stat-card:hover {
+.audit-kpi-card:hover {
   transform: translateY(-2px);
   border-color: rgba(42, 120, 214, 0.35);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
 }
 
-.audit-stat-card span {
-  display: block;
+/* KPI icon */
 
-  margin-bottom: 8px;
+.kpi-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  color: var(--text-muted);
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
 
-  font-size: 11px;
-  font-weight: 700;
+  border-radius: 11px;
+  background: rgba(42, 120, 214, 0.1);
+  color: var(--series-1);
 
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-size: 17px;
+  font-weight: 800;
 }
 
-.audit-stat-card strong {
-  display: block;
-
-  margin-bottom: 5px;
-
-  color: var(--text-primary);
-
-  font-size: 27px;
-  font-weight: 750;
+.audit-kpi-card.critical .kpi-icon {
+  background: rgba(208, 59, 59, 0.1);
+  color: var(--status-critical);
 }
 
-.audit-stat-card small {
-  display: block;
-
-  color: var(--text-muted);
-
-  font-size: 12px;
+.audit-kpi-card.success .kpi-icon {
+  background: rgba(12, 163, 12, 0.1);
+  color: var(--status-good);
 }
 
-.audit-stat-card .warning-number {
+.audit-kpi-card.warning .kpi-icon {
+  background: rgba(250, 178, 25, 0.12);
   color: var(--status-warning);
 }
 
-/* =========================================
-   MAIN PANEL
-========================================= */
+/* KPI content */
 
-.audits-panel {
-  overflow: hidden;
+.kpi-content {
+  min-width: 0;
+}
+
+.kpi-content span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.kpi-content strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-primary);
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 750;
+}
+
+.kpi-content small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   AI SUMMARY
+========================================================= */
+
+.audit-summary {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  margin-bottom: 18px;
+  padding: 18px 20px;
 
   background: var(--surface-1);
-
   border: 1px solid var(--border);
   border-radius: 14px;
 }
 
-/* Panel header */
+.audit-summary > div:first-child {
+  min-width: 210px;
+}
 
-.audits-panel-header {
+.audit-summary span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.audit-summary strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.audit-summary p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.summary-progress {
+  flex: 1;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--gridline);
+}
+
+.summary-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--series-1);
+  transition: width 0.4s ease;
+}
+
+/* =========================================================
+   MAIN AUDIT PANEL
+========================================================= */
+
+.audit-panel {
+  overflow: hidden;
+
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.audit-panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 20px;
 
-  padding: 18px 20px;
-
+  padding: 19px 20px;
   border-bottom: 1px solid var(--border);
 }
 
-.audits-panel-header h2 {
+.audit-panel-header h2 {
   margin: 0;
-
   color: var(--text-primary);
-
   font-size: 17px;
   font-weight: 700;
 }
 
-.audits-panel-header p {
+.audit-panel-header p {
   margin: 5px 0 0;
-
   color: var(--text-muted);
-
   font-size: 12px;
 }
 
-/* Filter */
+/* =========================================================
+   CONTROLS
+========================================================= */
 
-.audit-filter {
-  width: 130px;
-  height: 38px;
+.audit-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  padding: 0 10px;
+.audit-search {
+  width: 210px;
+  height: 37px;
+  box-sizing: border-box;
+
+  padding: 0 11px;
 
   border: 1px solid var(--border);
   border-radius: 8px;
-
   outline: none;
 
   background: var(--page-plane);
   color: var(--text-primary);
 
-  font-size: 13px;
+  font-family: inherit;
+  font-size: 12px;
 
+  transition: border-color 0.2s ease;
+}
+
+.audit-search::placeholder {
+  color: var(--text-muted);
+}
+
+.audit-search:focus {
+  border-color: var(--series-1);
+}
+
+.audit-filter {
+  width: 125px;
+  height: 37px;
+  padding: 0 9px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+
+  background: var(--page-plane);
+  color: var(--text-primary);
+
+  font-family: inherit;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -207,50 +337,44 @@
   border-color: var(--series-1);
 }
 
-/* =========================================
+/* =========================================================
    TABLE
-========================================= */
+========================================================= */
 
-.audit-table-container {
+.audit-table-wrapper {
   width: 100%;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .audit-table {
   width: 100%;
-
+  min-width: 1080px;
   border-collapse: collapse;
-
-  min-width: 760px;
 }
 
 .audit-table th {
-  padding: 13px 20px;
+  padding: 12px 16px;
 
   background: var(--page-plane);
-
   border-bottom: 1px solid var(--border);
 
   color: var(--text-muted);
-
-  font-size: 11px;
-  font-weight: 700;
-
+  font-size: 10px;
+  font-weight: 750;
   text-align: left;
   text-transform: uppercase;
-
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
 }
 
 .audit-table td {
-  padding: 16px 20px;
+  padding: 15px 16px;
 
   border-bottom: 1px solid var(--border);
 
   color: var(--text-secondary);
-
-  font-size: 13px;
-
+  font-size: 12px;
   vertical-align: middle;
 }
 
@@ -266,154 +390,361 @@
   border-bottom: none;
 }
 
-/* =========================================
-   AUDIT TITLE
-========================================= */
+/* =========================================================
+   RECORD
+========================================================= */
 
-.audit-title {
+.audit-record-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.audit-record-info strong {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.audit-record-info span {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.audit-time {
+  color: var(--text-primary);
+  font-weight: 650;
+}
+
+.audit-item {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* =========================================================
+   AI DETECTION
+========================================================= */
+
+.detection-info {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
+  min-width: 175px;
 }
 
-.audit-title strong {
+.detection-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: var(--series-1);
+  box-shadow: 0 0 0 4px rgba(42, 120, 214, 0.1);
+}
+
+.detection-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.detection-info strong {
   color: var(--text-primary);
-
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 650;
-
-  white-space: nowrap;
 }
 
-.audit-title span {
+.detection-info small {
   color: var(--text-muted);
-
-  font-size: 11px;
-  white-space: nowrap;
+  font-size: 10px;
 }
 
-/* =========================================
-   STATUS
-========================================= */
+/* =========================================================
+   CONFIDENCE
+========================================================= */
 
-.audit-status {
-  display: inline-flex;
-  align-items: center;
+.confidence {
+  width: 90px;
+}
 
-  padding: 5px 9px;
+.confidence-value {
+  margin-bottom: 5px;
+}
 
+.confidence-value strong {
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.confidence-bar {
+  width: 100%;
+  height: 5px;
+  overflow: hidden;
   border-radius: 999px;
-
-  font-size: 11px;
-  font-weight: 650;
-
-  white-space: nowrap;
+  background: var(--gridline);
 }
 
-/* Completed */
-
-.audit-status.completed {
-  background: rgba(12, 163, 12, 0.1);
-  color: var(--status-good);
+.confidence-progress {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--series-1);
+  transition: width 0.3s ease;
 }
 
-/* In progress */
+/* =========================================================
+   RISK BADGES
+========================================================= */
 
-.audit-status.in-progress {
-  background: rgba(250, 178, 25, 0.12);
-  color: var(--status-warning);
-}
-
-/* Scheduled */
-
-.audit-status.scheduled {
-  background: rgba(42, 120, 214, 0.1);
-  color: var(--series-1);
-}
-
-/* =========================================
-   FINDINGS
-========================================= */
-
-.finding-count {
+.risk-badge,
+.status-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  min-width: 26px;
-  height: 26px;
-
-  padding: 0 7px;
-
-  border-radius: 7px;
-
-  background: rgba(208, 59, 59, 0.1);
-
-  color: var(--status-critical);
-
-  font-size: 12px;
-  font-weight: 700;
-}
-
-.finding-clear {
-  color: var(--status-good);
-
-  font-size: 12px;
-  font-weight: 650;
-}
-
-/* =========================================
-   SCORE
-========================================= */
-
-.audit-score {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.audit-score strong {
-  min-width: 38px;
-
-  color: var(--text-primary);
-
-  font-size: 13px;
-  font-weight: 700;
-}
-
-.score-bar {
-  width: 65px;
-  height: 5px;
-
-  overflow: hidden;
+  min-height: 25px;
+  padding: 0 9px;
 
   border-radius: 999px;
 
-  background: var(--gridline);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.score-progress {
-  height: 100%;
-
-  border-radius: inherit;
-
-  background: var(--series-1);
-
-  transition: width 0.3s ease;
+.risk-badge.high {
+  background: rgba(208, 59, 59, 0.1);
+  color: var(--status-critical);
 }
 
-.score-empty {
+.risk-badge.medium {
+  background: rgba(250, 178, 25, 0.12);
+  color: var(--status-warning);
+}
+
+.risk-badge.low {
+  background: rgba(12, 163, 12, 0.1);
+  color: var(--status-good);
+}
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge.open {
+  background: rgba(208, 59, 59, 0.1);
+  color: var(--status-critical);
+}
+
+.status-badge.under-review {
+  background: rgba(250, 178, 25, 0.12);
+  color: var(--status-warning);
+}
+
+.status-badge.verified {
+  background: rgba(12, 163, 12, 0.1);
+  color: var(--status-good);
+}
+
+.status-badge.resolved {
+  background: rgba(42, 120, 214, 0.1);
+  color: var(--series-1);
+}
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.audit-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-button,
+.resolve-button {
+  height: 30px;
+  padding: 0 9px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 650;
+
+  cursor: pointer;
+}
+
+.view-button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.view-button:hover {
+  background: var(--page-plane);
+  border-color: var(--series-1);
+}
+
+.resolve-button {
+  border: 1px solid rgba(12, 163, 12, 0.25);
+  background: rgba(12, 163, 12, 0.08);
+  color: var(--status-good);
+}
+
+.resolve-button:hover {
+  background: rgba(12, 163, 12, 0.14);
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+  padding: 45px 20px !important;
+  color: var(--text-muted) !important;
+  text-align: center;
+}
+
+/* =========================================================
+   BOTTOM CARDS
+========================================================= */
+
+.audit-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.audit-insight-card,
+.audit-exceptions-card {
+  min-width: 0;
+  padding: 20px;
+
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.insight-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.card-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--series-1);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.insight-header h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.audit-insight-card > p {
+  margin: 15px 0 18px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.insight-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.insight-stat strong {
+  color: var(--status-critical);
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.insight-stat span {
   color: var(--text-muted);
+  font-size: 11px;
 }
 
-/* =========================================
+/* =========================================================
+   EXCEPTION LIST
+========================================================= */
+
+.exception-list {
+  margin-top: 15px;
+}
+
+.exception-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  padding: 12px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+.exception-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.exception-item:first-child {
+  padding-top: 0;
+}
+
+.exception-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.exception-item strong {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 11px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.exception-item span {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.exception-item button {
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+  color: var(--series-1);
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.exception-item button:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
    MODAL
-========================================= */
+========================================================= */
 
 .audit-modal-overlay {
   position: fixed;
   inset: 0;
-
   z-index: 9999;
 
   display: flex;
@@ -422,9 +753,8 @@
 
   padding: 20px;
 
-  background: rgba(0, 0, 0, 0.45);
-
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.48);
+  backdrop-filter: blur(5px);
 }
 
 .audit-modal {
@@ -435,19 +765,22 @@
   overflow-y: auto;
 
   background: var(--surface-1);
-
   border: 1px solid var(--border);
   border-radius: 16px;
 
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
 
   animation: auditModalAppear 0.2s ease;
+}
+
+.detail-modal {
+  max-width: 560px;
 }
 
 @keyframes auditModalAppear {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.98);
+    transform: translateY(12px) scale(0.98);
   }
 
   to {
@@ -456,13 +789,14 @@
   }
 }
 
-/* Modal header */
+/* =========================================================
+   MODAL HEADER
+========================================================= */
 
 .audit-modal-header {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-
   gap: 20px;
 
   padding: 20px;
@@ -472,25 +806,21 @@
 
 .audit-modal-header h2 {
   margin: 0;
-
   color: var(--text-primary);
-
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 700;
 }
 
 .audit-modal-header p {
   margin: 5px 0 0;
-
   color: var(--text-muted);
-
   font-size: 12px;
+  line-height: 1.5;
 }
 
 .close-modal {
   width: 34px;
   height: 34px;
-
   flex-shrink: 0;
 
   border: 1px solid var(--border);
@@ -499,7 +829,7 @@
   background: transparent;
   color: var(--text-secondary);
 
-  font-size: 22px;
+  font-size: 21px;
   line-height: 1;
 
   cursor: pointer;
@@ -514,46 +844,42 @@
   color: var(--text-primary);
 }
 
-/* =========================================
+/* =========================================================
    FORM
-========================================= */
+========================================================= */
 
 .audit-modal form {
   padding: 20px;
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 17px;
 }
 
 .form-group label {
   display: block;
-
   margin-bottom: 7px;
 
   color: var(--text-primary);
-
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 650;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-
   box-sizing: border-box;
 
   border: 1px solid var(--border);
   border-radius: 8px;
-
   outline: none;
 
   background: var(--page-plane);
   color: var(--text-primary);
 
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
 
   transition: border-color 0.2s ease;
 }
@@ -561,14 +887,12 @@
 .form-group input,
 .form-group select {
   height: 42px;
-  padding: 0 12px;
+  padding: 0 11px;
 }
 
 .form-group textarea {
-  padding: 11px 12px;
-
+  padding: 10px 11px;
   resize: vertical;
-
   line-height: 1.5;
 }
 
@@ -583,22 +907,20 @@
   border-color: var(--series-1);
 }
 
-/* Two-column form */
-
 .form-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-
   gap: 14px;
 }
 
-/* Form buttons */
+/* =========================================================
+   FORM ACTIONS
+========================================================= */
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
-
-  gap: 10px;
+  gap: 9px;
 
   margin-top: 22px;
   padding-top: 18px;
@@ -609,20 +931,19 @@
 .cancel-button,
 .save-audit-button {
   height: 40px;
-
   padding: 0 16px;
 
   border-radius: 8px;
 
-  font-size: 13px;
-  font-weight: 600;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
 
   cursor: pointer;
 }
 
 .cancel-button {
   border: 1px solid var(--border);
-
   background: transparent;
   color: var(--text-primary);
 }
@@ -633,9 +954,8 @@
 
 .save-audit-button {
   border: none;
-
   background: var(--series-1);
-  color: white;
+  color: #ffffff;
 
   transition:
     opacity 0.2s ease,
@@ -650,110 +970,262 @@
   transform: scale(0.98);
 }
 
-/* =========================================
-   TABLET
-========================================= */
+.full-width {
+  width: 100%;
+}
 
-@media (max-width: 900px) {
-  .audit-stats {
-    grid-template-columns: repeat(2, 1fr);
+/* =========================================================
+   RECORD DETAILS
+========================================================= */
+
+.record-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+
+  margin: 20px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: var(--border);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 13px;
+
+  background: var(--surface-1);
+}
+
+.detail-item > span:first-child {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.detail-item strong {
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.detail-note {
+  margin: 0 20px 20px;
+  padding: 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  background: var(--page-plane);
+}
+
+.detail-note > span {
+  display: block;
+  margin-bottom: 6px;
+
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.detail-note p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.detail-modal > .full-width {
+  width: calc(100% - 40px);
+  margin: 0 20px 20px;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .audit-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .audits-header h1 {
-    font-size: 25px;
+  .audit-panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .audit-controls {
+    width: 100%;
+  }
+
+  .audit-search {
+    flex: 1;
   }
 }
 
-/* =========================================
-   MOBILE
-========================================= */
+/* =========================================================
+   TABLET / SMALL LAPTOP
+========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .audits-page {
     max-width: 100%;
   }
 
   .audits-header {
+    align-items: flex-start;
     flex-direction: column;
-    margin-bottom: 22px;
   }
 
-  .audits-header h1 {
-    font-size: 24px;
-  }
-
-  .schedule-button {
+  .new-audit-button {
     width: 100%;
   }
 
-  .audit-stats {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .audit-stat-card {
-    min-height: 95px;
-    padding: 14px;
-  }
-
-  .audit-stat-card strong {
-    font-size: 23px;
-  }
-
-  .audits-panel-header {
+  .audit-summary {
     align-items: flex-start;
-    padding: 16px;
+    flex-direction: column;
   }
 
-  .audit-filter {
-    width: 110px;
+  .audit-summary > div:first-child {
+    width: 100%;
   }
 
-  .audit-table-container {
-    overflow-x: auto;
+  .summary-progress {
+    width: 100%;
+  }
+
+  .audit-bottom-grid {
+    grid-template-columns: 1fr;
   }
 }
 
-/* =========================================
-   SMALL PHONES
-========================================= */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+  .audits-page {
+    padding-bottom: 30px;
+  }
+
+  .audits-header {
+    margin-bottom: 20px;
+  }
+
+  .audits-eyebrow {
+    font-size: 9px;
+  }
+
   .audits-header h1 {
-    font-size: 22px;
+    font-size: 23px;
+    letter-spacing: -0.4px;
   }
 
   .audits-header p {
     font-size: 13px;
   }
 
-  .audit-stats {
-    gap: 8px;
+  /*
+     KPI CARDS
+     One card per row on phones.
+  */
+
+  .audit-kpis {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
-  .audit-stat-card {
+  .audit-kpi-card {
+    min-height: 88px;
+    padding: 14px;
+  }
+
+  .kpi-icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  .kpi-content strong {
+    font-size: 24px;
+  }
+
+  .audit-summary {
+    padding: 15px;
+  }
+
+  .audit-panel-header {
+    padding: 15px;
+  }
+
+  .audit-controls {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .audit-search,
+  .audit-filter {
+    width: 100%;
+  }
+
+  .audit-table {
+    min-width: 1050px;
+  }
+
+  .audit-insight-card,
+  .audit-exceptions-card {
+    padding: 16px;
+  }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 430px) {
+  .audits-header h1 {
+    font-size: 21px;
+  }
+
+  .audits-header p {
+    font-size: 12px;
+  }
+
+  .new-audit-button {
+    height: 40px;
+  }
+
+  .audit-kpi-card {
+    gap: 11px;
+    min-height: 82px;
     padding: 13px;
   }
 
-  .audit-stat-card span {
+  .kpi-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 9px;
+    font-size: 14px;
+  }
+
+  .kpi-content span {
     font-size: 9px;
   }
 
-  .audit-stat-card strong {
-    font-size: 20px;
+  .kpi-content strong {
+    font-size: 22px;
   }
 
-  .audit-stat-card small {
+  .kpi-content small {
     font-size: 10px;
-  }
-
-  .audits-panel-header {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .audit-filter {
-    width: 100%;
   }
 
   .audit-modal-overlay {
@@ -782,5 +1254,19 @@
   .cancel-button,
   .save-audit-button {
     width: 100%;
+  }
+
+  .record-details {
+    grid-template-columns: 1fr;
+    margin: 16px;
+  }
+
+  .detail-note {
+    margin: 0 16px 16px;
+  }
+
+  .detail-modal > .full-width {
+    width: calc(100% - 32px);
+    margin: 0 16px 16px;
   }
 }

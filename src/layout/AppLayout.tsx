@@ -1,46 +1,47 @@
-import { Outlet } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../layout/Sidebar";
+import Header from "../layout/Header";
+import "./AppLayout.css";
 
 export default function AppLayout() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarCollapsed((prev) => !prev);
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev);
-  };
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
 
   useEffect(() => {
-    document.documentElement.dataset.theme = darkMode
-      ? "dark"
-      : "light";
+    document.documentElement.dataset.theme = darkMode ? "dark" : "light";
+    localStorage.setItem("darkMode", String(darkMode));
   }, [darkMode]);
+
+  const toggleSidebar = () => {
+    setSidebarCollapsed((current) => !current);
+  };
 
   return (
     <div className={`shell ${sidebarCollapsed ? "sidebar-collapsed" : ""}`}>
-      <Sidebar collapsed={sidebarCollapsed} onClose={toggleSidebar} />
+      <Sidebar
+        collapsed={sidebarCollapsed}
+        onToggle={toggleSidebar}
+      />
 
-      <main className="main">
+      <div className="main">
         <Header
           onMenuClick={toggleSidebar}
           darkMode={darkMode}
-          onDarkModeToggle={toggleDarkMode}
+          onDarkModeToggle={() =>
+            setDarkMode((current) => !current)
+          }
         />
 
         <div className="app-shell">
-          <Outlet
-            context={{
-              darkMode,
-              setDarkMode,
-            }}
-          />
+          <Outlet context={{ darkMode, setDarkMode }} />
         </div>
-      </main>
+      </div>
+
+      <div className="brightness-overlay" aria-hidden="true" />
     </div>
   );
 }

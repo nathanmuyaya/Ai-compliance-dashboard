@@ -1,64 +1,76 @@
-
+import "./Header.css";
+import { useEffect, useRef, useState } from "react";
 import {
   Bell,
+  Check,
+  ChevronDown,
   Menu,
   Moon,
   Search,
+  Settings,
   Sun,
   User,
+  X,
 } from "lucide-react";
-
-import { useState } from "react";  
 import { useNavigate } from "react-router-dom";
 
-type HeaderProps = {
+interface HeaderProps {
   onMenuClick: () => void;
   darkMode: boolean;
   onDarkModeToggle: () => void;
-};
+}
 
-const SEARCH_DATA = [
+interface SearchItem {
+  title: string;
+  category: string;
+  path: string;
+}
+
+const SEARCH_DATA: SearchItem[] = [
   {
-    title: "High Risk Transaction",
-    description: "Transaction exceeded the configured risk threshold",
-    type: "Risk",
-    path: "/risks",
+    title: "Overview Dashboard",
+    category: "Dashboard",
+    path: "/",
   },
   {
-    title: "Third-party Vendor Risk",
-    description: "Vendor requires compliance review",
-    type: "Risk",
+    title: "Compliance Reports",
+    category: "Reports",
+    path: "/reports",
+  },
+  {
+    title: "Flagged Risks",
+    category: "Risk Management",
     path: "/risks",
   },
   {
     title: "Data Protection Policy",
-    description: "Policy expires soon",
-    type: "Policy",
+    category: "Policies",
     path: "/policies",
   },
   {
     title: "Access Control Policy",
-    description: "User access requirements and controls",
-    type: "Policy",
+    category: "Policies",
     path: "/policies",
   },
   {
     title: "IT Security Audit",
-    description: "Scheduled compliance audit",
-    type: "Audit",
+    category: "Audits",
     path: "/audits",
   },
   {
-    title: "Annual Compliance Report",
-    description: "Annual compliance assessment",
-    type: "Report",
-    path: "/reports",
+    title: "Alerts",
+    category: "Monitoring",
+    path: "/alerts",
   },
   {
-    title: "High Risk Alert",
-    description: "A high severity compliance alert",
-    type: "Alert",
-    path: "/alerts",
+    title: "Users & Roles",
+    category: "Administration",
+    path: "/users",
+  },
+  {
+    title: "Settings",
+    category: "System",
+    path: "/settings",
   },
 ];
 
@@ -67,306 +79,398 @@ export default function Header({
   darkMode,
   onDarkModeToggle,
 }: HeaderProps) {
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showProfile, setShowProfile] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-
   const navigate = useNavigate();
 
-  
-  const filteredResults = SEARCH_DATA.filter((item) => {
-    if (!searchQuery.trim()) {
-      return false;
-    }
+  const [search, setSearch] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-    const query = searchQuery.toLowerCase();
+  const searchRef = useRef<HTMLDivElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLDivElement>(null);
 
-    return (
-      item.title.toLowerCase().includes(query) ||
-      item.description.toLowerCase().includes(query) ||
-      item.type.toLowerCase().includes(query)
-    );
-  });
+  const unreadNotifications = 3;
 
-  const handleResultClick = (path: string) => {
-    setSearchQuery("");
+  const filteredResults =
+    search.trim().length > 0
+      ? SEARCH_DATA.filter((item) =>
+          `${item.title} ${item.category}`
+            .toLowerCase()
+            .includes(search.toLowerCase())
+        ).slice(0, 6)
+      : [];
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(target)
+      ) {
+        setSearchOpen(false);
+      }
+
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(target)
+      ) {
+        setNotificationsOpen(false);
+      }
+
+      if (
+        profileRef.current &&
+        !profileRef.current.contains(target)
+      ) {
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleKeyboard = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "k") {
+        event.preventDefault();
+
+        const input =
+          searchRef.current?.querySelector<HTMLInputElement>(
+            "input"
+          );
+
+        input?.focus();
+        setSearchOpen(true);
+      }
+
+      if (event.key === "Escape") {
+        setSearchOpen(false);
+        setNotificationsOpen(false);
+        setProfileOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyboard);
+
+    return () => {
+      document.removeEventListener(
+        "keydown",
+        handleKeyboard
+      );
+    };
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode
+      ? "dark"
+      : "light";
+  }, [darkMode]);
+
+  const handleSearchNavigate = (path: string) => {
     navigate(path);
+    setSearch("");
+    setSearchOpen(false);
   };
 
   return (
     <header className="header">
-
-      {/* LEFT SECTION */}
       <div className="header-left">
-
         <button
-          className="icon-button"
+          type="button"
+          className="mobile-menu-button"
           onClick={onMenuClick}
-          aria-label="Toggle sidebar"
+          aria-label="Open navigation menu"
         >
-          <Menu size={20} />
+          <Menu size={21} />
         </button>
 
+        <div className="header-title">
+          <span className="header-eyebrow">
+            COMPLIANCE CENTER
+          </span>
+
+          <h1>Business Intelligence</h1>
+        </div>
+      </div>
+
+      <div className="header-actions">
         {/* SEARCH */}
-        <div className="search-wrapper">
+        <div
+          className={`header-search ${
+            searchOpen ? "search-active" : ""
+          }`}
+          ref={searchRef}
+        >
+          <Search size={18} />
 
-          <div className="search-box">
+          <input
+            type="text"
+            value={search}
+            placeholder="Search dashboard..."
+            onFocus={() => setSearchOpen(true)}
+            onChange={(event) => {
+              setSearch(event.target.value);
+              setSearchOpen(true);
+            }}
+          />
 
-            <Search size={18} />
+          {search && (
+            <button
+              type="button"
+              className="search-clear"
+              onClick={() => setSearch("")}
+              aria-label="Clear search"
+            >
+              <X size={15} />
+            </button>
+          )}
 
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(event) =>
-                setSearchQuery(event.target.value)
-              }
-              placeholder="Search policies, risks, audits..."
-            />
+          {!search && (
+            <span className="search-shortcut">
+              Ctrl K
+            </span>
+          )}
 
-            {searchQuery && (
-              <button
-                className="search-clear"
-                onClick={() => setSearchQuery("")}
-                type="button"
-              >
-                ×
-              </button>
-            )}
-
-          </div>
-
-          {/* SEARCH RESULTS */}
-          {searchQuery.trim() !== "" && (
+          {searchOpen && search.trim() && (
             <div className="search-results">
-
               {filteredResults.length > 0 ? (
                 <>
-                  <div className="search-results-header">
-                    <span>Search results</span>
-                    <span>{filteredResults.length}</span>
+                  <div className="search-results-heading">
+                    Search results
                   </div>
 
-                  {filteredResults.map((result) => (
+                  {filteredResults.map((item) => (
                     <button
-                      key={result.title}
-                      className="search-result"
-                      onClick={() =>
-                        handleResultClick(result.path)
-                      }
                       type="button"
+                      className="search-result"
+                      key={`${item.title}-${item.path}`}
+                      onClick={() =>
+                        handleSearchNavigate(item.path)
+                      }
                     >
                       <div className="search-result-icon">
-                        <Search size={17} />
+                        <Search size={15} />
                       </div>
 
                       <div className="search-result-content">
-                        <strong>{result.title}</strong>
-
-                        <span>
-                          {result.description}
-                        </span>
+                        <strong>{item.title}</strong>
+                        <span>{item.category}</span>
                       </div>
-
-                      <span className="search-result-type">
-                        {result.type}
-                      </span>
                     </button>
                   ))}
                 </>
               ) : (
-                <div className="search-no-results">
+                <div className="search-empty">
                   <Search size={20} />
-
-                  <strong>
-                    No results found
-                  </strong>
-
+                  <strong>No results found</strong>
                   <span>
-                    Try searching for a policy, risk,
-                    audit, report, or alert.
+                    Try searching for a policy, risk or audit.
                   </span>
                 </div>
               )}
-
             </div>
           )}
-
         </div>
 
-      </div>
-
-      {/* RIGHT SECTION */}
-      <div className="header-actions">
-
-        {/* NOTIFICATIONS */}
-        <div className="dropdown-wrapper">
-
-          <button
-            className="icon-button notification-button"
-            onClick={() =>
-              setShowNotifications(!showNotifications)
-            }
-            type="button"
-          >
-            <Bell size={20} />
-
-            <span className="notification-badge">
-              5
-            </span>
-          </button>
-
-          {showNotifications && (
-            <div className="dropdown notifications-dropdown">
-
-              <div className="dropdown-header">
-                <h3>Notifications</h3>
-                <span>5 new</span>
-              </div>
-
-              <div className="notification-item">
-                <div className="notification-icon">
-                  ⚠
-                </div>
-
-                <div>
-                  <strong>
-                    High risk detected
-                  </strong>
-
-                  <p>
-                    Third-party vendor requires attention.
-                  </p>
-                </div>
-              </div>
-
-              <div className="notification-item">
-                <div className="notification-icon">
-                  📄
-                </div>
-
-                <div>
-                  <strong>
-                    Policy expiring soon
-                  </strong>
-
-                  <p>
-                    Data Protection Policy expires soon.
-                  </p>
-                </div>
-              </div>
-
-              <div className="notification-item">
-                <div className="notification-icon">
-                  ✓
-                </div>
-
-                <div>
-                  <strong>
-                    Audit scheduled
-                  </strong>
-
-                  <p>
-                    IT Security Audit is scheduled tomorrow.
-                  </p>
-                </div>
-              </div>
-
-            </div>
-          )}
-
-        </div>
-
-        {/* THEME BUTTON */}
+        {/* THEME */}
         <button
-  className="icon-button"
-  onClick={onDarkModeToggle}
-  title={
-    darkMode
-      ? "Switch to light mode"
-      : "Switch to dark mode"
-  }
-  aria-label={
-    darkMode
-      ? "Switch to light mode"
-      : "Switch to dark mode"
-  }
-  type="button"
->
+          type="button"
+          className="header-icon-button theme-button"
+          onClick={onDarkModeToggle}
+          aria-label={
+            darkMode
+              ? "Switch to light mode"
+              : "Switch to dark mode"
+          }
+          title={
+            darkMode
+              ? "Switch to light mode"
+              : "Switch to dark mode"
+          }
+        >
           {darkMode ? (
-            <Sun size={20} />
+            <Sun size={19} />
           ) : (
-            <Moon size={20} />
+            <Moon size={19} />
           )}
         </button>
 
-        {/* PROFILE */}
-        <div className="dropdown-wrapper">
-
+        {/* NOTIFICATIONS */}
+        <div
+          className="header-dropdown-wrapper"
+          ref={notificationRef}
+        >
           <button
-            className="profile-button"
-            onClick={() =>
-              setShowProfile(!showProfile)
-            }
             type="button"
+            className={`header-icon-button notification-button ${
+              notificationsOpen ? "active" : ""
+            }`}
+            onClick={() => {
+              setNotificationsOpen((current) => !current);
+              setProfileOpen(false);
+            }}
+            aria-label="Notifications"
           >
-            <div className="profile-avatar">
-              US
-            </div>
+            <Bell size={19} />
 
-            <div className="profile-info">
-              <strong>UserAdmin</strong>
-
-              <span>
-                Compliance Officer
+            {unreadNotifications > 0 && (
+              <span className="notification-badge">
+                {unreadNotifications}
               </span>
-            </div>
+            )}
           </button>
 
-          {showProfile && (
-            <div className="dropdown profile-dropdown">
-
-              <div className="profile-menu-header">
-
-                <div className="profile-avatar large">
-                  US
-                </div>
-
+          {notificationsOpen && (
+            <div className="header-dropdown notifications-dropdown">
+              <div className="dropdown-header">
                 <div>
-                  <strong>UserAdmin</strong>
-
-                  <p>
-                    Compliance Officer
-                  </p>
+                  <strong>Notifications</strong>
+                  <span>
+                    {unreadNotifications} unread
+                  </span>
                 </div>
 
+                <button type="button">
+                  <Check size={15} />
+                  Mark all read
+                </button>
               </div>
 
-              <hr />
+              <div className="notification-list">
+                <button
+                  type="button"
+                  className="notification-item unread"
+                  onClick={() => navigate("/risks")}
+                >
+                  <div className="notification-dot critical" />
 
-              <button type="button">
-                <User size={16} />
-                My Profile
+                  <div>
+                    <strong>High-risk transaction detected</strong>
+                    <span>
+                      A transaction requires immediate review.
+                    </span>
+                    <small>5 minutes ago</small>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className="notification-item unread"
+                  onClick={() => navigate("/alerts")}
+                >
+                  <div className="notification-dot warning" />
+
+                  <div>
+                    <strong>Multiple login failures</strong>
+                    <span>
+                      Unusual authentication activity detected.
+                    </span>
+                    <small>18 minutes ago</small>
+                  </div>
+                </button>
+
+                <button
+                  type="button"
+                  className="notification-item unread"
+                  onClick={() => navigate("/policies")}
+                >
+                  <div className="notification-dot info" />
+
+                  <div>
+                    <strong>Policy review approaching</strong>
+                    <span>
+                      A compliance policy is due for review.
+                    </span>
+                    <small>1 hour ago</small>
+                  </div>
+                </button>
+              </div>
+
+              <button
+                type="button"
+                className="dropdown-footer-button"
+                onClick={() => navigate("/alerts")}
+              >
+                View all alerts
               </button>
+            </div>
+          )}
+        </div>
 
-              <button type="button">
-                ⚙ Settings
+        {/* PROFILE */}
+        <div
+          className="header-dropdown-wrapper"
+          ref={profileRef}
+        >
+          <button
+            type="button"
+            className={`profile-button ${
+              profileOpen ? "active" : ""
+            }`}
+            onClick={() => {
+              setProfileOpen((current) => !current);
+              setNotificationsOpen(false);
+            }}
+          >
+            <span className="profile-avatar">NM</span>
+
+            <span className="profile-info">
+              <strong>Admin User</strong>
+              <small>Administrator</small>
+            </span>
+
+            <ChevronDown
+              size={16}
+              className={`profile-chevron ${
+                profileOpen ? "rotate" : ""
+              }`}
+            />
+          </button>
+
+          {profileOpen && (
+            <div className="header-dropdown profile-dropdown">
+              <div className="profile-dropdown-header">
+                <span className="profile-avatar large">
+                  NM
+                </span>
+
+                <div>
+                  <strong>Admin User</strong>
+                  <span>Administrator</span>
+                </div>
+              </div>
+
+              <div className="dropdown-divider" />
+
+              <button
+                type="button"
+                className="profile-menu-item"
+                onClick={() => navigate("/profile")}
+              >
+                <User size={17} />
+                <span>My Profile</span>
               </button>
 
               <button
-                className="logout-button"
                 type="button"
+                className="profile-menu-item"
+                onClick={() => navigate("/settings")}
               >
-                Logout
+                <Settings size={17} />
+                <span>Settings</span>
               </button>
-
             </div>
           )}
-
         </div>
-
       </div>
-
     </header>
   );
 }
-

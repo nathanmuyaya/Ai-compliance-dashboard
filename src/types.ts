@@ -1,10 +1,14 @@
 export interface DailySales {
+  value: any;
+  label: any;
   date: string; // ISO date
   revenue: number;
   orders: number;
 }
 
 export interface CategorySales {
+  value: number;
+  label: ReactNode;
   category: string;
   revenue: number;
 }

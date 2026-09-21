@@ -1,124 +1,168 @@
-import {
-  BarChart3,
-  ShieldCheck,
-  TriangleAlert,
-  ClipboardCheck,
-  FileText,
-  Download,
-} from "lucide-react";
+import { useState } from "react";
+import "./ReportsPage.css";
 
-const reports = [
+interface Report {
+  id: string;
+  title: string;
+  type: string;
+  status: string;
+  score: number;
+}
+
+const REPORTS: Report[] = [
   {
-    title: "Overall Compliance",
-    description: "View your organization's overall compliance status.",
-    icon: ShieldCheck,
-    status: "92% Compliant",
+    id: "REP-001",
+    title: "Monthly Compliance Report",
+    type: "Compliance",
+    status: "Completed",
+    score: 94,
   },
   {
-    title: "Risk Assessment",
-    description: "Review identified risks and their severity levels.",
-    icon: TriangleAlert,
-    status: "6 Open Risks",
+    id: "REP-002",
+    title: "Enterprise Risk Assessment",
+    type: "Risk",
+    status: "In Progress",
+    score: 88,
   },
   {
-    title: "Audit Report",
-    description: "View completed and upcoming compliance audits.",
-    icon: ClipboardCheck,
-    status: "8 Audits",
+    id: "REP-003",
+    title: "Internal Audit Report",
+    type: "Audit",
+    status: "Completed",
+    score: 91,
   },
   {
-    title: "Policy Compliance",
-    description: "Monitor policy implementation and compliance.",
-    icon: FileText,
-    status: "48 Policies",
+    id: "REP-004",
+    title: "Financial Controls Report",
+    type: "Financial",
+    status: "Pending",
+    score: 0,
   },
 ];
 
 export default function ReportsPage() {
+  const [search, setSearch] = useState("");
+
+  const filteredReports = REPORTS.filter((report) =>
+    report.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
-    <div className="reports-page">
-      
-      <div className="page-header">
+    <main className="reports-page">
+      <section className="reports-hero">
         <div>
+          <span className="reports-overline">
+            COMPLIANCE CENTER
+          </span>
+
           <h1>Compliance Reports</h1>
+
           <p>
-            Generate, review, and download compliance reports.
+            Analyze compliance performance and monitor your
+            organization's reports.
           </p>
         </div>
+      </section>
 
-        <button className="primary-button">
-          <Download size={18} />
-          Export Report
-        </button>
-      </div>
+      <section className="reports-kpi-grid">
+        <div className="report-kpi-card">
+          <span>Total Reports</span>
+          <strong>{REPORTS.length}</strong>
+        </div>
 
-      <div className="reports-grid">
-        {reports.map((report) => {
-          const Icon = report.icon;
+        <div className="report-kpi-card">
+          <span>Completed</span>
+          <strong>
+            {
+              REPORTS.filter(
+                (report) => report.status === "Completed"
+              ).length
+            }
+          </strong>
+        </div>
 
-          return (
-            <div className="report-card" key={report.title}>
-              
-              <div className="report-icon">
-                <Icon size={24} />
+        <div className="report-kpi-card">
+          <span>In Progress</span>
+          <strong>
+            {
+              REPORTS.filter(
+                (report) => report.status === "In Progress"
+              ).length
+            }
+          </strong>
+        </div>
+
+        <div className="report-kpi-card">
+          <span>Pending</span>
+          <strong>
+            {
+              REPORTS.filter(
+                (report) => report.status === "Pending"
+              ).length
+            }
+          </strong>
+        </div>
+      </section>
+
+      <section className="reports-library">
+        <div className="library-header">
+          <div>
+            <span className="section-label">
+              REPORT LIBRARY
+            </span>
+
+            <h2>Recent Reports</h2>
+          </div>
+
+          <input
+            type="text"
+            placeholder="Search reports..."
+            value={search}
+            onChange={(event) =>
+              setSearch(event.target.value)
+            }
+          />
+        </div>
+
+        <div className="report-grid">
+          {filteredReports.map((report) => (
+            <article
+              className="report-card"
+              key={report.id}
+            >
+              <div className="report-card-top">
+                <span className="report-type">
+                  {report.type}
+                </span>
+
+                <span className="report-status">
+                  {report.status}
+                </span>
               </div>
+
+              <span className="report-id">
+                {report.id}
+              </span>
 
               <h3>{report.title}</h3>
 
-              <p>{report.description}</p>
+              <div className="report-score">
+                <span>Compliance Score</span>
 
-              <div className="report-footer">
-                <span>{report.status}</span>
-
-                <button>
-                  View Report
-                </button>
+                <strong>
+                  {report.score > 0
+                    ? `${report.score}%`
+                    : "Pending"}
+                </strong>
               </div>
 
-            </div>
-          );
-        })}
-      </div>
-
-
-      <div className="report-summary">
-
-        <div className="summary-header">
-          <div>
-            <h2>Compliance Summary</h2>
-            <p>Overview of your organization's compliance performance.</p>
-          </div>
-
-          <BarChart3 size={24} />
+              <button type="button">
+                View Report →
+              </button>
+            </article>
+          ))}
         </div>
-
-
-        <div className="summary-stats">
-
-          <div>
-            <span>Compliance Score</span>
-            <strong>92%</strong>
-          </div>
-
-          <div>
-            <span>Open Risks</span>
-            <strong>6</strong>
-          </div>
-
-          <div>
-            <span>Policies</span>
-            <strong>48</strong>
-          </div>
-
-          <div>
-            <span>Completed Audits</span>
-            <strong>8</strong>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
+      </section>
+    </main>
   );
 }

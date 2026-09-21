@@ -1,576 +1,838 @@
-/* =========================================
+/* =========================================================
    POLICIES PAGE
-   ========================================= */
+========================================================= */
 
-.page {
+.policies-page {
   width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
-}
-
-.page-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-}
-
-.page-header h1 {
-  margin: 0;
-  font-size: 28px;
+  padding: 30px 0 60px;
   color: var(--text-primary);
 }
 
-.page-header p {
-  margin: 6px 0 0;
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.policies-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.policies-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  color: var(--series-1);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+}
+
+.policies-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--series-1);
+  box-shadow: 0 0 0 4px rgba(42, 120, 214, 0.1);
+}
+
+.policies-header h1 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 34px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.policies-header p {
+  margin: 9px 0 0;
+  max-width: 620px;
   color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-.primary-button {
-  border: none;
-  border-radius: 8px;
-  padding: 10px 16px;
-  background: #2563eb;
-  color: white;
-  font-weight: 600;
+/* =========================================================
+   ADD POLICY BUTTON
+========================================================= */
+
+.add-policy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 17px;
+  border: 1px solid var(--text-primary);
+  border-radius: 9px;
+  background: var(--text-primary);
+  color: var(--surface-1);
+  font-size: 13px;
+  font-weight: 750;
   cursor: pointer;
-  white-space: nowrap;
+  box-shadow: 0 7px 18px rgba(0, 0, 0, 0.08);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
 }
 
-/* =========================================
-   SUMMARY CARDS
-   ========================================= */
+.add-policy-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.13);
+}
 
-.policy-summary {
+.add-policy-button:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.policy-summary-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-  margin-bottom: 20px;
+  gap: 16px;
+  margin-bottom: 24px;
 }
 
-.summary-card {
-  min-width: 0;
+.policy-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 125px;
   padding: 20px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface-1);
-  box-sizing: border-box;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.035);
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.summary-card span {
+.policy-card::after {
+  content: "";
+  position: absolute;
+  right: -25px;
+  bottom: -35px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: rgba(42, 120, 214, 0.035);
+}
+
+.policy-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(42, 120, 214, 0.25);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.07);
+}
+
+.policy-card span {
+  position: relative;
+  z-index: 1;
   display: block;
-  margin-bottom: 10px;
   color: var(--text-secondary);
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 650;
 }
 
-.summary-card strong {
+.policy-card strong {
+  position: relative;
+  z-index: 1;
   display: block;
-  font-size: 22px;
+  margin-top: 9px;
   color: var(--text-primary);
+  font-size: 30px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
-/* =========================================
-   POLICY PANEL
-   ========================================= */
-
-.policy-panel {
-  width: 100%;
-  min-width: 0;
-  box-sizing: border-box;
+.policy-card small {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-top: 9px;
+  color: var(--text-muted);
+  font-size: 11px;
 }
 
-.policy-toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 14px;
-}
+/* =========================================================
+   MAIN PANEL
+========================================================= */
 
-.policy-toolbar input,
-.policy-toolbar select {
-  height: 38px;
+.policies-panel {
+  overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0 12px;
+  border-radius: 15px;
   background: var(--surface-1);
-  color: var(--text-primary);
-  box-sizing: border-box;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.035);
 }
 
-.policy-toolbar input {
-  width: 240px;
-}
-
-.policy-toolbar select {
-  width: 140px;
-}
-
-/* =========================================
-   TABLE
-   ========================================= */
-
-.policy-table-wrapper {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  min-width: 0 !important;
-
-  overflow-x: auto !important;
-  overflow-y: hidden;
-
-  -webkit-overflow-scrolling: touch;
-
-  box-sizing: border-box;
-}
-
-.policy-table {
-  width: auto !important;
-  min-width: 950px !important;
-  border-collapse: collapse;
-  table-layout: auto !important;
-}
-
-.policy-table th,
-.policy-table td {
-  padding: 12px 14px;
-  text-align: left;
-  white-space: nowrap !important;
-  vertical-align: middle;
-  color: var(--text-primary);
-}
-
-.policy-table th {
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.policy-table td {
-  font-size: 14px;
+.policies-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  padding: 22px 22px 20px;
   border-bottom: 1px solid var(--border);
 }
 
-/* Policy name */
-
-.policy-name {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
+.policies-panel-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
 }
 
-.policy-name strong {
-  font-weight: 600;
-}
-
-.policy-name span {
+.policies-panel-header p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
   font-size: 12px;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.policy-search {
+  position: relative;
+}
+
+.policy-search::before {
+  content: "⌕";
+  position: absolute;
+  top: 50%;
+  left: 13px;
+  transform: translateY(-52%);
+  color: var(--text-muted);
+  font-size: 17px;
+  pointer-events: none;
+}
+
+.policy-search input {
+  width: 260px;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 13px 0 36px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  outline: none;
+  background: var(--page-plane);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.policy-search input::placeholder {
   color: var(--text-muted);
 }
 
-/* Status */
+.policy-search input:focus {
+  border-color: var(--series-1);
+  background: var(--surface-1);
+  box-shadow: 0 0 0 3px rgba(42, 120, 214, 0.1);
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.policies-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.policies-table {
+  width: 100%;
+  min-width: 900px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.policies-table th {
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  background: var(--page-plane);
+  color: var(--text-muted);
+  text-align: left;
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+
+.policies-table td {
+  padding: 18px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
+  font-size: 12px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.policies-table tbody tr {
+  transition: background 0.18s ease;
+}
+
+.policies-table tbody tr:hover {
+  background: rgba(42, 120, 214, 0.025);
+}
+
+.policies-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* =========================================================
+   POLICY NAME
+========================================================= */
+
+.policy-name {
+  min-width: 210px;
+}
+
+.policy-name strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.policy-name span {
+  display: inline-flex;
+  margin-top: 5px;
+  padding: 3px 6px;
+  border-radius: 4px;
+  background: var(--page-plane);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+}
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
 
 .policy-status {
   display: inline-flex;
   align-items: center;
-  padding: 5px 9px;
+  gap: 6px;
+  padding: 6px 9px;
   border-radius: 999px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.policy-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
 }
 
 .policy-status.active {
-  background: rgba(16, 185, 129, 0.12);
-  color: #059669;
+  background: rgba(12, 163, 12, 0.1);
+  color: var(--status-good);
 }
 
-.policy-status.under-review {
-  background: rgba(245, 158, 11, 0.12);
-  color: #d97706;
+.policy-status.active::before {
+  background: var(--status-good);
+}
+
+.policy-status.review {
+  background: rgba(250, 178, 25, 0.12);
+  color: var(--status-warning);
+}
+
+.policy-status.review::before {
+  background: var(--status-warning);
 }
 
 .policy-status.expired {
-  background: rgba(239, 68, 68, 0.12);
-  color: #dc2626;
+  background: rgba(208, 59, 59, 0.1);
+  color: var(--status-critical);
 }
 
-/* Actions */
-
-.policy-actions {
-  display: flex;
-  gap: 6px;
+.policy-status.expired::before {
+  background: var(--status-critical);
 }
 
-.policy-actions button {
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+.view-policy-button {
+  min-width: 58px;
+  padding: 7px 11px;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 6px 10px;
+  border-radius: 7px;
   background: transparent;
   color: var(--text-primary);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
   cursor: pointer;
-  white-space: nowrap;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    transform 0.18s ease;
 }
 
-.policy-actions button:hover {
-  background: rgba(37, 99, 235, 0.08);
+.view-policy-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(42, 120, 214, 0.35);
+  background: rgba(42, 120, 214, 0.06);
+  color: var(--series-1);
 }
 
-/* Empty state */
+/* =========================================================
+   DARK MODE
+========================================================= */
 
-.empty-state {
-  padding: 30px;
-  text-align: center;
-  color: var(--text-secondary);
+:root[data-theme="dark"] .policy-card,
+:root[data-theme="dark"] .policies-panel {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
 }
 
-/* =========================================
-   MODAL
-   ========================================= */
-
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
+:root[data-theme="dark"] .policy-card:hover {
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
-.policy-modal {
-  width: 100%;
-  max-width: 520px;
-  max-height: 90vh;
-
-  overflow-y: auto;
-
-  padding: 24px;
-  border-radius: 16px;
-
-  background: var(--surface-1);
-  color: var(--text-primary);
-
-  box-sizing: border-box;
+:root[data-theme="dark"] .add-policy-button {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 22px;
+:root[data-theme="dark"] .policies-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
 }
 
-.modal-header h2 {
-  margin: 0;
-}
-
-.modal-header p {
-  margin: 5px 0 0;
-  color: var(--text-secondary);
-}
-
-.modal-close {
-  width: 34px;
-  height: 34px;
-  border: none;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text-primary);
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.modal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.modal-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 7px;
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.modal-form input,
-.modal-form select {
-  width: 100%;
-  height: 42px;
-  box-sizing: border-box;
-
-  padding: 0 12px;
-
-  border: 1px solid var(--border);
-  border-radius: 8px;
-
-  background: var(--surface-1);
-  color: var(--text-primary);
-}
-
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 24px;
-}
-
-.secondary-button {
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 16px;
-  background: transparent;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-/* =========================================
+/* =========================================================
    TABLET
-   ========================================= */
+========================================================= */
 
-@media (max-width: 768px) {
-  .page-header {
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .page-header h1 {
-    font-size: 24px;
-  }
-
-  .primary-button {
-    width: 100%;
-  }
-
-  .policy-summary {
+@media (max-width: 1050px) {
+  .policy-summary-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .policy-toolbar {
-    width: 100%;
-  }
-
-  .policy-toolbar input,
-  .policy-toolbar select {
-    flex: 1;
-    width: auto;
-    min-width: 0;
-  }
-
-  .policy-table-wrapper {
-    width: 100% !important;
-    max-width: 100% !important;
-    overflow-x: scroll !important;
-  }
-
-  .policy-table {
-    min-width: 950px !important;
+  .policies-table {
+    min-width: 850px;
   }
 }
 
-/* =========================================
-   PHONE
-   ========================================= */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width: 480px) {
-  .page-header {
+@media (max-width: 700px) {
+  .policies-page {
+    padding: 20px 0 45px;
+  }
+
+  .policies-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+
+  .policies-header h1 {
+    font-size: 28px;
+  }
+
+  .policies-header p {
+    font-size: 13px;
+  }
+
+  .add-policy-button {
+    width: 100%;
+  }
+
+  .policy-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
     margin-bottom: 18px;
   }
 
-  .page-header h1 {
-    font-size: 22px;
+  .policy-card {
+    min-height: 105px;
+    padding: 15px;
+    border-radius: 11px;
   }
 
-  .page-header p {
-    font-size: 13px;
-    line-height: 1.5;
+  .policy-card strong {
+    font-size: 25px;
   }
 
-  .policy-summary {
-    grid-template-columns: 1fr;
-    gap: 10px;
+  .policy-card small {
+    font-size: 10px;
   }
 
-  .summary-card {
-    padding: 16px;
-  }
-
-  .policy-toolbar {
-    flex-direction: column;
-  }
-
-  .policy-toolbar input,
-  .policy-toolbar select {
-    width: 100%;
-    height: 42px;
-  }
-
-  .policy-table-wrapper {
-    width: calc(100vw - 24px) !important;
-    max-width: calc(100vw - 24px) !important;
-    overflow-x: auto !important;
-  }
-
-  .policy-table {
-    min-width: 950px !important;
-  }
-
-  .modal-overlay {
-    padding: 12px;
-    align-items: flex-start;
-  }
-
-  .policy-modal {
-    max-height: calc(100vh - 24px);
-    padding: 18px;
-  }
-
-  .modal-footer {
-    flex-direction: column-reverse;
-  }
-
-  .modal-footer button {
-    width: 100%;
-  }
-}
-
-/* =========================================
-   MOBILE POLICY CARDS
-   ========================================= */
-
-.mobile-policy-list {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  /* Hide problematic desktop table */
-  .desktop-policy-table {
-    display: none !important;
-  }
-
-  /* Show mobile cards */
-  .mobile-policy-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .mobile-policy-card {
-    width: 100%;
-    box-sizing: border-box;
-
-    padding: 16px;
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    background: var(--surface-1);
-  }
-
-  .mobile-policy-card-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 12px;
-
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .mobile-policy-card-header h3 {
-    margin: 0 0 4px;
-
-    font-size: 16px;
-    line-height: 1.4;
-
-    color: var(--text-primary);
-  }
-
-  .mobile-policy-card-header > div > span {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .mobile-policy-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-
-    padding: 16px 0;
-  }
-
-  .mobile-policy-details div {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    min-width: 0;
-  }
-
-  .mobile-policy-details span {
-    font-size: 12px;
-    color: var(--text-muted);
-  }
-
-  .mobile-policy-details strong {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-
-    overflow-wrap: anywhere;
-  }
-
-  .mobile-policy-actions {
-    display: flex;
-    gap: 8px;
-
-    padding-top: 14px;
-    border-top: 1px solid var(--border);
-  }
-
-  .mobile-policy-actions button {
-    flex: 1;
-
-    height: 38px;
-
-    border: 1px solid var(--border);
-    border-radius: 8px;
-
-    background: transparent;
-    color: var(--text-primary);
-
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .mobile-policy-actions button:hover {
-    background: rgba(37, 99, 235, 0.08);
-  }
-}
-
-@media (max-width: 480px) {
-  .mobile-policy-card {
-    padding: 14px;
+  .policies-panel {
     border-radius: 12px;
   }
 
-  .mobile-policy-card-header {
+  .policies-panel-header {
+    align-items: stretch;
     flex-direction: column;
-    gap: 8px;
+    padding: 17px;
+    gap: 15px;
   }
 
-  .mobile-policy-details {
+  .policy-search {
+    width: 100%;
+  }
+
+  .policy-search input {
+    width: 100%;
+  }
+
+  .policies-table {
+    min-width: 820px;
+  }
+
+  .policies-table th,
+  .policies-table td {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+  .policy-summary-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
   }
 
-  .mobile-policy-actions button {
-    height: 40px;
+  .policy-card {
+    min-height: auto;
+  }
+
+  .policies-header h1 {
+    font-size: 25px;
+  }
+
+  .policies-panel-header h2 {
+    font-size: 16px;
+  }
+}
+
+/* =========================================================
+   POLICY FILTERS
+========================================================= */
+
+.policy-filters {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.policy-filters select {
+  min-width: 150px;
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  outline: none;
+  background: var(--page-plane);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.policy-filters select:focus {
+  border-color: var(--series-1);
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.policy-empty-state {
+  padding: 55px 20px;
+  text-align: center;
+}
+
+.policy-empty-state strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 15px;
+}
+
+.policy-empty-state p {
+  margin: 7px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.policy-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(5px);
+}
+
+.policy-modal {
+  width: min(560px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface-1);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+}
+
+.policy-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.policy-modal-header span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--series-1);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.policy-modal-header h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 20px;
+}
+
+.policy-modal-header small {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.policy-modal-close {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.policy-modal-close:hover {
+  background: var(--page-plane);
+  color: var(--text-primary);
+}
+
+/* =========================================================
+   POLICY DETAILS
+========================================================= */
+
+.policy-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  margin: 20px 24px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.policy-details-grid div {
+  padding: 15px;
+  background: var(--page-plane);
+}
+
+.policy-details-grid span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.policy-details-grid strong {
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.policy-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 22px 24px;
+}
+
+.policy-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.policy-form input,
+.policy-form select {
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  padding: 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  background: var(--page-plane);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.policy-form input:focus,
+.policy-form select:focus {
+  border-color: var(--series-1);
+  box-shadow: 0 0 0 3px rgba(42, 120, 214, 0.08);
+}
+
+.policy-form label:first-child,
+.policy-form label:nth-child(2),
+.policy-form label:nth-child(3) {
+  grid-column: span 2;
+}
+
+/* =========================================================
+   MODAL FOOTER
+========================================================= */
+
+.policy-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.modal-secondary-button,
+.modal-primary-button {
+  min-height: 38px;
+  padding: 0 15px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.modal-secondary-button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.modal-secondary-button:hover {
+  background: var(--page-plane);
+}
+
+.modal-primary-button {
+  border: 1px solid var(--text-primary);
+  background: var(--text-primary);
+  color: var(--surface-1);
+}
+
+.modal-primary-button:hover {
+  opacity: 0.85;
+}
+
+/* =========================================================
+   MOBILE MODAL
+========================================================= */
+
+@media (max-width: 700px) {
+  .policy-filters {
+    flex-direction: column;
+    padding: 12px 16px;
+  }
+
+  .policy-filters select {
+    width: 100%;
+  }
+
+  .policy-modal-overlay {
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  .policy-modal {
+    max-height: 92vh;
+    border-radius: 16px 16px 10px 10px;
+  }
+
+  .policy-modal-header {
+    padding: 20px;
+  }
+
+  .policy-details-grid {
+    grid-template-columns: 1fr;
+    margin: 16px 20px;
+  }
+
+  .policy-form {
+    grid-template-columns: 1fr;
+    padding: 18px 20px;
+  }
+
+  .policy-form label:first-child,
+  .policy-form label:nth-child(2),
+  .policy-form label:nth-child(3) {
+    grid-column: span 1;
+  }
+
+  .policy-modal-footer {
+    padding: 15px 20px;
+  }
+
+  .modal-secondary-button,
+  .modal-primary-button {
+    flex: 1;
   }
 }

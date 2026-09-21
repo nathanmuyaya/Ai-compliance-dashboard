@@ -1,0 +1,260 @@
+/* =========================================================
+   APP LAYOUT
+   ========================================================= */
+
+.shell {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+
+  display: flex;
+
+  background: var(--surface-2);
+
+  overflow-x: hidden;
+
+  transition: background 0.25s ease;
+}
+
+
+/* =========================================================
+   MAIN AREA
+   ========================================================= */
+
+.main {
+  flex: 1 1 auto;
+
+  width: 0;
+  min-width: 0;
+
+  min-height: 100vh;
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--surface-2);
+
+  transition: background 0.25s ease;
+}
+
+
+/* =========================================================
+   PAGE CONTENT CONTAINER
+   ========================================================= */
+
+.app-shell {
+  width: 100%;
+  max-width: 1440px;
+
+  margin: 0 auto;
+
+  padding: 32px 32px 64px;
+
+  min-width: 0;
+
+  overflow-x: hidden;
+}
+
+
+/*
+   Prevent individual pages from becoming wider
+   than the available screen.
+*/
+
+.app-shell > * {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+
+/* =========================================================
+   SIDEBAR SPACE
+   ========================================================= */
+
+.sidebar {
+  flex: 0 0 260px;
+
+  width: 260px;
+  min-width: 260px;
+  max-width: 260px;
+}
+
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+.shell.sidebar-collapsed .sidebar {
+  flex-basis: 78px;
+
+  width: 78px;
+  min-width: 78px;
+  max-width: 78px;
+}
+
+
+/* =========================================================
+   SMOOTH LAYOUT TRANSITION
+   ========================================================= */
+
+.sidebar,
+.main {
+  transition:
+    width 0.28s ease,
+    min-width 0.28s ease,
+    max-width 0.28s ease,
+    flex-basis 0.28s ease,
+    background 0.25s ease;
+}
+
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 1201px) {
+  .app-shell {
+    padding-left: 36px;
+    padding-right: 36px;
+  }
+}
+
+
+/* =========================================================
+   LAPTOP / TABLET
+   ========================================================= */
+
+@media (max-width: 1200px) {
+  .app-shell {
+    padding: 28px 24px 50px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 800px) {
+  .shell {
+    display: flex;
+
+    width: 100%;
+    min-width: 0;
+
+    overflow-x: hidden;
+  }
+
+  /*
+     Sidebar becomes fixed on mobile.
+  */
+
+  .sidebar {
+    position: fixed !important;
+
+    top: 0;
+    left: 0;
+
+    width: 260px !important;
+    min-width: 260px !important;
+    max-width: 260px !important;
+
+    height: 100vh;
+    height: 100svh;
+
+    z-index: 5000;
+
+    flex: none;
+
+    transition:
+      width 0.28s ease,
+      min-width 0.28s ease,
+      max-width 0.28s ease;
+  }
+
+
+  /*
+     Collapsed mobile sidebar.
+  */
+
+  .shell.sidebar-collapsed .sidebar {
+    width: 78px !important;
+    min-width: 78px !important;
+    max-width: 78px !important;
+  }
+
+
+  /*
+     Main area takes the full screen.
+  */
+
+  .main {
+    width: 100%;
+    min-width: 0;
+
+    flex: 1;
+  }
+
+
+  /*
+     Page container.
+  */
+
+  .app-shell {
+    width: 100%;
+    max-width: 100%;
+
+    padding: 22px 16px 40px;
+
+    overflow-x: hidden;
+  }
+}
+
+
+/* =========================================================
+   SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 560px) {
+  .sidebar {
+    width: 240px !important;
+    min-width: 240px !important;
+    max-width: 240px !important;
+  }
+
+  .shell.sidebar-collapsed .sidebar {
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+  }
+
+  .app-shell {
+    padding: 18px 12px 34px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+  .sidebar {
+    width: 225px !important;
+    min-width: 225px !important;
+    max-width: 225px !important;
+  }
+
+  .shell.sidebar-collapsed .sidebar {
+    width: 66px !important;
+    min-width: 66px !important;
+    max-width: 66px !important;
+  }
+
+  .app-shell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

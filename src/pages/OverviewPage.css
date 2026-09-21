@@ -1,0 +1,639 @@
+/* =========================================================
+   OVERVIEW PAGE
+   ========================================================= */
+
+.overview-page {
+  width: 100%;
+  padding-bottom: 50px;
+}
+
+/* =========================================================
+   KPI CARDS
+   ========================================================= */
+
+.overview-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.overview-kpi {
+  position: relative;
+  min-height: 150px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-1);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.overview-kpi:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+}
+
+.overview-kpi.revenue {
+  border-top: 3px solid var(--series-1);
+}
+
+.overview-kpi.risk-kpi {
+  border-top: 3px solid var(--status-critical);
+}
+
+.overview-kpi-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.overview-kpi-top > span {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.kpi-icon {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--page-plane);
+  color: var(--series-1);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.overview-kpi strong {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  font-size: 28px;
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+
+.kpi-bottom {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+.positive {
+  color: var(--status-good);
+  font-weight: 700;
+}
+
+.critical-text {
+  color: var(--status-critical);
+  font-weight: 700;
+}
+
+/* =========================================================
+   CARDS
+   ========================================================= */
+
+.overview-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-1);
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.035);
+}
+
+.overview-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card-eyebrow {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.overview-card h2 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.overview-card-header p {
+  margin: 5px 0 0;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* =========================================================
+   CHART GRID
+   ========================================================= */
+
+.overview-chart-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(320px, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+/* =========================================================
+   SALES CHART
+   ========================================================= */
+
+.chart-total {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: var(--text-primary);
+  font-size: 17px;
+  font-weight: 750;
+}
+
+.chart-total span {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.sales-chart {
+  height: 260px;
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  padding: 25px 22px 35px;
+}
+
+.sales-bar-wrapper {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  min-width: 5px;
+}
+
+.sales-bar {
+  width: 100%;
+  min-height: 8px;
+  border-radius: 5px 5px 2px 2px;
+  background: var(--series-1);
+  opacity: 0.8;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sales-bar:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.sales-label {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-muted);
+  font-size: 9px;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   CATEGORY PERFORMANCE
+   ========================================================= */
+
+.category-list {
+  padding: 22px;
+}
+
+.category-row {
+  margin-bottom: 22px;
+}
+
+.category-row:last-child {
+  margin-bottom: 0;
+}
+
+.category-row-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 8px;
+}
+
+.category-row-top span {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+.category-row-top strong {
+  color: var(--text-primary);
+  font-size: 12px;
+}
+
+.category-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--page-plane);
+  overflow: hidden;
+}
+
+.category-fill {
+  height: 100%;
+  min-width: 4px;
+  border-radius: inherit;
+  background: var(--series-1);
+}
+
+/* =========================================================
+   RISKS
+   ========================================================= */
+
+.risks-card {
+  margin-bottom: 24px;
+}
+
+.view-all-link {
+  color: var(--series-1);
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.view-all-link:hover {
+  text-decoration: underline;
+}
+
+.risk-list {
+  width: 100%;
+}
+
+.risk-row {
+  display: grid;
+  grid-template-columns: 75px minmax(0, 1fr) 100px 120px 100px;
+  align-items: center;
+  gap: 18px;
+  padding: 17px 22px;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+.risk-row:last-child {
+  border-bottom: 0;
+}
+
+.risk-row:hover {
+  background: var(--page-plane);
+}
+
+.risk-date {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.risk-description {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.risk-description strong {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.risk-description span {
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.risk-amount {
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.risk-status {
+  width: fit-content;
+  padding: 5px 9px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.risk-status-open {
+  color: var(--status-critical);
+  background: rgba(208, 59, 59, 0.1);
+}
+
+.risk-status-investigating {
+  color: var(--status-warning);
+  background: rgba(250, 178, 25, 0.12);
+}
+
+.risk-status-resolved {
+  color: var(--status-good);
+  background: rgba(12, 163, 12, 0.1);
+}
+
+/* =========================================================
+   BOTTOM SECTION
+   ========================================================= */
+
+.overview-bottom-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+}
+
+.insight-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 17px;
+  padding: 22px;
+}
+
+.insight-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: rgba(42, 120, 214, 0.1);
+  color: var(--series-1);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.insight-card h3,
+.health-card h3 {
+  margin: 0;
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.insight-card p,
+.health-card p {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.insight-card a {
+  color: var(--series-1);
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.health-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+}
+
+.health-circle {
+  width: 68px;
+  height: 68px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      circle at center,
+      var(--surface-1) 58%,
+      transparent 59%
+    ),
+    conic-gradient(
+      var(--status-good) 0 92%,
+      var(--page-plane) 92% 100%
+    );
+}
+
+.health-circle span {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   DARK MODE
+   ========================================================= */
+
+:root[data-theme="dark"] .overview-card,
+:root[data-theme="dark"] .overview-kpi {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme="dark"] .overview-kpi:hover {
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme="dark"] .sales-bar {
+  opacity: 0.9;
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+  .overview-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .overview-chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .risk-row {
+    grid-template-columns: 70px minmax(0, 1fr) 90px 100px;
+  }
+
+  .risk-status {
+    display: none;
+  }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .overview-kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .overview-kpi {
+    min-height: 135px;
+    padding: 18px;
+  }
+
+  .overview-kpi strong {
+    font-size: 25px;
+  }
+
+  .overview-chart-grid {
+    gap: 15px;
+  }
+
+  .overview-card-header {
+    padding: 18px;
+    flex-direction: column;
+  }
+
+  .chart-total {
+    align-items: flex-start;
+  }
+
+  .sales-chart {
+    height: 210px;
+    padding: 20px 16px 35px;
+    gap: 5px;
+  }
+
+  .category-list {
+    padding: 18px;
+  }
+
+  .risk-row {
+    grid-template-columns: 1fr auto;
+    gap: 10px 14px;
+    padding: 16px 18px;
+  }
+
+  .risk-date {
+    grid-column: 1;
+  }
+
+  .risk-description {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .risk-amount {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .risk-status {
+    display: inline-flex;
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .risk-row .severity-badge {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: end;
+  }
+
+  .insight-card {
+    grid-template-columns: auto 1fr;
+    padding: 18px;
+  }
+
+  .insight-card a {
+    grid-column: 2;
+  }
+
+  .health-card {
+    padding: 18px;
+  }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+  .overview-kpi {
+    border-radius: 14px;
+  }
+
+  .overview-card {
+    border-radius: 14px;
+  }
+
+  .overview-card h2 {
+    font-size: 15px;
+  }
+
+  .risk-description strong {
+    font-size: 12px;
+  }
+
+  .health-circle {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+/* =========================================================
+   EXISTING CHART COMPONENTS
+   ========================================================= */
+
+.overview-chart-wrapper {
+  min-width: 0;
+  width: 100%;
+  min-height: 320px;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+.overview-chart-wrapper > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* Make sure chart SVG/canvas has room */
+.overview-chart-wrapper svg {
+  max-width: 100%;
+}
+
+/* Dark mode */
+:root[data-theme="dark"] .overview-chart-wrapper {
+  background: var(--surface-1);
+  border-color: var(--border);
+}
+
+@media (max-width: 700px) {
+  .overview-chart-wrapper {
+    min-height: 280px;
+    border-radius: 14px;
+  }
+}
