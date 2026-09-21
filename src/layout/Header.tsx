@@ -83,10 +83,12 @@ export default function Header({
 
   const [search, setSearch] = useState("");
   const [searchOpen, setSearchOpen] = useState(false);
-  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] =
+    useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
 
   const searchRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLDivElement>(null);
 
@@ -100,6 +102,10 @@ export default function Header({
             .includes(search.toLowerCase())
         ).slice(0, 6)
       : [];
+
+  /* =========================================================
+     CLOSE DROPDOWNS WHEN CLICKING OUTSIDE
+     ========================================================= */
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -127,7 +133,10 @@ export default function Header({
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener(
+      "mousedown",
+      handleClickOutside
+    );
 
     return () => {
       document.removeEventListener(
@@ -137,18 +146,23 @@ export default function Header({
     };
   }, []);
 
+  /* =========================================================
+     KEYBOARD SHORTCUT
+     ========================================================= */
+
   useEffect(() => {
     const handleKeyboard = (event: KeyboardEvent) => {
-      if ((event.ctrlKey || event.metaKey) && event.key === "k") {
+      if (
+        (event.ctrlKey || event.metaKey) &&
+        event.key.toLowerCase() === "k"
+      ) {
         event.preventDefault();
 
-        const input =
-          searchRef.current?.querySelector<HTMLInputElement>(
-            "input"
-          );
-
-        input?.focus();
         setSearchOpen(true);
+
+        setTimeout(() => {
+          searchInputRef.current?.focus();
+        }, 0);
       }
 
       if (event.key === "Escape") {
@@ -158,7 +172,10 @@ export default function Header({
       }
     };
 
-    document.addEventListener("keydown", handleKeyboard);
+    document.addEventListener(
+      "keydown",
+      handleKeyboard
+    );
 
     return () => {
       document.removeEventListener(
@@ -168,21 +185,52 @@ export default function Header({
     };
   }, []);
 
+  /* =========================================================
+     THEME
+     ========================================================= */
+
   useEffect(() => {
-    document.documentElement.dataset.theme = darkMode
-      ? "dark"
-      : "light";
+    document.documentElement.dataset.theme =
+      darkMode ? "dark" : "light";
   }, [darkMode]);
+
+  /* =========================================================
+     SEARCH
+     ========================================================= */
+
+  const openSearch = () => {
+    setSearchOpen(true);
+
+    setTimeout(() => {
+      searchInputRef.current?.focus();
+    }, 0);
+  };
 
   const handleSearchNavigate = (path: string) => {
     navigate(path);
+
     setSearch("");
     setSearchOpen(false);
   };
 
+  const handleSearchChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+
+    setSearch(value);
+    setSearchOpen(true);
+  };
+
   return (
     <header className="header">
+
+      {/* =====================================================
+          HEADER LEFT
+          ===================================================== */}
+
       <div className="header-left">
+
         <button
           type="button"
           className="mobile-menu-button"
@@ -199,34 +247,52 @@ export default function Header({
 
           <h1>Business Intelligence</h1>
         </div>
+
       </div>
 
+
+      {/* =====================================================
+          HEADER ACTIONS
+          ===================================================== */}
+
       <div className="header-actions">
-        {/* SEARCH */}
+
+        {/* =================================================
+            SEARCH
+        ================================================= */}
+
         <div
+          ref={searchRef}
           className={`header-search ${
             searchOpen ? "search-active" : ""
           }`}
-          ref={searchRef}
+          onClick={openSearch}
         >
-          <Search size={18} />
+
+          <Search
+            size={18}
+            className="header-search-icon"
+          />
 
           <input
+            ref={searchInputRef}
             type="text"
             value={search}
             placeholder="Search dashboard..."
             onFocus={() => setSearchOpen(true)}
-            onChange={(event) => {
-              setSearch(event.target.value);
-              setSearchOpen(true);
-            }}
+            onChange={handleSearchChange}
+            autoComplete="off"
           />
 
           {search && (
             <button
               type="button"
               className="search-clear"
-              onClick={() => setSearch("")}
+              onClick={(event) => {
+                event.stopPropagation();
+                setSearch("");
+                searchInputRef.current?.focus();
+              }}
               aria-label="Clear search"
             >
               <X size={15} />
@@ -240,7 +306,13 @@ export default function Header({
           )}
 
           {searchOpen && search.trim() && (
-            <div className="search-results">
+            <div
+              className="search-results"
+              onClick={(event) =>
+                event.stopPropagation()
+              }
+            >
+
               {filteredResults.length > 0 ? (
                 <>
                   <div className="search-results-heading">
@@ -253,44 +325,59 @@ export default function Header({
                       className="search-result"
                       key={`${item.title}-${item.path}`}
                       onClick={() =>
-                        handleSearchNavigate(item.path)
+                        handleSearchNavigate(
+                          item.path
+                        )
                       }
                     >
+
                       <div className="search-result-icon">
                         <Search size={15} />
                       </div>
 
                       <div className="search-result-content">
-                        <strong>{item.title}</strong>
-                        <span>{item.category}</span>
+                        <strong>
+                          {item.title}
+                        </strong>
+
+                        <span>
+                          {item.category}
+                        </span>
                       </div>
+
                     </button>
                   ))}
                 </>
               ) : (
                 <div className="search-empty">
                   <Search size={20} />
-                  <strong>No results found</strong>
+
+                  <strong>
+                    No results found
+                  </strong>
+
                   <span>
-                    Try searching for a policy, risk or audit.
+                    Try searching for a policy,
+                    risk or audit.
                   </span>
                 </div>
               )}
+
             </div>
           )}
+
         </div>
 
-        {/* THEME */}
+
+        {/* =================================================
+            THEME
+        ================================================= */}
+
         <button
           type="button"
           className="header-icon-button theme-button"
           onClick={onDarkModeToggle}
           aria-label={
-            darkMode
-              ? "Switch to light mode"
-              : "Switch to dark mode"
-          }
-          title={
             darkMode
               ? "Switch to light mode"
               : "Switch to dark mode"
@@ -303,22 +390,33 @@ export default function Header({
           )}
         </button>
 
-        {/* NOTIFICATIONS */}
+
+        {/* =================================================
+            NOTIFICATIONS
+        ================================================= */}
+
         <div
           className="header-dropdown-wrapper"
           ref={notificationRef}
         >
+
           <button
             type="button"
             className={`header-icon-button notification-button ${
-              notificationsOpen ? "active" : ""
+              notificationsOpen
+                ? "active"
+                : ""
             }`}
             onClick={() => {
-              setNotificationsOpen((current) => !current);
+              setNotificationsOpen(
+                (current) => !current
+              );
+
               setProfileOpen(false);
             }}
             aria-label="Notifications"
           >
+
             <Bell size={19} />
 
             {unreadNotifications > 0 && (
@@ -326,13 +424,17 @@ export default function Header({
                 {unreadNotifications}
               </span>
             )}
+
           </button>
 
           {notificationsOpen && (
             <div className="header-dropdown notifications-dropdown">
+
               <div className="dropdown-header">
+
                 <div>
                   <strong>Notifications</strong>
+
                   <span>
                     {unreadNotifications} unread
                   </span>
@@ -342,85 +444,132 @@ export default function Header({
                   <Check size={15} />
                   Mark all read
                 </button>
+
               </div>
 
               <div className="notification-list">
+
                 <button
                   type="button"
                   className="notification-item unread"
-                  onClick={() => navigate("/risks")}
+                  onClick={() =>
+                    navigate("/risks")
+                  }
                 >
                   <div className="notification-dot critical" />
 
                   <div>
-                    <strong>High-risk transaction detected</strong>
+                    <strong>
+                      High-risk transaction detected
+                    </strong>
+
                     <span>
-                      A transaction requires immediate review.
+                      A transaction requires immediate
+                      review.
                     </span>
-                    <small>5 minutes ago</small>
+
+                    <small>
+                      5 minutes ago
+                    </small>
                   </div>
                 </button>
+
 
                 <button
                   type="button"
                   className="notification-item unread"
-                  onClick={() => navigate("/alerts")}
+                  onClick={() =>
+                    navigate("/alerts")
+                  }
                 >
                   <div className="notification-dot warning" />
 
                   <div>
-                    <strong>Multiple login failures</strong>
+                    <strong>
+                      Multiple login failures
+                    </strong>
+
                     <span>
-                      Unusual authentication activity detected.
+                      Unusual authentication activity
+                      detected.
                     </span>
-                    <small>18 minutes ago</small>
+
+                    <small>
+                      18 minutes ago
+                    </small>
                   </div>
                 </button>
+
 
                 <button
                   type="button"
                   className="notification-item unread"
-                  onClick={() => navigate("/policies")}
+                  onClick={() =>
+                    navigate("/policies")
+                  }
                 >
                   <div className="notification-dot info" />
 
                   <div>
-                    <strong>Policy review approaching</strong>
+                    <strong>
+                      Policy review approaching
+                    </strong>
+
                     <span>
-                      A compliance policy is due for review.
+                      A compliance policy is due for
+                      review.
                     </span>
-                    <small>1 hour ago</small>
+
+                    <small>
+                      1 hour ago
+                    </small>
                   </div>
                 </button>
+
               </div>
 
               <button
                 type="button"
                 className="dropdown-footer-button"
-                onClick={() => navigate("/alerts")}
+                onClick={() =>
+                  navigate("/alerts")
+                }
               >
                 View all alerts
               </button>
+
             </div>
           )}
+
         </div>
 
-        {/* PROFILE */}
+
+        {/* =================================================
+            PROFILE
+        ================================================= */}
+
         <div
           className="header-dropdown-wrapper"
           ref={profileRef}
         >
+
           <button
             type="button"
             className={`profile-button ${
               profileOpen ? "active" : ""
             }`}
             onClick={() => {
-              setProfileOpen((current) => !current);
+              setProfileOpen(
+                (current) => !current
+              );
+
               setNotificationsOpen(false);
             }}
           >
-            <span className="profile-avatar">NM</span>
+
+            <span className="profile-avatar">
+              NM
+            </span>
 
             <span className="profile-info">
               <strong>Admin User</strong>
@@ -433,11 +582,14 @@ export default function Header({
                 profileOpen ? "rotate" : ""
               }`}
             />
+
           </button>
 
           {profileOpen && (
             <div className="header-dropdown profile-dropdown">
+
               <div className="profile-dropdown-header">
+
                 <span className="profile-avatar large">
                   NM
                 </span>
@@ -446,6 +598,7 @@ export default function Header({
                   <strong>Admin User</strong>
                   <span>Administrator</span>
                 </div>
+
               </div>
 
               <div className="dropdown-divider" />
@@ -453,7 +606,9 @@ export default function Header({
               <button
                 type="button"
                 className="profile-menu-item"
-                onClick={() => navigate("/profile")}
+                onClick={() =>
+                  navigate("/profile")
+                }
               >
                 <User size={17} />
                 <span>My Profile</span>
@@ -462,14 +617,19 @@ export default function Header({
               <button
                 type="button"
                 className="profile-menu-item"
-                onClick={() => navigate("/settings")}
+                onClick={() =>
+                  navigate("/settings")
+                }
               >
                 <Settings size={17} />
                 <span>Settings</span>
               </button>
+
             </div>
           )}
+
         </div>
+
       </div>
     </header>
   );

@@ -1,19 +1,36 @@
+ /* =========================================================
+    APP LAYOUT
+    ========================================================= */
+
+:root {
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 78px;
+}
+
+
 /* =========================================================
-   APP LAYOUT
+   MAIN SHELL
    ========================================================= */
 
 .shell {
-  width: 100%;
   min-height: 100vh;
-  min-height: 100svh;
+  width: 100%;
+  background: var(--page-plane, var(--surface-2));
+  padding-left: var(--sidebar-width);
 
-  display: flex;
+  transition:
+    padding-left 0.25s ease;
 
-  background: var(--surface-2);
+  box-sizing: border-box;
+}
 
-  overflow-x: hidden;
 
-  transition: background 0.25s ease;
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+.shell.sidebar-collapsed {
+  padding-left: var(--sidebar-collapsed-width);
 }
 
 
@@ -22,114 +39,122 @@
    ========================================================= */
 
 .main {
-  flex: 1 1 auto;
-
-  width: 0;
   min-width: 0;
-
+  width: 100%;
   min-height: 100vh;
-  min-height: 100svh;
-
-  display: flex;
-  flex-direction: column;
-
-  background: var(--surface-2);
-
-  transition: background 0.25s ease;
+  position: relative;
+  z-index: 1;
 }
 
 
 /* =========================================================
-   PAGE CONTENT CONTAINER
+   CONTENT CONTAINER
    ========================================================= */
 
 .app-shell {
   width: 100%;
-  max-width: 1440px;
-
+  max-width: 1180px;
   margin: 0 auto;
 
-  padding: 32px 32px 64px;
+  padding: 32px 24px 64px;
 
-  min-width: 0;
-
-  overflow-x: hidden;
-}
-
-
-/*
-   Prevent individual pages from becoming wider
-   than the available screen.
-*/
-
-.app-shell > * {
-  width: 100%;
-  max-width: 100%;
-  min-width: 0;
+  box-sizing: border-box;
 }
 
 
 /* =========================================================
-   SIDEBAR SPACE
+   BRIGHTNESS OVERLAY
+   ========================================================= */
+
+/*
+   The brightness layer sits ABOVE page content,
+   but BELOW the sidebar and header.
+
+   This prevents the sidebar from becoming dark/blurred
+   when it is collapsed.
+*/
+
+.brightness-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: #000;
+
+  opacity: calc(
+    (1 - var(--dashboard-brightness, 1)) * 0.55
+  );
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease;
+
+  z-index: 50;
+}
+
+
+/* =========================================================
+   DESKTOP SIDEBAR LAYER
    ========================================================= */
 
 .sidebar {
-  flex: 0 0 260px;
-
-  width: 260px;
-  min-width: 260px;
-  max-width: 260px;
+  z-index: 100;
 }
 
 
 /* =========================================================
-   COLLAPSED SIDEBAR
+   HEADER LAYER
    ========================================================= */
 
-.shell.sidebar-collapsed .sidebar {
-  flex-basis: 78px;
-
-  width: 78px;
-  min-width: 78px;
-  max-width: 78px;
+.header {
+  position: relative;
+  z-index: 100;
 }
 
 
 /* =========================================================
-   SMOOTH LAYOUT TRANSITION
+   MOBILE SIDEBAR BACKDROP
    ========================================================= */
 
-.sidebar,
-.main {
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
   transition:
-    width 0.28s ease,
-    min-width 0.28s ease,
-    max-width 0.28s ease,
-    flex-basis 0.28s ease,
-    background 0.25s ease;
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+
+  z-index: 90;
+}
+
+
+/* Visible mobile backdrop */
+
+.sidebar-backdrop.visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 
 /* =========================================================
-   DESKTOP
+   RESPONSIVE TABLET
    ========================================================= */
 
-@media (min-width: 1201px) {
+@media (max-width: 1000px) {
+
   .app-shell {
-    padding-left: 36px;
-    padding-right: 36px;
+    max-width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
   }
-}
 
-
-/* =========================================================
-   LAPTOP / TABLET
-   ========================================================= */
-
-@media (max-width: 1200px) {
-  .app-shell {
-    padding: 28px 24px 50px;
-  }
 }
 
 
@@ -138,123 +163,101 @@
    ========================================================= */
 
 @media (max-width: 800px) {
-  .shell {
-    display: flex;
-
-    width: 100%;
-    min-width: 0;
-
-    overflow-x: hidden;
-  }
 
   /*
-     Sidebar becomes fixed on mobile.
+     Remove desktop sidebar spacing.
+     The sidebar becomes a drawer.
   */
 
-  .sidebar {
-    position: fixed !important;
-
-    top: 0;
-    left: 0;
-
-    width: 260px !important;
-    min-width: 260px !important;
-    max-width: 260px !important;
-
-    height: 100vh;
-    height: 100svh;
-
-    z-index: 5000;
-
-    flex: none;
-
-    transition:
-      width 0.28s ease,
-      min-width 0.28s ease,
-      max-width 0.28s ease;
+  .shell,
+  .shell.sidebar-collapsed {
+    padding-left: 0;
   }
 
-
-  /*
-     Collapsed mobile sidebar.
-  */
-
-  .shell.sidebar-collapsed .sidebar {
-    width: 78px !important;
-    min-width: 78px !important;
-    max-width: 78px !important;
-  }
-
-
-  /*
-     Main area takes the full screen.
-  */
 
   .main {
     width: 100%;
     min-width: 0;
-
-    flex: 1;
   }
 
-
-  /*
-     Page container.
-  */
 
   .app-shell {
     width: 100%;
     max-width: 100%;
 
-    padding: 22px 16px 40px;
-
-    overflow-x: hidden;
+    padding:
+      20px
+      16px
+      40px;
   }
+
+
+  /*
+     Mobile brightness overlay stays behind
+     the mobile sidebar.
+  */
+
+  .brightness-overlay {
+    z-index: 50;
+  }
+
+
+  /*
+     Mobile sidebar stays above everything.
+  */
+
+  .sidebar {
+    z-index: 100;
+  }
+
+
+  /*
+     Header stays above page content.
+  */
+
+  .header {
+    z-index: 100;
+  }
+
+
+  /*
+     Backdrop sits between page content
+     and sidebar.
+  */
+
+  .sidebar-backdrop {
+    z-index: 90;
+  }
+
 }
 
 
 /* =========================================================
-   SMALL PHONES
+   SMALL MOBILE
    ========================================================= */
 
-@media (max-width: 560px) {
-  .sidebar {
-    width: 240px !important;
-    min-width: 240px !important;
-    max-width: 240px !important;
-  }
-
-  .shell.sidebar-collapsed .sidebar {
-    width: 70px !important;
-    min-width: 70px !important;
-    max-width: 70px !important;
-  }
+@media (max-width: 480px) {
 
   .app-shell {
-    padding: 18px 12px 34px;
+    padding:
+      16px
+      12px
+      32px;
   }
+
 }
 
 
 /* =========================================================
-   VERY SMALL PHONES
+   REDUCED MOTION
    ========================================================= */
 
-@media (max-width: 380px) {
-  .sidebar {
-    width: 225px !important;
-    min-width: 225px !important;
-    max-width: 225px !important;
+@media (prefers-reduced-motion: reduce) {
+
+  .shell,
+  .brightness-overlay,
+  .sidebar-backdrop {
+    transition: none;
   }
 
-  .shell.sidebar-collapsed .sidebar {
-    width: 66px !important;
-    min-width: 66px !important;
-    max-width: 66px !important;
-  }
-
-  .app-shell {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
 }

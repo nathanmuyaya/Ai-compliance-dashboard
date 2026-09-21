@@ -1,5 +1,13 @@
 import { useMemo, useState } from "react";
-import { CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  CartesianGrid,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 import type { DailySales } from "../types";
 
 const RANGES = [
@@ -8,22 +16,50 @@ const RANGES = [
   { label: "90D", days: 90 },
 ] as const;
 
-const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const currency = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 0,
+});
 
-function CustomTooltip({ active, payload, label }: any) {
-  if (!active || !payload?.length) return null;
+interface CustomTooltipProps {
+  active?: boolean;
+  payload?: any[];
+  label?: string;
+}
+
+function CustomTooltip({
+  active,
+  payload,
+  label,
+}: CustomTooltipProps) {
+  if (!active || !payload?.length || !label) {
+    return null;
+  }
+
   const point: DailySales = payload[0].payload;
+
   return (
-    <div className="chart-tooltip">
-      <div className="chart-tooltip-label">
-        {new Date(label).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+    <div className="sales-chart-tooltip">
+      <div className="sales-chart-tooltip-date">
+        {new Date(label).toLocaleDateString(undefined, {
+          weekday: "short",
+          month: "short",
+          day: "numeric",
+          year: "numeric",
+        })}
       </div>
-      <div className="chart-tooltip-row">
-        <span className="chart-tooltip-swatch" />
-        <span>Revenue</span>
-        <strong>{currency.format(point.revenue)}</strong>
+
+      <div className="sales-chart-tooltip-main">
+        <span className="sales-chart-tooltip-dot" />
+
+        <div className="sales-chart-tooltip-content">
+          <span>Revenue</span>
+          <strong>{currency.format(point.revenue)}</strong>
+        </div>
       </div>
-      <div className="chart-tooltip-row chart-tooltip-row-muted">
+
+      <div className="sales-chart-tooltip-secondary">
         <span>Orders</span>
         <strong>{point.orders}</strong>
       </div>
@@ -31,63 +67,217 @@ function CustomTooltip({ active, payload, label }: any) {
   );
 }
 
-export default function SalesTrendChart({ data }: { data: DailySales[] }) {
+export default function SalesTrendChart({
+  data,
+}: {
+  data: DailySales[];
+}) {
   const [rangeDays, setRangeDays] = useState<number>(30);
 
-  const filtered = useMemo(() => data.slice(-rangeDays), [data, rangeDays]);
+  const filtered = useMemo(
+    () => data.slice(-rangeDays),
+    [data, rangeDays]
+  );
 
-  const totalRevenue = useMemo(() => filtered.reduce((sum, d) => sum + d.revenue, 0), [filtered]);
+  const totalRevenue = useMemo(
+    () =>
+      filtered.reduce(
+        (sum, item) => sum + item.revenue,
+        0
+      ),
+    [filtered]
+  );
+
+  const averageRevenue = useMemo(() => {
+    if (!filtered.length) return 0;
+
+    return totalRevenue / filtered.length;
+  }, [filtered, totalRevenue]);
+
+  const latestRevenue = filtered.length
+    ? filtered[filtered.length - 1].revenue
+    : 0;
+
+  const previousRevenue =
+    filtered.length > 1
+      ? filtered[filtered.length - 2].revenue
+      : latestRevenue;
+
+  const revenueChange =
+    previousRevenue > 0
+      ? ((latestRevenue - previousRevenue) /
+          previousRevenue) *
+        100
+      : 0;
 
   return (
-    <div className="panel">
-      <div className="panel-header">
-        <div>
-          <h2 className="panel-title">Sales revenue trend</h2>
-          <p className="panel-subtitle">{currency.format(totalRevenue)} total over selected range</p>
+    <section className="sales-trend-card">
+      {/* Header */}
+      <div className="sales-trend-header">
+        <div className="sales-trend-heading">
+          <span className="sales-trend-eyebrow">
+            REVENUE ANALYTICS
+          </span>
+
+          <h2>Sales Revenue Trend</h2>
+
+          <p>
+            Track revenue performance across the selected
+            period.
+          </p>
         </div>
-        <div className="range-toggle" role="group" aria-label="Date range">
-          {RANGES.map((r) => (
+
+        <div
+          className="sales-trend-range"
+          role="group"
+          aria-label="Revenue date range"
+        >
+          {RANGES.map((range) => (
             <button
-              key={r.days}
-              className={`range-toggle-btn ${rangeDays === r.days ? "range-toggle-btn-active" : ""}`}
-              onClick={() => setRangeDays(r.days)}
+              key={range.days}
+              type="button"
+              className={
+                rangeDays === range.days
+                  ? "sales-trend-range-active"
+                  : ""
+              }
+              onClick={() => setRangeDays(range.days)}
             >
-              {r.label}
+              {range.label}
             </button>
           ))}
         </div>
       </div>
-      <ResponsiveContainer width="100%" height={280}>
-        <LineChart data={filtered} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-          <CartesianGrid stroke="var(--gridline)" vertical={false} />
-          <XAxis
-            dataKey="date"
-            tickFormatter={(d) => new Date(d).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-            stroke="var(--baseline)"
-            tick={{ fill: "var(--text-muted)", fontSize: 12 }}
-            tickLine={false}
-            axisLine={{ stroke: "var(--baseline)" }}
-            minTickGap={32}
-          />
-          <YAxis
-            tickFormatter={(v) => `$${Math.round(v / 1000)}k`}
-            stroke="var(--baseline)"
-            tick={{ fill: "var(--text-muted)", fontSize: 12 }}
-            tickLine={false}
-            axisLine={false}
-            width={48}
-          />
-          <Tooltip content={<CustomTooltip />} cursor={{ stroke: "var(--baseline)", strokeWidth: 1 }} />
-          <Line
-            type="monotone"
-            dataKey="revenue"
-            stroke="var(--series-1)"
-            strokeWidth={2}
-            dot={false}
-            activeDot={{ r: 4, fill: "var(--series-1)", stroke: "var(--surface-1)", strokeWidth: 2 }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </div>
+
+      {/* Summary */}
+      <div className="sales-trend-summary">
+        <div className="sales-trend-summary-main">
+          <span>Total Revenue</span>
+          <strong>{currency.format(totalRevenue)}</strong>
+        </div>
+
+        <div className="sales-trend-summary-item">
+          <span>Latest</span>
+          <strong>
+            {currency.format(latestRevenue)}
+          </strong>
+        </div>
+
+        <div className="sales-trend-summary-item">
+          <span>Daily Average</span>
+          <strong>
+            {currency.format(averageRevenue)}
+          </strong>
+        </div>
+
+        <div className="sales-trend-summary-item">
+          <span>Change</span>
+          <strong
+            className={
+              revenueChange >= 0
+                ? "sales-trend-positive"
+                : "sales-trend-negative"
+            }
+          >
+            {revenueChange >= 0 ? "+" : ""}
+            {revenueChange.toFixed(1)}%
+          </strong>
+        </div>
+      </div>
+
+      {/* Chart */}
+      <div className="sales-trend-chart">
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+        >
+          <LineChart
+            data={filtered}
+            margin={{
+              top: 15,
+              right: 12,
+              left: 0,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid
+              stroke="var(--gridline)"
+              strokeDasharray="3 5"
+              vertical={false}
+            />
+
+            <XAxis
+              dataKey="date"
+              tickFormatter={(date) =>
+                new Date(date).toLocaleDateString(
+                  undefined,
+                  {
+                    month: "short",
+                    day: "numeric",
+                  }
+                )
+              }
+              tick={{
+                fill: "var(--text-muted)",
+                fontSize: 11,
+              }}
+              tickLine={false}
+              axisLine={false}
+              minTickGap={35}
+            />
+
+            <YAxis
+              tickFormatter={(value) =>
+                `$${Math.round(value / 1000)}k`
+              }
+              tick={{
+                fill: "var(--text-muted)",
+                fontSize: 11,
+              }}
+              tickLine={false}
+              axisLine={false}
+              width={48}
+            />
+
+            <Tooltip
+              content={<CustomTooltip />}
+              cursor={{
+                stroke: "var(--text-muted)",
+                strokeWidth: 1,
+                strokeDasharray: "4 4",
+              }}
+            />
+
+            <Line
+              type="monotone"
+              dataKey="revenue"
+              stroke="var(--series-1)"
+              strokeWidth={3}
+              dot={false}
+              activeDot={{
+                r: 6,
+                fill: "var(--series-1)",
+                stroke: "var(--surface-1)",
+                strokeWidth: 3,
+              }}
+            />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+
+      {/* Footer */}
+      <div className="sales-trend-footer">
+        <span>
+          Showing last {Math.min(rangeDays, data.length)}{" "}
+          days
+        </span>
+
+        <span>
+          {filtered.length > 0
+            ? `Latest: ${currency.format(latestRevenue)}`
+            : "No data available"}
+        </span>
+      </div>
+    </section>
   );
 }

@@ -1,8 +1,10 @@
+
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 import {
   ChevronLeft,
   ChevronRight,
+  X,
 } from "lucide-react";
 
 import {
@@ -29,6 +31,12 @@ const NAV_ITEMS = [
     label: "Overview",
     icon: OverviewIcon,
     end: true,
+  },
+  {
+    to: "/Sales",
+    label: "Sales",
+    icon: SalesIcon,
+    end: false,
   },
   {
     to: "/reports",
@@ -80,23 +88,40 @@ export default function Sidebar({
 }: SidebarProps) {
   const { openRisks } = useSalesStats();
 
+  const handleNavigation = () => {
+    if (window.innerWidth <= 800 && !collapsed) {
+      onToggle();
+    }
+  };
+
   return (
     <>
-      {/* Mobile backdrop */}
+      {/* =========================================
+          MOBILE BACKDROP
+      ========================================== */}
+
       <div
         className={`sidebar-backdrop ${
-          collapsed ? "" : "visible"
+          !collapsed ? "visible" : ""
         }`}
         onClick={onToggle}
         aria-hidden="true"
       />
 
+      {/* =========================================
+          SIDEBAR
+      ========================================== */}
+
       <aside
         className={`sidebar ${
-          collapsed ? "collapsed" : ""
+          collapsed ? "collapsed" : "open"
         }`}
+        aria-label="Main navigation"
       >
-        {/* Brand */}
+        {/* =====================================
+            BRAND
+        ====================================== */}
+
         <div className="sidebar-brand">
           <div className="sidebar-brand-mark">
             CB
@@ -109,26 +134,59 @@ export default function Sidebar({
         </div>
 
         {/* =====================================
-            COLLAPSE / CLOSE BUTTON
+            DESKTOP COLLAPSE BUTTON
         ====================================== */}
-        <button
-  type="button"
-  className="sidebar-collapse-button"
-  onClick={onToggle}
-  aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-  title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
->
-  {collapsed ? (
-    <ChevronRight size={18} />
-  ) : (
-    <ChevronLeft size={18} />
-  )}
-</button>
 
-        {/* Navigation */}
+        <button
+          type="button"
+          className="sidebar-collapse-button desktop-collapse-button"
+          onClick={onToggle}
+          aria-label={
+            collapsed
+              ? "Expand sidebar"
+              : "Collapse sidebar"
+          }
+          title={
+            collapsed
+              ? "Expand sidebar"
+              : "Collapse sidebar"
+          }
+        >
+          {collapsed ? (
+  <ChevronRight size={18} />
+) : (
+  <>
+    <span className="desktop-collapse-icon">
+      <ChevronLeft size={18} />
+    </span>
+
+    <span className="mobile-close-icon">
+      <X size={17} />
+    </span>
+  </>
+)}
+        </button>
+
+        {/* =====================================
+            MOBILE CLOSE BUTTON
+        ====================================== */}
+
+        <button
+          type="button"
+          className="sidebar-mobile-close"
+          onClick={onToggle}
+          aria-label="Close navigation"
+        >
+          <X size={20} />
+        </button>
+
+        {/* =====================================
+            NAVIGATION
+        ====================================== */}
+
         <nav className="sidebar-nav">
           <div className="sidebar-section-title">
-            
+            <span>MAIN MENU</span>
           </div>
 
           {NAV_ITEMS.map((item) => {
@@ -144,11 +202,7 @@ export default function Sidebar({
                     isActive ? "active" : ""
                   }`
                 }
-                onClick={() => {
-                  if (window.innerWidth <= 800) {
-                    onToggle();
-                  }
-                }}
+                onClick={handleNavigation}
               >
                 <span className="sidebar-link-icon">
                   <Icon />
@@ -175,19 +229,26 @@ export default function Sidebar({
           })}
         </nav>
 
-        {/* System status */}
+        {/* =====================================
+            SYSTEM STATUS
+        ====================================== */}
+
         <div className="sidebar-status">
           <div className="sidebar-status-indicator" />
 
           <div className="sidebar-status-text">
             <strong>System Healthy</strong>
+
             <span>
               All services operational
             </span>
           </div>
         </div>
 
-        {/* Footer */}
+        {/* =====================================
+            FOOTER
+        ====================================== */}
+
         <div className="sidebar-footer">
           <span>Compliance Dashboard</span>
           <span>v1.0.0</span>
@@ -196,3 +257,4 @@ export default function Sidebar({
     </>
   );
 }
+
