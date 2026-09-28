@@ -29,12 +29,14 @@ export const DAILY_SALES: DailySales[] = Array.from({ length: 90 }, (_, i) => {
   const noise = 0.8 + rand() * 0.4;
   const revenue = Math.round(3200 * weekendBoost * trend * noise);
   const orders = Math.round(revenue / (38 + rand() * 12));
-  return { date: isoDaysAgo(daysAgo), revenue, orders };
+  const date = isoDaysAgo(daysAgo);
+  return { date, revenue, orders, value: revenue, label: date };
 });
 
 export const CATEGORY_SALES: CategorySales[] = CATEGORIES.map((category, i) => {
   const base = [42000, 31000, 24500, 19800, 15200][i];
-  return { category, revenue: Math.round(base * (0.9 + rand() * 0.2)) };
+  const value = Math.round(base * (0.9 + rand() * 0.2));
+  return { category, value, label: category, revenue: value };
 });
 
 const RISK_TEMPLATES: Array<{ description: string; category: string; severity: RiskSeverity }> = [
