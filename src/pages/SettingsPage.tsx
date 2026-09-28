@@ -1,3 +1,4 @@
+import "./SettingsPage.css";
 import {
   useEffect,
   useState,
