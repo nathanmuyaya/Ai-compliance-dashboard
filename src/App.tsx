@@ -8,7 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import OverviewPage from "./pages/OverviewPage";
 import RisksPage from "./pages/RisksPage";
 import PoliciesPage from "./pages/PoliciesPage";
-import AuditsPage from "./pages/AuditsPage";
+import RecordsPage from "./pages/RecordsPage";
 import SalesPage from "./pages/SalesPage";
 import ReportsPage from "./pages/ReportsPage";
 import AlertsPage from "./pages/AlertsPage";
@@ -30,7 +30,7 @@ export default function App() {
 
           <Route path="policies" element={<PoliciesPage />} />
 
-          <Route path="audits" element={<AuditsPage />} />
+          <Route path="records" element={<RecordsPage />} />
 
           <Route path="sales" element={<SalesPage />} />
 

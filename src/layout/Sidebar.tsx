@@ -12,7 +12,7 @@ import {
   RisksIcon,
   SalesIcon,
   AlertsIcon,
-  AuditsIcon,
+  RecordsIcon,
   PoliciesIcon,
   UsersIcon,
   SettingsIcon,
@@ -57,9 +57,9 @@ const NAV_ITEMS = [
     end: false,
   },
   {
-    to: "/audits",
-    label: "Audits",
-    icon: AuditsIcon,
+    to: "/Records",
+    label: "Records",
+    icon: RecordsIcon,
     end: false,
   },
   {
@@ -124,7 +124,7 @@ export default function Sidebar({
 
         <div className="sidebar-brand">
           <div className="sidebar-brand-mark">
-            CB
+            CD
           </div>
 
           <div className="sidebar-brand-text">

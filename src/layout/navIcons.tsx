@@ -52,7 +52,7 @@ export function AlertsIcon({ className }: IconProps) {
   );
 }
 
-export function AuditsIcon({ className }: IconProps) {
+export function RecordsIcon({ className }: IconProps) {
   return (
     <svg {...base} className={className}>
       <path d="M6 3h9l3 3v15H6z" />

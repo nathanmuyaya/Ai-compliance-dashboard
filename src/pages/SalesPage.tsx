@@ -15,44 +15,44 @@ const SALES: Sale[] = [
   {
     id: "SAL-001",
     customer: "Kabwe Trading Ltd",
-    product: "iPhone 15 Pro",
-    category: "Smartphones",
-    amount: 1199,
+    product: "Coca-Cola",
+    category: "Soft Drinks",
+    amount: 120,
     status: "Completed",
     date: "20 Sep 2026",
   },
   {
     id: "SAL-002",
     customer: "Mwamba Stores",
-    product: "Dell Latitude 5520",
-    category: "Laptops",
-    amount: 1450,
-    status: "Flagged",
+    product: "Fanta",
+    category: "Soft Drinks",
+    amount: 95,
+    status: "Completed",
     date: "20 Sep 2026",
   },
   {
     id: "SAL-003",
     customer: "Zambezi Holdings",
-    product: "Samsung Galaxy S24",
-    category: "Smartphones",
-    amount: 999,
-    status: "Completed",
+    product: "Pepsi",
+    category: "Soft Drinks",
+    amount: 110,
+    status: "Flagged",
     date: "19 Sep 2026",
   },
   {
     id: "SAL-004",
     customer: "Lusaka Finance",
-    product: "HP LaserJet Printer",
-    category: "Printers",
-    amount: 380,
+    product: "Sprite",
+    category: "Soft Drinks",
+    amount: 85,
     status: "Completed",
     date: "19 Sep 2026",
   },
   {
     id: "SAL-005",
     customer: "Copperbelt Mining",
-    product: "Premium Water × 12",
-    category: "Bottled Products",
+    product: "Water",
+    category: "Water",
     amount: 48,
     status: "Pending",
     date: "18 Sep 2026",
@@ -60,9 +60,9 @@ const SALES: Sale[] = [
   {
     id: "SAL-006",
     customer: "Central Supplies",
-    product: "MacBook Air",
-    category: "Laptops",
-    amount: 1299,
+    product: "Coca-Cola",
+    category: "Soft Drinks",
+    amount: 120,
     status: "Completed",
     date: "18 Sep 2026",
   },
@@ -77,70 +77,58 @@ interface Handover {
   confidence: number;
   risk: "Low" | "Medium" | "High";
   status: "Verified" | "Detected" | "Review";
-  icon: string;
-  iconClass: string;
 }
 
 const HANDOVERS: Handover[] = [
   {
     id: "HND-001",
-    product: "iPhone 15 Pro",
-    productType: "Smartphone",
+    product: "Coca-Cola",
+    productType: "Soft Drink",
     customer: "Customer #1042",
-    amount: 1199,
-    confidence: 98,
-    risk: "Low",
-    status: "Verified",
-    icon: "📱",
-    iconClass: "phone",
+    amount: 120,
+    confidence: 94,
+    risk: "High",
+    status: "Review",
   },
   {
     id: "HND-002",
-    product: "Dell Latitude 5520",
-    productType: "Laptop",
+    product: "Fanta",
+    productType: "Soft Drink",
     customer: "Customer #1043",
-    amount: 1450,
-    confidence: 94,
+    amount: 95,
+    confidence: 97,
     risk: "Low",
     status: "Verified",
-    icon: "💻",
-    iconClass: "laptop",
   },
   {
     id: "HND-003",
-    product: "Premium Water × 12",
-    productType: "Bottled Product",
+    product: "Pepsi",
+    productType: "Soft Drink",
     customer: "Customer #1044",
-    amount: 48,
-    confidence: 89,
-    risk: "Low",
-    status: "Detected",
-    icon: "🧴",
-    iconClass: "bottle",
+    amount: 110,
+    confidence: 91,
+    risk: "High",
+    status: "Review",
   },
   {
     id: "HND-004",
-    product: "Samsung Galaxy S24",
-    productType: "Smartphone",
+    product: "Sprite",
+    productType: "Soft Drink",
     customer: "Customer #1045",
-    amount: 999,
-    confidence: 67,
-    risk: "High",
-    status: "Review",
-    icon: "📱",
-    iconClass: "phone",
-  },
-  {
-    id: "HND-005",
-    product: "HP LaserJet Printer",
-    productType: "Printer",
-    customer: "Customer #1046",
-    amount: 380,
+    amount: 85,
     confidence: 96,
     risk: "Low",
     status: "Verified",
-    icon: "🖨️",
-    iconClass: "printer",
+  },
+  {
+    id: "HND-005",
+    product: "Water",
+    productType: "Bottled Water",
+    customer: "Customer #1046",
+    amount: 48,
+    confidence: 88,
+    risk: "Medium",
+    status: "Detected",
   },
 ];
 
@@ -208,10 +196,62 @@ export default function SalesPage() {
     ) / HANDOVERS.length
   );
 
+  /* =========================
+     REVENUE CHART
+  ========================= */
+
+  const highestSale = Math.max(
+    ...SALES.map((sale) => sale.amount)
+  );
+
+  const chartMax =
+    Math.ceil(highestSale / 50) * 50 + 50;
+
+  const chartStep = chartMax / 5;
+
+  const chartLabels = [
+    chartMax,
+    chartStep * 4,
+    chartStep * 3,
+    chartStep * 2,
+    chartStep,
+    0,
+  ];
+
+  /* =========================
+     CATEGORY PERFORMANCE
+  ========================= */
+
+  const categoryPerformance = [
+    "Soft Drinks",
+    "Water",
+  ].map((category) => {
+    const revenue = SALES.filter(
+      (sale) => sale.category === category
+    ).reduce(
+      (total, sale) => total + sale.amount,
+      0
+    );
+
+    const percentage =
+      totalRevenue > 0
+        ? Math.round(
+            (revenue / totalRevenue) * 100
+          )
+        : 0;
+
+    return {
+      name: category,
+      revenue,
+      percentage,
+    };
+  });
+
   return (
     <main className="sales-page">
 
       {/* PAGE HEADER */}
+
       <section className="sales-header">
         <div>
           <span className="section-label">
@@ -221,8 +261,8 @@ export default function SalesPage() {
           <h1>Sales & Product Intelligence</h1>
 
           <p>
-            Monitor sales performance and use AI to detect
-            product handovers in real time.
+            Monitor sales performance and use AI
+            to detect product handovers in real time.
           </p>
         </div>
 
@@ -235,6 +275,7 @@ export default function SalesPage() {
       </section>
 
       {/* KPI CARDS */}
+
       <section className="sales-kpi-grid">
 
         <div className="sales-kpi-card">
@@ -242,33 +283,43 @@ export default function SalesPage() {
           <strong>
             ${totalRevenue.toLocaleString()}
           </strong>
-          <small>Across all recorded sales</small>
+          <small>
+            Across all recorded sales
+          </small>
         </div>
 
         <div className="sales-kpi-card">
           <span>Completed Sales</span>
           <strong>{completedSales}</strong>
-          <small>Successfully completed</small>
+          <small>
+            Successfully completed
+          </small>
         </div>
 
         <div className="sales-kpi-card">
           <span>Flagged Sales</span>
           <strong>{flaggedSales}</strong>
-          <small>Require investigation</small>
+          <small>
+            Require investigation
+          </small>
         </div>
 
         <div className="sales-kpi-card">
           <span>Pending Sales</span>
           <strong>{pendingSales}</strong>
-          <small>Awaiting completion</small>
+          <small>
+            Awaiting completion
+          </small>
         </div>
 
       </section>
 
       {/* REVENUE OVERVIEW */}
-      <section className="sales-panel">
+
+      <section className="sales-panel revenue-panel">
 
         <div className="sales-panel-header">
+
           <div>
             <span className="section-label">
               REVENUE ANALYTICS
@@ -280,81 +331,98 @@ export default function SalesPage() {
               Revenue generated from recent product sales.
             </p>
           </div>
-        </div>
 
-        <div className="sales-chart">
-          <div className="chart-y-axis">
-            <span>$2,000</span>
-            <span>$1,500</span>
-            <span>$1,000</span>
-            <span>$500</span>
-            <span>$0</span>
+          <div className="revenue-total">
+            <span>Total Revenue</span>
+
+            <strong>
+              ${totalRevenue.toLocaleString()}
+            </strong>
           </div>
 
-          <div className="chart-area">
+        </div>
 
-            <div
-              className="chart-grid-line"
-              style={{ top: "0%" }}
-            />
+        <div className="revenue-chart">
 
-            <div
-              className="chart-grid-line"
-              style={{ top: "25%" }}
-            />
+          <div className="revenue-y-axis">
 
-            <div
-              className="chart-grid-line"
-              style={{ top: "50%" }}
-            />
+            {chartLabels.map((label) => (
+              <span key={label}>
+                ${label.toLocaleString()}
+              </span>
+            ))}
 
-            <div
-              className="chart-grid-line"
-              style={{ top: "75%" }}
-            />
+          </div>
 
-            <div
-              className="chart-grid-line"
-              style={{ top: "100%" }}
-            />
+          <div className="revenue-chart-area">
 
-            <div className="sales-bars">
+            <div className="revenue-grid">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
 
-              {SALES.slice(0, 6).map((sale) => {
-                const height = Math.min(
-                  (sale.amount / 2000) * 100,
-                  100
-                );
+            <div className="revenue-bars">
+
+              {SALES.map((sale) => {
+
+                const height =
+                  (sale.amount / chartMax) * 100;
 
                 return (
                   <div
-                    className="sales-bar-group"
+                    className="revenue-bar-column"
                     key={sale.id}
                   >
-                    <div
-                      className="sales-bar"
-                      style={{
-                        height: `${height}%`,
-                      }}
-                      title={`${sale.product}: $${sale.amount}`}
-                    />
 
-                    <span>
-                      {sale.id.replace("SAL-", "")}
-                    </span>
+                    <div className="revenue-bar-value">
+                      ${sale.amount}
+                    </div>
+
+                    <div className="revenue-bar-wrapper">
+
+                      <div
+                        className="revenue-bar"
+                        style={{
+                          height: `${height}%`,
+                        }}
+                        title={`${sale.product}: $${sale.amount}`}
+                      />
+
+                    </div>
+
+                    <div
+                      className="revenue-product"
+                      title={sale.product}
+                    >
+                      {sale.product}
+                    </div>
+
+                    <div className="revenue-date">
+                      {sale.date}
+                    </div>
+
                   </div>
                 );
               })}
 
             </div>
+
           </div>
+
         </div>
+
       </section>
 
       {/* CATEGORY PERFORMANCE */}
+
       <section className="sales-panel">
 
         <div className="sales-panel-header">
+
           <div>
             <span className="section-label">
               PRODUCT ANALYTICS
@@ -367,38 +435,20 @@ export default function SalesPage() {
               categories.
             </p>
           </div>
+
         </div>
 
         <div className="category-performance">
 
-          {[
-            {
-              name: "Laptops",
-              revenue: 2749,
-              percentage: 82,
-            },
-            {
-              name: "Smartphones",
-              revenue: 2198,
-              percentage: 68,
-            },
-            {
-              name: "Printers",
-              revenue: 380,
-              percentage: 32,
-            },
-            {
-              name: "Bottled Products",
-              revenue: 48,
-              percentage: 18,
-            },
-          ].map((category) => (
+          {categoryPerformance.map((category) => (
             <div
               className="category-row"
               key={category.name}
             >
+
               <div className="category-info">
                 <span>{category.name}</span>
+
                 <strong>
                   ${category.revenue.toLocaleString()}
                 </strong>
@@ -411,13 +461,16 @@ export default function SalesPage() {
                   }}
                 />
               </div>
+
             </div>
           ))}
 
         </div>
+
       </section>
 
       {/* AI PRODUCT HANDOVER DETECTION */}
+
       <section className="handover-section">
 
         <div className="handover-header">
@@ -427,7 +480,9 @@ export default function SalesPage() {
               AI MONITORING
             </span>
 
-            <h2>AI Product Handover Detection</h2>
+            <h2>
+              AI Product Handover Detection
+            </h2>
 
             <p>
               AI-powered monitoring of products being
@@ -443,55 +498,85 @@ export default function SalesPage() {
         </div>
 
         {/* HANDOVER SUMMARY */}
+
         <div className="handover-summary">
 
           <div className="handover-stat">
+
             <span className="handover-stat-icon">
               ◉
             </span>
 
             <div>
-              <strong>{HANDOVERS.length}</strong>
-              <span>Handovers Detected</span>
+              <strong>
+                {HANDOVERS.length}
+              </strong>
+
+              <span>
+                Handovers Detected
+              </span>
             </div>
+
           </div>
 
           <div className="handover-stat">
+
             <span className="handover-stat-icon success">
               ✓
             </span>
 
             <div>
-              <strong>{verifiedHandovers}</strong>
-              <span>Verified</span>
+              <strong>
+                {verifiedHandovers}
+              </strong>
+
+              <span>
+                Verified
+              </span>
             </div>
+
           </div>
 
           <div className="handover-stat">
+
             <span className="handover-stat-icon warning">
               !
             </span>
 
             <div>
-              <strong>{reviewHandovers}</strong>
-              <span>Require Review</span>
+              <strong>
+                {reviewHandovers}
+              </strong>
+
+              <span>
+                Require Review
+              </span>
             </div>
+
           </div>
 
           <div className="handover-stat">
+
             <span className="handover-stat-icon confidence">
               AI
             </span>
 
             <div>
-              <strong>{averageConfidence}%</strong>
-              <span>AI Confidence</span>
+              <strong>
+                {averageConfidence}%
+              </strong>
+
+              <span>
+                AI Confidence
+              </span>
             </div>
+
           </div>
 
         </div>
 
         {/* HANDOVER TABLE */}
+
         <div className="handover-table-wrapper">
 
           <table className="handover-table">
@@ -514,17 +599,14 @@ export default function SalesPage() {
                 <tr key={handover.id}>
 
                   <td>
-                    <strong>{handover.id}</strong>
+                    <strong>
+                      {handover.id}
+                    </strong>
                   </td>
 
                   <td>
-                    <div className="product-cell">
 
-                      <div
-                        className={`product-icon ${handover.iconClass}`}
-                      >
-                        {handover.icon}
-                      </div>
+                    <div className="product-cell">
 
                       <div>
                         <strong>
@@ -537,9 +619,12 @@ export default function SalesPage() {
                       </div>
 
                     </div>
+
                   </td>
 
-                  <td>{handover.customer}</td>
+                  <td>
+                    {handover.customer}
+                  </td>
 
                   <td>
                     <strong>
@@ -548,6 +633,7 @@ export default function SalesPage() {
                   </td>
 
                   <td>
+
                     <div className="ai-confidence">
 
                       <div className="confidence-bar">
@@ -563,17 +649,21 @@ export default function SalesPage() {
                       </strong>
 
                     </div>
+
                   </td>
 
                   <td>
+
                     <span
                       className={`risk-badge ${handover.risk.toLowerCase()}`}
                     >
                       {handover.risk}
                     </span>
+
                   </td>
 
                   <td>
+
                     <span
                       className={`handover-status ${handover.status.toLowerCase()}`}
                     >
@@ -585,6 +675,7 @@ export default function SalesPage() {
 
                       {handover.status}
                     </span>
+
                   </td>
 
                 </tr>
@@ -598,10 +689,12 @@ export default function SalesPage() {
 
       </section>
 
-      {/* SALES RECORDS */}
+      {/* RECENT SALES */}
+
       <section className="sales-panel">
 
         <div className="sales-panel-header">
+
           <div>
             <span className="section-label">
               SALES RECORDS
@@ -623,7 +716,10 @@ export default function SalesPage() {
               setSearch(event.target.value)
             }
           />
+
         </div>
+
+        {/* FILTERS */}
 
         <div className="sales-filters">
 
@@ -634,7 +730,9 @@ export default function SalesPage() {
                 ? "active-filter"
                 : ""
             }
-            onClick={() => setStatusFilter("All")}
+            onClick={() =>
+              setStatusFilter("All")
+            }
           >
             All
           </button>
@@ -691,24 +789,18 @@ export default function SalesPage() {
               All Categories
             </option>
 
-            <option value="Smartphones">
-              Smartphones
+            <option value="Soft Drinks">
+              Soft Drinks
             </option>
 
-            <option value="Laptops">
-              Laptops
-            </option>
-
-            <option value="Printers">
-              Printers
-            </option>
-
-            <option value="Bottled Products">
-              Bottled Products
+            <option value="Water">
+              Water
             </option>
           </select>
 
         </div>
+
+        {/* SALES TABLE */}
 
         <div className="sales-table-wrapper">
 
@@ -732,14 +824,22 @@ export default function SalesPage() {
                 <tr key={sale.id}>
 
                   <td>
-                    <strong>{sale.id}</strong>
+                    <strong>
+                      {sale.id}
+                    </strong>
                   </td>
 
-                  <td>{sale.customer}</td>
+                  <td>
+                    {sale.customer}
+                  </td>
 
-                  <td>{sale.product}</td>
+                  <td>
+                    {sale.product}
+                  </td>
 
-                  <td>{sale.category}</td>
+                  <td>
+                    {sale.category}
+                  </td>
 
                   <td>
                     <strong>
@@ -748,14 +848,18 @@ export default function SalesPage() {
                   </td>
 
                   <td>
+
                     <span
                       className={`sale-status ${sale.status.toLowerCase()}`}
                     >
                       {sale.status}
                     </span>
+
                   </td>
 
-                  <td>{sale.date}</td>
+                  <td>
+                    {sale.date}
+                  </td>
 
                 </tr>
               ))}
@@ -768,11 +872,15 @@ export default function SalesPage() {
 
         {filteredSales.length === 0 && (
           <div className="sales-empty">
-            <strong>No sales found</strong>
+
+            <strong>
+              No sales found
+            </strong>
 
             <p>
               Try changing your search or filters.
             </p>
+
           </div>
         )}
 

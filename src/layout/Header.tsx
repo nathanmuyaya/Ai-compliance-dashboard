@@ -568,7 +568,7 @@ export default function Header({
           >
 
             <span className="profile-avatar">
-              NM
+              A
             </span>
 
             <span className="profile-info">
@@ -591,7 +591,7 @@ export default function Header({
               <div className="profile-dropdown-header">
 
                 <span className="profile-avatar large">
-                  NM
+                  A
                 </span>
 
                 <div>

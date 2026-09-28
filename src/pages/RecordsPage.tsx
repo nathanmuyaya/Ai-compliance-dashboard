@@ -1,7 +1,7 @@
 import { useMemo, useState, type FormEvent } from "react";
-import "./AuditsPage.css";
+import "./RecordsPage.css";
 
-type AuditStatus = "Open" | "Under Review" | "Verified" | "Resolved";
+type RecordStatus = "Open" | "Under Review" | "Verified" | "Resolved";
 type RiskLevel = "High" | "Medium" | "Low";
 
 interface AuditRecord {
@@ -13,7 +13,7 @@ interface AuditRecord {
   recordedSale: boolean;
   confidence: number;
   risk: RiskLevel;
-  status: AuditStatus;
+  status: RecordStatus;
   notes?: string;
 }
 
@@ -80,7 +80,7 @@ const initialRecords: AuditRecord[] = [
   },
 ];
 
-function AuditsPage() {
+function RecordsPage() {
   const [records, setRecords] = useState<AuditRecord[]>(initialRecords);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -155,7 +155,7 @@ function AuditsPage() {
   }, [records, searchTerm, statusFilter, riskFilter]);
 
   /*
-   * Add new audit record
+   * Add new record
    */
   const handleAddRecord = (event: FormEvent) => {
     event.preventDefault();
@@ -197,7 +197,7 @@ function AuditsPage() {
   };
 
   /*
-   * Resolve an audit record
+   * Resolve a record
    */
   const handleResolve = (id: string) => {
     setRecords((currentRecords) =>
@@ -221,7 +221,7 @@ function AuditsPage() {
             AI COMPLIANCE MONITORING
           </span>
 
-          <h1>Audit & Transaction Monitoring</h1>
+          <h1>Records & Transaction Monitoring</h1>
 
           <p>
             Monitor product handovers, transaction records, and
@@ -233,7 +233,7 @@ function AuditsPage() {
           className="new-audit-button"
           onClick={() => setShowForm(true)}
         >
-          + Add Audit Record
+          + Add Record
         </button>
       </header>
 
@@ -304,7 +304,7 @@ function AuditsPage() {
       <section className="audit-panel">
         <div className="audit-panel-header">
           <div>
-            <h2>Audit Records</h2>
+            <h2>Records</h2>
 
             <p>
               AI-detected product handovers and transaction
@@ -499,7 +499,7 @@ function AuditsPage() {
                     colSpan={9}
                     className="empty-state"
                   >
-                    No audit records match your filters.
+                    No records match your filters.
                   </td>
                 </tr>
               )}
@@ -576,7 +576,7 @@ function AuditsPage() {
         </div>
       </section>
 
-      {/* ADD AUDIT RECORD MODAL */}
+      {/* ADD RECORD MODAL */}
       {showForm && (
         <div
           className="audit-modal-overlay"
@@ -591,10 +591,10 @@ function AuditsPage() {
             <div className="audit-modal-header">
               <div>
                 <span className="card-label">
-                  AUDIT RECORD
+                  RECORD
                 </span>
 
-                <h2>Add Audit Record</h2>
+                <h2>Add Record</h2>
 
                 <p>
                   Add a transaction or product handover
@@ -679,7 +679,11 @@ function AuditsPage() {
                 <label>Transaction Status</label>
 
                 <select
-                  value={recordedSale ? "recorded" : "unrecorded"}
+                  value={
+                    recordedSale
+                      ? "recorded"
+                      : "unrecorded"
+                  }
                   onChange={(event) =>
                     setRecordedSale(
                       event.target.value === "recorded"
@@ -701,7 +705,7 @@ function AuditsPage() {
 
                 <textarea
                   rows={4}
-                  placeholder="Add additional information about this audit record..."
+                  placeholder="Add additional information about this record..."
                   value={notes}
                   onChange={(event) =>
                     setNotes(event.target.value)
@@ -745,7 +749,7 @@ function AuditsPage() {
             <div className="audit-modal-header">
               <div>
                 <span className="card-label">
-                  AUDIT DETAILS
+                  RECORD DETAILS
                 </span>
 
                 <h2>{selectedRecord.id}</h2>
@@ -845,4 +849,4 @@ function AuditsPage() {
   );
 }
 
-export default AuditsPage;
+export default RecordsPage;
