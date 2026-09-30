@@ -1,6 +1,6 @@
- /* =========================================================
-    APP LAYOUT
-    ========================================================= */
+/* =========================================================
+   APP LAYOUT
+   ========================================================= */
 
 :root {
   --sidebar-width: 250px;
@@ -15,19 +15,32 @@
 .shell {
   min-height: 100vh;
   width: 100%;
-  background: var(--page-plane, var(--surface-2));
-  padding-left: var(--sidebar-width);
 
-  transition:
-    padding-left 0.25s ease;
+  background: var(--page-plane, var(--surface-2));
+
+  /*
+     Keep the content at the collapsed-sidebar position.
+     The sidebar expands OVER the content instead of pushing it.
+  */
+  padding-left: var(--sidebar-collapsed-width);
 
   box-sizing: border-box;
+
+  transition: none;
 }
 
 
 /* =========================================================
-   COLLAPSED SIDEBAR
+   SIDEBAR STATE
    ========================================================= */
+
+/*
+   IMPORTANT:
+   We intentionally do NOT change padding-left when the
+   sidebar expands.
+
+   This prevents the dashboard from jumping sideways.
+*/
 
 .shell.sidebar-collapsed {
   padding-left: var(--sidebar-collapsed-width);
@@ -42,6 +55,7 @@
   min-width: 0;
   width: 100%;
   min-height: 100vh;
+
   position: relative;
   z-index: 1;
 }
@@ -54,6 +68,7 @@
 .app-shell {
   width: 100%;
   max-width: 1180px;
+
   margin: 0 auto;
 
   padding: 32px 24px 64px;
@@ -65,14 +80,6 @@
 /* =========================================================
    BRIGHTNESS OVERLAY
    ========================================================= */
-
-/*
-   The brightness layer sits ABOVE page content,
-   but BELOW the sidebar and header.
-
-   This prevents the sidebar from becoming dark/blurred
-   when it is collapsed.
-*/
 
 .brightness-overlay {
   position: fixed;
@@ -86,19 +93,21 @@
 
   pointer-events: none;
 
-  transition:
-    opacity 0.2s ease;
+  transition: opacity 0.2s ease;
 
+  /*
+     Below sidebar and header.
+  */
   z-index: 50;
 }
 
 
 /* =========================================================
-   DESKTOP SIDEBAR LAYER
+   SIDEBAR LAYER
    ========================================================= */
 
 .sidebar {
-  z-index: 100;
+  z-index: 1000;
 }
 
 
@@ -106,9 +115,17 @@
    HEADER LAYER
    ========================================================= */
 
+/*
+   DO NOT use position: relative here.
+
+   Header.css controls the sticky behavior.
+*/
+
 .header {
-  position: relative;
-  z-index: 100;
+  position: sticky;
+  top: 0;
+
+  z-index: 4000;
 }
 
 
@@ -130,11 +147,8 @@
     opacity 0.25s ease,
     visibility 0.25s ease;
 
-  z-index: 90;
+  z-index: 999;
 }
-
-
-/* Visible mobile backdrop */
 
 .sidebar-backdrop.visible {
   opacity: 1;
@@ -151,6 +165,7 @@
 
   .app-shell {
     max-width: 100%;
+
     padding-left: 20px;
     padding-right: 20px;
   }
@@ -165,8 +180,8 @@
 @media (max-width: 800px) {
 
   /*
-     Remove desktop sidebar spacing.
-     The sidebar becomes a drawer.
+     The sidebar becomes a drawer on mobile,
+     so the dashboard uses the full width.
   */
 
   .shell,
@@ -192,41 +207,42 @@
   }
 
 
-  /*
-     Mobile brightness overlay stays behind
-     the mobile sidebar.
-  */
+  /* =======================================================
+     MOBILE BRIGHTNESS
+     ======================================================= */
 
   .brightness-overlay {
     z-index: 50;
   }
 
 
-  /*
-     Mobile sidebar stays above everything.
-  */
+  /* =======================================================
+     MOBILE SIDEBAR
+     ======================================================= */
 
   .sidebar {
-    z-index: 100;
+    z-index: 5000;
   }
 
 
-  /*
-     Header stays above page content.
-  */
+  /* =======================================================
+     MOBILE HEADER
+     ======================================================= */
 
   .header {
-    z-index: 100;
+    position: sticky;
+    top: 0;
+
+    z-index: 4000;
   }
 
 
-  /*
-     Backdrop sits between page content
-     and sidebar.
-  */
+  /* =======================================================
+     MOBILE BACKDROP
+     ======================================================= */
 
   .sidebar-backdrop {
-    z-index: 90;
+    z-index: 4500;
   }
 
 }
@@ -254,7 +270,6 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-  .shell,
   .brightness-overlay,
   .sidebar-backdrop {
     transition: none;

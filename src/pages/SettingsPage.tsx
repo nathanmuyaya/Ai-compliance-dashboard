@@ -19,8 +19,6 @@ import {
 
 import { useOutletContext } from "react-router-dom";
 
-import "./SettingsPage.css";
-
 
 /* =========================================================
    CONTEXT TYPE
@@ -49,27 +47,14 @@ export default function SettingsPage() {
   } = useOutletContext<SettingsContext>();
 
 
-  /* --------------------------------
-     OTHER SETTINGS
-  -------------------------------- */
+  const [notifications, setNotifications] = useState(true);
+  const [twoFactor, setTwoFactor] = useState(true);
+  const [autoSave, setAutoSave] = useState(true);
 
-  const [notifications, setNotifications] =
-    useState(true);
+  const [language, setLanguage] = useState("English");
+  const [timeZone, setTimeZone] = useState("Africa/Lusaka");
 
-  const [twoFactor, setTwoFactor] =
-    useState(true);
-
-  const [autoSave, setAutoSave] =
-    useState(true);
-
-  const [language, setLanguage] =
-    useState("English");
-
-  const [timeZone, setTimeZone] =
-    useState("Africa/Lusaka");
-
-  const [saved, setSaved] =
-    useState(false);
+  const [saved, setSaved] = useState(false);
 
 
   /* =========================================================
@@ -95,21 +80,15 @@ export default function SettingsPage() {
 
 
     if (savedNotifications !== null) {
-      setNotifications(
-        savedNotifications === "true"
-      );
+      setNotifications(savedNotifications === "true");
     }
 
     if (savedTwoFactor !== null) {
-      setTwoFactor(
-        savedTwoFactor === "true"
-      );
+      setTwoFactor(savedTwoFactor === "true");
     }
 
     if (savedAutoSave !== null) {
-      setAutoSave(
-        savedAutoSave === "true"
-      );
+      setAutoSave(savedAutoSave === "true");
     }
 
     if (savedLanguage) {
@@ -168,21 +147,13 @@ export default function SettingsPage() {
 
 
   /* =========================================================
-     DARK MODE
+     TOGGLE
   ========================================================= */
 
   const handleDarkMode = () => {
-
-    setDarkMode(
-      (current) => !current
-    );
-
+    setDarkMode((current) => !current);
   };
 
-
-  /* =========================================================
-     RENDER
-  ========================================================= */
 
   return (
 
@@ -190,38 +161,49 @@ export default function SettingsPage() {
 
 
       {/* =====================================================
-          PAGE HEADER
+          HERO
       ===================================================== */}
 
-      <header className="settings-header">
+      <section className="settings-hero">
 
-        <div>
+        <div className="settings-hero-content">
 
-          <span className="settings-eyebrow">
-            SYSTEM CONFIGURATION
-          </span>
+          <div className="settings-hero-icon">
+            <ShieldCheck size={25} />
+          </div>
 
-          <h1>
-            Settings
-          </h1>
+          <div>
 
-          <p>
-            Configure your dashboard preferences,
-            security and system behavior.
-          </p>
+            <span className="settings-eyebrow">
+              SYSTEM CONFIGURATION
+            </span>
+
+            <h1>
+              Settings
+            </h1>
+
+            <p>
+              Manage your dashboard appearance,
+              security, notifications and regional
+              preferences.
+            </p>
+
+          </div>
 
         </div>
 
 
         <button
-          className="settings-save-button"
+          className={`settings-save-button ${
+            saved ? "saved" : ""
+          }`}
           onClick={saveSettings}
         >
 
           {saved ? (
             <>
               <Check size={17} />
-              Saved
+              Changes Saved
             </>
           ) : (
             <>
@@ -232,84 +214,88 @@ export default function SettingsPage() {
 
         </button>
 
-      </header>
+      </section>
 
 
       {/* =====================================================
-          APPEARANCE
+          QUICK STATUS
       ===================================================== */}
 
-      <section className="settings-card">
+      <section className="settings-overview">
 
-        <div className="settings-card-header">
+        <div className="settings-overview-item">
 
-          <div className="settings-card-icon">
-
+          <div className="overview-icon">
             {darkMode ? (
-              <Moon size={20} />
+              <Moon size={17} />
             ) : (
-              <Sun size={20} />
+              <Sun size={17} />
             )}
-
           </div>
 
-
           <div>
-
-            <span className="settings-section-label">
-              APPEARANCE
-            </span>
-
-            <h2>
-              Theme
-            </h2>
-
-            <p>
-              Customize how the dashboard looks.
-            </p>
-
+            <span>THEME</span>
+            <strong>
+              {darkMode ? "Dark Mode" : "Light Mode"}
+            </strong>
           </div>
 
         </div>
 
 
-        <div className="settings-row">
+        <div className="settings-overview-divider" />
 
-          <div className="settings-row-info">
 
-            <div className="settings-row-title">
+        <div className="settings-overview-item">
 
-              {darkMode ? (
-                <Moon size={18} />
-              ) : (
-                <Sun size={18} />
-              )}
-
-              <span>
-                Dark Mode
-              </span>
-
-            </div>
-
-            <p>
-              Use a darker interface for
-              low-light environments.
-            </p>
-
+          <div className="overview-icon">
+            <Bell size={17} />
           </div>
 
+          <div>
+            <span>NOTIFICATIONS</span>
+            <strong>
+              {notifications ? "Enabled" : "Disabled"}
+            </strong>
+          </div>
 
-          <button
-            type="button"
-            className={`toggle ${
-              darkMode ? "active" : ""
-            }`}
-            onClick={handleDarkMode}
-            aria-label="Toggle dark mode"
-            aria-pressed={darkMode}
-          >
-            <span />
-          </button>
+        </div>
+
+
+        <div className="settings-overview-divider" />
+
+
+        <div className="settings-overview-item">
+
+          <div className="overview-icon">
+            <Lock size={17} />
+          </div>
+
+          <div>
+            <span>SECURITY</span>
+            <strong>
+              {twoFactor ? "Protected" : "Standard"}
+            </strong>
+          </div>
+
+        </div>
+
+
+        <div className="settings-overview-divider" />
+
+
+        <div className="settings-overview-item">
+
+          <div className="overview-icon">
+            <Globe size={17} />
+          </div>
+
+          <div>
+            <span>REGION</span>
+            <strong>
+              {timeZone}
+            </strong>
+          </div>
 
         </div>
 
@@ -317,74 +303,168 @@ export default function SettingsPage() {
 
 
       {/* =====================================================
-          BRIGHTNESS
+          MAIN SETTINGS GRID
       ===================================================== */}
 
-      <section className="settings-card">
-
-        <div className="settings-card-header">
-
-          <div className="settings-card-icon">
-            <Sun size={20} />
-          </div>
+      <div className="settings-grid">
 
 
-          <div>
+        {/* ===================================================
+            APPEARANCE
+        =================================================== */}
 
-            <span className="settings-section-label">
-              DISPLAY
-            </span>
+        <section className="settings-panel appearance-panel">
 
-            <h2>
-              Brightness
-            </h2>
+          <div className="settings-panel-header">
 
-            <p>
-              Adjust the brightness of the
-              entire dashboard interface.
-            </p>
+            <div className="panel-icon">
+              {darkMode ? (
+                <Moon size={19} />
+              ) : (
+                <Sun size={19} />
+              )}
+            </div>
 
-          </div>
-
-        </div>
-
-
-        <div className="brightness-setting">
-
-
-          {/* BRIGHTNESS HEADER */}
-
-          <div className="brightness-top">
-
-            <div className="brightness-title">
-
-              <Sun
-                size={18}
-                className="brightness-icon-low"
-              />
+            <div>
 
               <span>
-                Dashboard Brightness
+                APPEARANCE
+              </span>
+
+              <h2>
+                Interface Theme
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div className="theme-preview">
+
+            <div className="theme-preview-top">
+              <div />
+              <div />
+              <div />
+            </div>
+
+            <div className="theme-preview-body">
+
+              <div className="theme-preview-sidebar" />
+
+              <div className="theme-preview-content">
+
+                <div />
+                <div />
+                <div />
+
+              </div>
+
+            </div>
+
+            <div className="theme-preview-label">
+
+              <span>
+                {darkMode ? "Dark interface" : "Light interface"}
+              </span>
+
+              <span className="theme-live">
+                ACTIVE
               </span>
 
             </div>
 
+          </div>
+
+
+          <div className="setting-control-row">
+
+            <div className="setting-control-info">
+
+              <div className="control-icon">
+                {darkMode ? (
+                  <Moon size={17} />
+                ) : (
+                  <Sun size={17} />
+                )}
+              </div>
+
+              <div>
+
+                <strong>
+                  Dark Mode
+                </strong>
+
+                <span>
+                  Use a darker interface for
+                  low-light environments.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              className={`toggle ${
+                darkMode ? "active" : ""
+              }`}
+              onClick={handleDarkMode}
+              aria-label="Toggle dark mode"
+              aria-pressed={darkMode}
+            >
+              <span />
+            </button>
+
+          </div>
+
+        </section>
+
+
+        {/* ===================================================
+            BRIGHTNESS
+        =================================================== */}
+
+        <section className="settings-panel brightness-panel">
+
+          <div className="settings-panel-header">
+
+            <div className="panel-icon">
+              <Sun size={19} />
+            </div>
+
+            <div>
+
+              <span>
+                DISPLAY
+              </span>
+
+              <h2>
+                Brightness
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div className="brightness-value">
 
             <strong>
               {brightness}%
             </strong>
 
+            <span>
+              Dashboard brightness
+            </span>
+
           </div>
 
 
-          {/* SLIDER */}
-
           <div className="brightness-slider-wrapper">
 
-            <span className="brightness-min">
-              20%
-            </span>
-
+            <span>20%</span>
 
             <input
               type="range"
@@ -401,377 +481,344 @@ export default function SettingsPage() {
               aria-label="Dashboard brightness"
             />
 
-
-            <span className="brightness-max">
-              100%
-            </span>
+            <span>100%</span>
 
           </div>
 
 
-          {/* PREVIEW */}
+          <div
+            className="brightness-preview"
+            style={{
+              opacity: 0.45 + brightness / 180,
+            }}
+          >
 
-          <div className="brightness-preview">
+            <Sun size={22} />
 
-            <div
-              className="brightness-preview-content"
-              style={{
-                opacity:
-                  0.35 +
-                  brightness / 150,
-              }}
-            >
+            <div>
 
-              <div className="brightness-preview-icon">
+              <strong>
+                Brightness Preview
+              </strong>
 
-                <Sun size={18} />
+              <span>
+                Interface visibility preview
+              </span>
 
+            </div>
+
+          </div>
+
+        </section>
+
+
+        {/* ===================================================
+            NOTIFICATIONS
+        =================================================== */}
+
+        <section className="settings-panel">
+
+          <div className="settings-panel-header">
+
+            <div className="panel-icon">
+              <Bell size={19} />
+            </div>
+
+            <div>
+
+              <span>
+                ALERTS
+              </span>
+
+              <h2>
+                Notifications
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div className="setting-control-row">
+
+            <div className="setting-control-info">
+
+              <div className="control-icon">
+                <Bell size={17} />
               </div>
-
 
               <div>
 
                 <strong>
-                  Brightness Preview
+                  Compliance Notifications
                 </strong>
 
                 <span>
-                  Move the slider to adjust
-                  the entire dashboard.
+                  Receive alerts about risks,
+                  compliance issues and system events.
                 </span>
 
               </div>
 
             </div>
 
-          </div>
 
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          NOTIFICATIONS
-      ===================================================== */}
-
-      <section className="settings-card">
-
-        <div className="settings-card-header">
-
-          <div className="settings-card-icon">
-            <Bell size={20} />
-          </div>
-
-
-          <div>
-
-            <span className="settings-section-label">
-              NOTIFICATIONS
-            </span>
-
-            <h2>
-              Notifications
-            </h2>
-
-            <p>
-              Control compliance and system
-              alerts.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div className="settings-row">
-
-          <div className="settings-row-info">
-
-            <div className="settings-row-title">
-
-              <Bell size={18} />
-
-              <span>
-                Compliance Notifications
-              </span>
-
-            </div>
-
-            <p>
-              Receive alerts about risks,
-              compliance issues and important
-              system events.
-            </p>
-
-          </div>
-
-
-          <button
-            type="button"
-            className={`toggle ${
-              notifications ? "active" : ""
-            }`}
-            onClick={() =>
-              setNotifications(
-                (current) => !current
-              )
-            }
-            aria-label="Toggle notifications"
-            aria-pressed={notifications}
-          >
-            <span />
-          </button>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          SECURITY
-      ===================================================== */}
-
-      <section className="settings-card">
-
-        <div className="settings-card-header">
-
-          <div className="settings-card-icon">
-            <ShieldCheck size={20} />
-          </div>
-
-
-          <div>
-
-            <span className="settings-section-label">
-              SECURITY
-            </span>
-
-            <h2>
-              Security & Protection
-            </h2>
-
-            <p>
-              Manage account security and
-              data protection settings.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        {/* TWO FACTOR */}
-
-        <div className="settings-row">
-
-          <div className="settings-row-info">
-
-            <div className="settings-row-title">
-
-              <Lock size={18} />
-
-              <span>
-                Two-Factor Authentication
-              </span>
-
-            </div>
-
-            <p>
-              Add an additional layer of
-              protection to your account.
-            </p>
-
-          </div>
-
-
-          <button
-            type="button"
-            className={`toggle ${
-              twoFactor ? "active" : ""
-            }`}
-            onClick={() =>
-              setTwoFactor(
-                (current) => !current
-              )
-            }
-            aria-label="Toggle two-factor authentication"
-            aria-pressed={twoFactor}
-          >
-            <span />
-          </button>
-
-        </div>
-
-
-        {/* AUTO SAVE */}
-
-        <div className="settings-row">
-
-          <div className="settings-row-info">
-
-            <div className="settings-row-title">
-
-              <Save size={18} />
-
-              <span>
-                Auto Save
-              </span>
-
-            </div>
-
-            <p>
-              Automatically save dashboard
-              configuration changes.
-            </p>
-
-          </div>
-
-
-          <button
-            type="button"
-            className={`toggle ${
-              autoSave ? "active" : ""
-            }`}
-            onClick={() =>
-              setAutoSave(
-                (current) => !current
-              )
-            }
-            aria-label="Toggle auto save"
-            aria-pressed={autoSave}
-          >
-            <span />
-          </button>
-
-        </div>
-
-      </section>
-
-
-      {/* =====================================================
-          REGIONAL SETTINGS
-      ===================================================== */}
-
-      <section className="settings-card">
-
-        <div className="settings-card-header">
-
-          <div className="settings-card-icon">
-            <Globe size={20} />
-          </div>
-
-
-          <div>
-
-            <span className="settings-section-label">
-              REGIONAL
-            </span>
-
-            <h2>
-              Language & Region
-            </h2>
-
-            <p>
-              Configure your language and
-              regional preferences.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div className="settings-select-grid">
-
-
-          {/* LANGUAGE */}
-
-          <div className="settings-field">
-
-            <label htmlFor="language">
-              Language
-            </label>
-
-            <select
-              id="language"
-              value={language}
-              onChange={(event) =>
-                setLanguage(
-                  event.target.value
+            <button
+              type="button"
+              className={`toggle ${
+                notifications ? "active" : ""
+              }`}
+              onClick={() =>
+                setNotifications(
+                  (current) => !current
                 )
               }
+              aria-label="Toggle notifications"
+              aria-pressed={notifications}
             >
+              <span />
+            </button>
 
-              <option value="English">
-                English
-              </option>
+          </div>
 
-              <option value="French">
-                French
-              </option>
+        </section>
 
-              <option value="Portuguese">
-                Portuguese
-              </option>
 
-            </select>
+        {/* ===================================================
+            SECURITY
+        =================================================== */}
+
+        <section className="settings-panel security-panel">
+
+          <div className="settings-panel-header">
+
+            <div className="panel-icon security-icon">
+              <ShieldCheck size={19} />
+            </div>
+
+            <div>
+
+              <span>
+                PROTECTION
+              </span>
+
+              <h2>
+                Security
+              </h2>
+
+            </div>
+
+            <div className="security-badge">
+              {twoFactor ? "SECURE" : "STANDARD"}
+            </div>
 
           </div>
 
 
-          {/* TIME ZONE */}
+          <div className="setting-control-row">
 
-          <div className="settings-field">
+            <div className="setting-control-info">
 
-            <label htmlFor="timeZone">
-              Time Zone
-            </label>
+              <div className="control-icon">
+                <Lock size={17} />
+              </div>
 
-            <select
-              id="timeZone"
-              value={timeZone}
-              onChange={(event) =>
-                setTimeZone(
-                  event.target.value
+              <div>
+
+                <strong>
+                  Two-Factor Authentication
+                </strong>
+
+                <span>
+                  Add an additional layer of
+                  protection to your account.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              className={`toggle ${
+                twoFactor ? "active" : ""
+              }`}
+              onClick={() =>
+                setTwoFactor(
+                  (current) => !current
                 )
               }
+              aria-label="Toggle two-factor authentication"
+              aria-pressed={twoFactor}
             >
-
-              <option value="Africa/Lusaka">
-                Africa/Lusaka
-              </option>
-
-              <option value="Africa/Johannesburg">
-                Africa/Johannesburg
-              </option>
-
-              <option value="Africa/Nairobi">
-                Africa/Nairobi
-              </option>
-
-              <option value="UTC">
-                UTC
-              </option>
-
-            </select>
+              <span />
+            </button>
 
           </div>
 
-        </div>
 
-      </section>
+          <div className="setting-control-row">
+
+            <div className="setting-control-info">
+
+              <div className="control-icon">
+                <Save size={17} />
+              </div>
+
+              <div>
+
+                <strong>
+                  Auto Save
+                </strong>
+
+                <span>
+                  Automatically save dashboard
+                  configuration changes.
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              className={`toggle ${
+                autoSave ? "active" : ""
+              }`}
+              onClick={() =>
+                setAutoSave(
+                  (current) => !current
+                )
+              }
+              aria-label="Toggle auto save"
+              aria-pressed={autoSave}
+            >
+              <span />
+            </button>
+
+          </div>
+
+        </section>
+
+
+        {/* ===================================================
+            REGIONAL SETTINGS
+        =================================================== */}
+
+        <section className="settings-panel regional-panel">
+
+          <div className="settings-panel-header">
+
+            <div className="panel-icon">
+              <Globe size={19} />
+            </div>
+
+            <div>
+
+              <span>
+                REGIONAL
+              </span>
+
+              <h2>
+                Language & Region
+              </h2>
+
+            </div>
+
+          </div>
+
+
+          <div className="regional-fields">
+
+            <div className="settings-field">
+
+              <label htmlFor="language">
+                Language
+              </label>
+
+              <select
+                id="language"
+                value={language}
+                onChange={(event) =>
+                  setLanguage(
+                    event.target.value
+                  )
+                }
+              >
+
+                <option value="English">
+                  English
+                </option>
+
+                <option value="French">
+                  French
+                </option>
+
+                <option value="Portuguese">
+                  Portuguese
+                </option>
+
+              </select>
+
+            </div>
+
+
+            <div className="settings-field">
+
+              <label htmlFor="timeZone">
+                Time Zone
+              </label>
+
+              <select
+                id="timeZone"
+                value={timeZone}
+                onChange={(event) =>
+                  setTimeZone(
+                    event.target.value
+                  )
+                }
+              >
+
+                <option value="Africa/Lusaka">
+                  Africa/Lusaka
+                </option>
+
+                <option value="Africa/Johannesburg">
+                  Africa/Johannesburg
+                </option>
+
+                <option value="Africa/Nairobi">
+                  Africa/Nairobi
+                </option>
+
+                <option value="UTC">
+                  UTC
+                </option>
+
+              </select>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </div>
 
 
       {/* =====================================================
           SYSTEM STATUS
       ===================================================== */}
 
-      <section className="settings-card settings-system-card">
+      <section className="system-status-panel">
 
-        <div className="settings-system-info">
+        <div className="system-status-left">
 
-          <div className="system-status-dot" />
+          <div className="system-status-indicator">
+            <span />
+          </div>
 
           <div>
 
@@ -789,9 +836,10 @@ export default function SettingsPage() {
         </div>
 
 
-        <span className="system-version">
-          v1.0.0
-        </span>
+        <div className="system-version">
+          <span>VERSION</span>
+          <strong>v1.0.0</strong>
+        </div>
 
       </section>
 

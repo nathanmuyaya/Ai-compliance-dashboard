@@ -1,4 +1,3 @@
-
 /* =========================================================
    SIDEBAR
    ========================================================= */
@@ -16,6 +15,7 @@
   flex-direction: column;
 
   padding: 24px 14px 18px;
+  box-sizing: border-box;
 
   background: var(--surface-1);
   border-right: 1px solid var(--border);
@@ -31,6 +31,13 @@
   overflow: hidden;
 }
 
+/* Expanded desktop sidebar */
+.sidebar.open {
+  width: 250px;
+
+  box-shadow:
+    12px 0 35px rgba(0, 0, 0, 0.08);
+}
 
 /* =========================================================
    BRAND
@@ -42,7 +49,6 @@
   gap: 12px;
 
   min-height: 52px;
-
   padding: 4px 8px 22px;
 
   border-bottom: 1px solid var(--border);
@@ -101,7 +107,6 @@
   white-space: nowrap;
 }
 
-
 /* =========================================================
    DESKTOP COLLAPSE BUTTON
    ========================================================= */
@@ -138,7 +143,6 @@
   color: var(--text-primary);
 }
 
-
 /* =========================================================
    MOBILE CLOSE BUTTON
    ========================================================= */
@@ -170,7 +174,6 @@
   color: var(--text-primary);
   background: var(--surface-3);
 }
-
 
 /* =========================================================
    NAVIGATION
@@ -216,7 +219,6 @@
   border-radius: 11px;
 
   color: var(--text-secondary);
-
   text-decoration: none;
 
   transition:
@@ -236,6 +238,7 @@
 
 .sidebar-link.active {
   background: var(--surface-3);
+
   color: var(--text-primary);
 
   font-weight: 650;
@@ -256,7 +259,6 @@
 
   background: var(--text-primary);
 }
-
 
 /* =========================================================
    ICON
@@ -282,7 +284,6 @@
   height: 18px;
 }
 
-
 /* =========================================================
    LABEL
    ========================================================= */
@@ -295,14 +296,12 @@
   font-size: 13px;
 
   white-space: nowrap;
-
   overflow: hidden;
 
   transition:
     opacity 0.2s ease,
     transform 0.2s ease;
 }
-
 
 /* =========================================================
    BADGES
@@ -332,7 +331,6 @@
   color: #d03b3b;
 }
 
-
 /* =========================================================
    SYSTEM STATUS
    ========================================================= */
@@ -340,6 +338,7 @@
 .sidebar-status {
   display: flex;
   align-items: center;
+
   gap: 10px;
 
   margin: 12px 4px 14px;
@@ -388,7 +387,6 @@
   white-space: nowrap;
 }
 
-
 /* =========================================================
    FOOTER
    ========================================================= */
@@ -407,7 +405,6 @@
   font-size: 9px;
 }
 
-
 /* =========================================================
    COLLAPSED DESKTOP STATE
    ========================================================= */
@@ -418,6 +415,7 @@
 
 .sidebar.collapsed .sidebar-brand {
   justify-content: center;
+
   padding-left: 0;
   padding-right: 0;
 }
@@ -428,13 +426,17 @@
 .sidebar.collapsed .sidebar-status-text,
 .sidebar.collapsed .sidebar-footer {
   opacity: 0;
+
   width: 0;
+
   overflow: hidden;
+
   pointer-events: none;
 }
 
 .sidebar.collapsed .sidebar-link {
   justify-content: center;
+
   padding: 0;
 }
 
@@ -444,6 +446,7 @@
 
 .sidebar.collapsed .sidebar-badge {
   position: absolute;
+
   top: 3px;
   right: 7px;
 
@@ -457,16 +460,17 @@
 
 .sidebar.collapsed .sidebar-status {
   justify-content: center;
+
   padding: 12px 0;
 }
 
-
 /* =========================================================
-   MOBILE DRAWER
+   MOBILE BACKDROP
    ========================================================= */
 
 .sidebar-backdrop {
   position: fixed;
+
   inset: 0;
 
   z-index: 999;
@@ -489,12 +493,12 @@
   visibility: visible;
 }
 
-
 /* =========================================================
    MOBILE
    ========================================================= */
 
 @media (max-width: 800px) {
+
   .sidebar {
     width: min(86vw, 320px);
 
@@ -516,19 +520,14 @@
       transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  /*
-     IMPORTANT:
-     On mobile, "open" means visible.
-  */
-
+  /* Mobile open state */
   .sidebar.open {
+    width: min(86vw, 320px);
+
     transform: translateX(0);
   }
 
-  /*
-     Collapsed means hidden on mobile.
-  */
-
+  /* Mobile collapsed = hidden */
   .sidebar.collapsed {
     width: min(86vw, 320px);
 
@@ -576,7 +575,6 @@
     min-height: 50px;
 
     margin: 5px 0;
-
     padding: 0 10px;
 
     border-radius: 12px;
@@ -605,14 +603,18 @@
   }
 }
 
-
 /* =========================================================
    VERY SMALL PHONES
    ========================================================= */
 
 @media (max-width: 380px) {
+
   .sidebar {
     width: calc(100vw - 20px);
   }
-}
 
+  .sidebar.open,
+  .sidebar.collapsed {
+    width: calc(100vw - 20px);
+  }
+}

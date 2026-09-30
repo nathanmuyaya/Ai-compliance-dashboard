@@ -149,91 +149,315 @@
    REVENUE CHART
 ========================================================= */
 
-.sales-chart {
+.revenue-chart {
   display: flex;
   width: 100%;
-  height: 330px;
+  height: 360px;
   margin-top: 10px;
   box-sizing: border-box;
 }
 
-.chart-y-axis {
-  width: 58px;
-  height: 285px;
+.revenue-y-axis {
+  width: 65px;
+  height: 300px;
+  flex: 0 0 65px;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-bottom: 32px;
+
+  padding: 0 12px 0 0;
   box-sizing: border-box;
+
+  text-align: right;
 }
 
-.chart-y-axis span {
+.revenue-y-axis span {
+  display: block;
+  margin: 0;
+
   color: var(--text-muted);
   font-size: 10px;
+  font-weight: 600;
+  line-height: 1;
+
+  white-space: nowrap;
 }
 
-.chart-area {
+
+/* =========================================================
+   CHART AREA
+========================================================= */
+
+.revenue-chart-area {
   position: relative;
+
   flex: 1;
   height: 300px;
+
   border-bottom: 1px solid var(--border);
+
   box-sizing: border-box;
 }
 
-.chart-grid-line {
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.revenue-grid {
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: var(--gridline);
-  z-index: 0;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  pointer-events: none;
+  z-index: 1;
 }
 
-.sales-bars {
+.revenue-grid span {
+  display: block;
+
+  width: 100%;
+  height: 1px;
+
+  background: var(--border);
+  opacity: 0.6;
+}
+
+
+/* =========================================================
+   BARS CONTAINER
+========================================================= */
+
+.revenue-bars {
   position: absolute;
+
   left: 0;
   right: 0;
   bottom: 0;
-  height: 270px;
+
+  height: 300px;
+
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  gap: 20px;
-  padding: 0 18px;
+
+  gap: 14px;
+  padding: 0 12px;
+
   box-sizing: border-box;
-  z-index: 2;
+
+  z-index: 5;
 }
 
-.sales-bar-group {
+
+/* =========================================================
+   BAR COLUMN
+========================================================= */
+
+.revenue-bar-column {
   height: 100%;
+
   flex: 1;
+
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
-  min-width: 30px;
+  justify-content: flex-end;
+
+  min-width: 45px;
+  max-width: 90px;
+
+  box-sizing: border-box;
 }
 
-.sales-bar {
+
+/* =========================================================
+   BAR VALUE
+========================================================= */
+
+.revenue-bar-value {
+  margin-bottom: 6px;
+
+  color: var(--text-secondary);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   BAR WRAPPER
+========================================================= */
+
+.revenue-bar-wrapper {
+  width: 100%;
+  height: 245px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   REVENUE BAR
+========================================================= */
+
+.revenue-bar {
+  display: block;
+
   width: 100%;
   max-width: 55px;
-  min-height: 8px;
-  border-radius: 7px 7px 2px 2px;
+
+  min-height: 5px;
+
+  border-radius: 8px 8px 2px 2px;
+
   background: var(--series-1);
-  transition:
-    height 0.3s ease,
-    transform 0.2s ease;
+
+  box-shadow:
+    0 4px 12px rgba(42, 120, 214, 0.25);
+
   cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
-.sales-bar:hover {
+.revenue-bar:hover {
   transform: translateY(-4px);
+  opacity: 0.85;
 }
 
-.sales-bar-group > span {
-  margin-top: 10px;
-  color: var(--text-muted);
+
+/* =========================================================
+   PRODUCT NAME
+========================================================= */
+
+.revenue-product {
+  width: 100%;
+
+  margin-top: 9px;
+
+  color: var(--text-secondary);
+
   font-size: 10px;
+  font-weight: 700;
+
+  text-align: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.revenue-date {
+  width: 100%;
+
+  margin-top: 4px;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+
+  text-align: center;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   CHART - TABLET
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .revenue-chart {
+    height: 340px;
+  }
+
+  .revenue-y-axis {
+    width: 48px;
+    flex-basis: 48px;
+  }
+
+  .revenue-bars {
+    gap: 7px;
+    padding: 0 5px;
+  }
+
+  .revenue-bar-column {
+    min-width: 30px;
+    max-width: 60px;
+  }
+
+  .revenue-bar {
+    max-width: 40px;
+  }
+
+  .revenue-product {
+    font-size: 8px;
+  }
+
+  .revenue-date {
+    font-size: 7px;
+  }
+}
+
+
+/* =========================================================
+   CHART - SMALL PHONES
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .revenue-chart {
+    height: 320px;
+  }
+
+  .revenue-y-axis {
+    width: 42px;
+    flex-basis: 42px;
+  }
+
+  .revenue-bars {
+    gap: 4px;
+    padding: 0 2px;
+  }
+
+  .revenue-bar-column {
+    min-width: 24px;
+  }
+
+  .revenue-bar {
+    max-width: 30px;
+  }
+
+  .revenue-bar-value {
+    font-size: 8px;
+  }
+
+  .revenue-product {
+    font-size: 7px;
+  }
+
+  .revenue-date {
+    font-size: 6px;
+  }
 }
 
 /* =========================================================

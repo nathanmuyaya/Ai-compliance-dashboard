@@ -1,4 +1,3 @@
-
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
 import {
@@ -88,8 +87,28 @@ export default function Sidebar({
 }: SidebarProps) {
   const { openRisks } = useSalesStats();
 
+  // =========================================
+  // MOBILE NAVIGATION
+  // =========================================
+
   const handleNavigation = () => {
     if (window.innerWidth <= 800 && !collapsed) {
+      onToggle();
+    }
+  };
+
+  // =========================================
+  // DESKTOP HOVER BEHAVIOR
+  // =========================================
+
+  const handleMouseEnter = () => {
+    if (window.innerWidth > 800 && collapsed) {
+      onToggle();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (window.innerWidth > 800 && !collapsed) {
       onToggle();
     }
   };
@@ -117,6 +136,8 @@ export default function Sidebar({
           collapsed ? "collapsed" : "open"
         }`}
         aria-label="Main navigation"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {/* =====================================
             BRAND
@@ -153,18 +174,18 @@ export default function Sidebar({
           }
         >
           {collapsed ? (
-  <ChevronRight size={18} />
-) : (
-  <>
-    <span className="desktop-collapse-icon">
-      <ChevronLeft size={18} />
-    </span>
+            <ChevronRight size={18} />
+          ) : (
+            <>
+              <span className="desktop-collapse-icon">
+                <ChevronLeft size={18} />
+              </span>
 
-    <span className="mobile-close-icon">
-      <X size={17} />
-    </span>
-  </>
-)}
+              <span className="mobile-close-icon">
+                <X size={17} />
+              </span>
+            </>
+          )}
         </button>
 
         {/* =====================================
@@ -257,4 +278,3 @@ export default function Sidebar({
     </>
   );
 }
-
