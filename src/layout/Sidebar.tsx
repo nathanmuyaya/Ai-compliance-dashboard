@@ -1,10 +1,6 @@
 import { NavLink } from "react-router-dom";
 import "./Sidebar.css";
-import {
-  ChevronLeft,
-  ChevronRight,
-  X,
-} from "lucide-react";
+import {X} from "lucide-react";
 
 import {
   OverviewIcon,
@@ -144,8 +140,12 @@ export default function Sidebar({
         ====================================== */}
 
         <div className="sidebar-brand">
-          <div className="sidebar-brand-mark">
-            CD
+          <div
+            className="sidebar-brand-mark"
+            aria-label="Compliance Dashboard"
+          >
+            <span className="logo-c">C</span>
+            <span className="logo-d">D</span>
           </div>
 
           <div className="sidebar-brand-text">
@@ -154,40 +154,7 @@ export default function Sidebar({
           </div>
         </div>
 
-        {/* =====================================
-            DESKTOP COLLAPSE BUTTON
-        ====================================== */}
-
-        <button
-          type="button"
-          className="sidebar-collapse-button desktop-collapse-button"
-          onClick={onToggle}
-          aria-label={
-            collapsed
-              ? "Expand sidebar"
-              : "Collapse sidebar"
-          }
-          title={
-            collapsed
-              ? "Expand sidebar"
-              : "Collapse sidebar"
-          }
-        >
-          {collapsed ? (
-            <ChevronRight size={18} />
-          ) : (
-            <>
-              <span className="desktop-collapse-icon">
-                <ChevronLeft size={18} />
-              </span>
-
-              <span className="mobile-close-icon">
-                <X size={17} />
-              </span>
-            </>
-          )}
-        </button>
-
+        
         {/* =====================================
             MOBILE CLOSE BUTTON
         ====================================== */}

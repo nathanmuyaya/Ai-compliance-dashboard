@@ -1,0 +1,845 @@
+/* =========================================================
+   RECORDS SKELETON
+========================================================= */
+
+.records-skeleton-page {
+  --records-skeleton-base: #e5e8ed;
+  --records-skeleton-highlight: #f6f7f9;
+
+  --records-skeleton-surface: var(--surface-1, #ffffff);
+  --records-skeleton-plane: var(--page-plane, #f8fafc);
+  --records-skeleton-border: var(--border, #e3e7ed);
+
+  width: 100%;
+  max-width: 1500px;
+
+  margin: 0 auto;
+  padding: 32px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   SHIMMER
+========================================================= */
+
+.records-skeleton-page .skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+
+  background: var(--records-skeleton-base);
+}
+
+.records-skeleton-page .skeleton-shimmer::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  transform: translateX(-100%);
+
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--records-skeleton-highlight) 50%,
+    transparent 100%
+  );
+
+  animation: recordsSkeletonShimmer 1.6s infinite;
+}
+
+@keyframes recordsSkeletonShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.records-skeleton-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 30px;
+
+  margin-bottom: 26px;
+}
+
+.records-skeleton-header-content {
+  min-width: 0;
+}
+
+.records-skeleton-eyebrow {
+  width: 175px;
+  height: 9px;
+
+  border-radius: 5px;
+
+  margin-bottom: 12px;
+}
+
+.records-skeleton-title {
+  width: 380px;
+  max-width: 100%;
+
+  height: 37px;
+
+  border-radius: 9px;
+
+  margin-bottom: 14px;
+}
+
+.records-skeleton-description {
+  width: 650px;
+  max-width: 100%;
+
+  height: 10px;
+
+  border-radius: 5px;
+
+  margin-bottom: 8px;
+}
+
+.records-skeleton-description.short {
+  width: 430px;
+}
+
+.records-skeleton-add-button {
+  width: 125px;
+  height: 40px;
+
+  border-radius: 10px;
+
+  margin-top: 4px;
+}
+
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.records-skeleton-kpis {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.records-skeleton-kpi {
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  min-height: 105px;
+
+  padding: 19px;
+
+  background: var(--records-skeleton-surface);
+
+  border: 1px solid var(--records-skeleton-border);
+
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.records-skeleton-kpi-icon {
+  width: 42px;
+  height: 42px;
+
+  flex: 0 0 42px;
+
+  border-radius: 13px;
+}
+
+.records-skeleton-kpi-content {
+  min-width: 0;
+}
+
+.records-skeleton-kpi-label {
+  width: 115px;
+  height: 9px;
+
+  border-radius: 5px;
+
+  margin-bottom: 9px;
+}
+
+.records-skeleton-kpi-value {
+  width: 38px;
+  height: 24px;
+
+  border-radius: 7px;
+
+  margin-bottom: 8px;
+}
+
+.records-skeleton-kpi-small {
+  width: 125px;
+  height: 8px;
+
+  border-radius: 4px;
+}
+
+
+/* =========================================================
+   AI SUMMARY
+========================================================= */
+
+.records-skeleton-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 35px;
+
+  padding: 21px 24px;
+
+  margin-bottom: 24px;
+
+  background: var(--records-skeleton-surface);
+
+  border: 1px solid var(--records-skeleton-border);
+
+  border-radius: 16px;
+
+  box-sizing: border-box;
+}
+
+.records-skeleton-summary-content {
+  min-width: 190px;
+}
+
+.records-skeleton-summary-label {
+  width: 150px;
+  height: 9px;
+
+  border-radius: 5px;
+
+  margin-bottom: 9px;
+}
+
+.records-skeleton-summary-value {
+  width: 60px;
+  height: 27px;
+
+  border-radius: 7px;
+
+  margin-bottom: 8px;
+}
+
+.records-skeleton-summary-text {
+  width: 240px;
+  height: 8px;
+
+  border-radius: 4px;
+}
+
+.records-skeleton-progress {
+  position: relative;
+
+  flex: 1;
+
+  height: 9px;
+
+  max-width: 650px;
+
+  border-radius: 999px;
+
+  background: var(--records-skeleton-plane);
+
+  border: 1px solid var(--records-skeleton-border);
+}
+
+.records-skeleton-progress-fill {
+  width: 72%;
+  height: 100%;
+
+  border-radius: inherit;
+}
+
+
+/* =========================================================
+   RECORDS PANEL
+========================================================= */
+
+.records-skeleton-panel {
+  padding: 25px;
+
+  background: var(--records-skeleton-surface);
+
+  border: 1px solid var(--records-skeleton-border);
+
+  border-radius: 20px;
+
+  box-sizing: border-box;
+
+  margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   PANEL HEADER
+========================================================= */
+
+.records-skeleton-panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 25px;
+
+  margin-bottom: 22px;
+}
+
+.records-skeleton-panel-title {
+  width: 95px;
+  height: 23px;
+
+  border-radius: 7px;
+
+  margin-bottom: 10px;
+}
+
+.records-skeleton-panel-description {
+  width: 300px;
+  height: 9px;
+
+  border-radius: 5px;
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.records-skeleton-controls {
+  display: grid;
+
+  grid-template-columns: 230px 145px 130px;
+
+  gap: 9px;
+}
+
+.records-skeleton-search,
+.records-skeleton-filter {
+  height: 41px;
+
+  background: var(--records-skeleton-plane);
+
+  border: 1px solid var(--records-skeleton-border);
+
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.records-skeleton-table-wrapper {
+  width: 100%;
+
+  overflow-x: auto;
+
+  border: 1px solid var(--records-skeleton-border);
+
+  border-radius: 13px;
+}
+
+.records-skeleton-table {
+  min-width: 1050px;
+}
+
+.records-skeleton-table-row {
+  display: grid;
+
+  grid-template-columns:
+    1.15fr
+    0.65fr
+    0.8fr
+    0.8fr
+    1.7fr
+    1fr
+    0.75fr
+    0.9fr
+    1fr;
+
+  align-items: center;
+
+  gap: 14px;
+
+  min-height: 72px;
+
+  padding: 0 16px;
+
+  border-top: 1px solid var(--records-skeleton-border);
+
+  box-sizing: border-box;
+}
+
+.records-skeleton-table-row.header {
+  min-height: 47px;
+
+  border-top: 0;
+
+  background: var(--records-skeleton-plane);
+}
+
+.records-skeleton-table-row.header .records-col {
+  height: 8px;
+
+  border-radius: 4px;
+}
+
+.records-col {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   RECORD COLUMN
+========================================================= */
+
+.skeleton-record-id {
+  width: 67px;
+  height: 10px;
+
+  border-radius: 5px;
+
+  margin-bottom: 7px;
+}
+
+.skeleton-record-subtext {
+  width: 85px;
+  height: 7px;
+
+  border-radius: 4px;
+}
+
+
+/* =========================================================
+   OTHER TABLE CONTENT
+========================================================= */
+
+.skeleton-time {
+  width: 42px;
+  height: 10px;
+
+  border-radius: 5px;
+}
+
+.skeleton-employee {
+  width: 55px;
+  height: 10px;
+
+  border-radius: 5px;
+}
+
+.skeleton-item {
+  width: 72px;
+  height: 10px;
+
+  border-radius: 5px;
+}
+
+
+/* =========================================================
+   DETECTION
+========================================================= */
+
+.skeleton-detection {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.skeleton-detection-dot {
+  width: 9px;
+  height: 9px;
+
+  flex: 0 0 9px;
+
+  border-radius: 50%;
+}
+
+.skeleton-detection-title {
+  width: 120px;
+  height: 9px;
+
+  border-radius: 5px;
+
+  margin-bottom: 6px;
+}
+
+.skeleton-detection-subtitle {
+  width: 85px;
+  height: 7px;
+
+  border-radius: 4px;
+}
+
+
+/* =========================================================
+   CONFIDENCE
+========================================================= */
+
+.skeleton-confidence-value {
+  width: 38px;
+  height: 10px;
+
+  border-radius: 5px;
+
+  margin-bottom: 7px;
+}
+
+.skeleton-confidence-bar {
+  width: 70px;
+  height: 5px;
+
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   BADGES
+========================================================= */
+
+.skeleton-risk-badge {
+  width: 54px;
+  height: 24px;
+
+  border-radius: 999px;
+}
+
+.skeleton-status-badge {
+  width: 72px;
+  height: 24px;
+
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   ACTION
+========================================================= */
+
+.skeleton-action-button {
+  width: 52px;
+  height: 30px;
+
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   BOTTOM GRID
+========================================================= */
+
+.records-skeleton-bottom-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+.records-skeleton-bottom-card {
+  padding: 23px;
+
+  background: var(--records-skeleton-surface);
+
+  border: 1px solid var(--records-skeleton-border);
+
+  border-radius: 18px;
+
+  box-sizing: border-box;
+}
+
+.records-skeleton-card-label {
+  width: 75px;
+  height: 8px;
+
+  border-radius: 4px;
+
+  margin-bottom: 10px;
+}
+
+.records-skeleton-card-title {
+  width: 175px;
+  height: 20px;
+
+  border-radius: 7px;
+
+  margin-bottom: 20px;
+}
+
+.records-skeleton-card-line {
+  width: 95%;
+  height: 9px;
+
+  border-radius: 5px;
+
+  margin-bottom: 8px;
+}
+
+.records-skeleton-card-line.short {
+  width: 70%;
+}
+
+
+/* =========================================================
+   INSIGHT STAT
+========================================================= */
+
+.records-skeleton-insight-stat {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  margin-top: 24px;
+}
+
+.records-skeleton-stat-value {
+  width: 38px;
+  height: 29px;
+
+  border-radius: 7px;
+}
+
+.records-skeleton-stat-label {
+  width: 125px;
+  height: 9px;
+
+  border-radius: 5px;
+}
+
+
+/* =========================================================
+   EXCEPTION LIST
+========================================================= */
+
+.records-skeleton-exception-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.records-skeleton-exception {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 15px;
+
+  padding: 14px 0;
+
+  border-top: 1px solid var(--records-skeleton-border);
+}
+
+.skeleton-exception-title {
+  width: 155px;
+  height: 9px;
+
+  border-radius: 5px;
+
+  margin-bottom: 7px;
+}
+
+.skeleton-exception-meta {
+  width: 105px;
+  height: 7px;
+
+  border-radius: 4px;
+}
+
+.skeleton-exception-button {
+  width: 49px;
+  height: 29px;
+
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+:root[data-theme="dark"] .records-skeleton-page {
+  --records-skeleton-base: #303641;
+  --records-skeleton-highlight: #414956;
+
+  --records-skeleton-surface: var(--surface-1, #1d222c);
+  --records-skeleton-plane: var(--page-plane, #171b23);
+  --records-skeleton-border: var(--border, #303642);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .records-skeleton-page {
+    padding: 24px;
+  }
+
+  .records-skeleton-kpis {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .records-skeleton-panel-header {
+    flex-direction: column;
+  }
+
+  .records-skeleton-controls {
+    width: 100%;
+
+    grid-template-columns:
+      minmax(200px, 1fr)
+      minmax(130px, 170px)
+      minmax(120px, 160px);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .records-skeleton-page {
+    padding: 18px;
+  }
+
+  .records-skeleton-header {
+    flex-direction: column;
+
+    gap: 16px;
+  }
+
+  .records-skeleton-title {
+    width: 290px;
+    height: 32px;
+  }
+
+  .records-skeleton-description {
+    width: 100%;
+  }
+
+  .records-skeleton-description.short {
+    width: 72%;
+  }
+
+  .records-skeleton-add-button {
+    margin-top: 0;
+  }
+
+  .records-skeleton-kpis {
+    grid-template-columns: 1fr 1fr;
+
+    gap: 12px;
+  }
+
+  .records-skeleton-kpi {
+    min-height: 92px;
+
+    padding: 15px;
+
+    gap: 11px;
+  }
+
+  .records-skeleton-kpi-icon {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .records-skeleton-kpi-small {
+    width: 90px;
+  }
+
+  .records-skeleton-summary {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 18px;
+
+    padding: 18px;
+  }
+
+  .records-skeleton-progress {
+    max-width: none;
+  }
+
+  .records-skeleton-panel {
+    padding: 18px;
+
+    border-radius: 16px;
+  }
+
+  .records-skeleton-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .records-skeleton-table-wrapper {
+    overflow-x: hidden;
+  }
+
+  .records-skeleton-table {
+    min-width: 0;
+  }
+
+  .records-skeleton-table-row {
+    display: none;
+  }
+
+  .records-skeleton-bottom-grid {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .records-skeleton-kpis {
+    grid-template-columns: 1fr;
+  }
+
+  .records-skeleton-title {
+    width: 245px;
+  }
+
+  .records-skeleton-panel-title {
+    width: 80px;
+  }
+
+  .records-skeleton-card-title {
+    width: 150px;
+  }
+
+}

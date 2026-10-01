@@ -1,0 +1,311 @@
+/* =========================================
+   USERS SKELETON
+========================================= */
+
+.users-skeleton-page {
+  width: 100%;
+  min-height: 100%;
+  padding: 32px;
+  box-sizing: border-box;
+  color: var(--text-primary);
+}
+
+/* =========================================
+   SHARED SKELETON ELEMENT
+========================================= */
+
+.users-skeleton-title,
+.users-skeleton-subtitle,
+.users-skeleton-button,
+.users-skeleton-small,
+.users-skeleton-number,
+.users-skeleton-search,
+.users-skeleton-filter,
+.users-skeleton-table-header div,
+.users-skeleton-avatar,
+.users-skeleton-name,
+.users-skeleton-email,
+.users-skeleton-cell,
+.users-skeleton-status,
+.users-skeleton-actions div {
+  background: var(--skeleton-color, #d9dde5);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.users-skeleton-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.users-skeleton-title {
+  width: 220px;
+  height: 34px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.users-skeleton-subtitle {
+  width: 420px;
+  max-width: 70vw;
+  height: 16px;
+  border-radius: 6px;
+}
+
+.users-skeleton-button {
+  width: 125px;
+  height: 42px;
+  border-radius: 8px;
+}
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.users-skeleton-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+.users-skeleton-card {
+  min-height: 115px;
+  padding: 22px;
+  box-sizing: border-box;
+  border-radius: 12px;
+
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+.users-skeleton-small {
+  width: 90px;
+  height: 14px;
+  border-radius: 5px;
+  margin-bottom: 18px;
+}
+
+.users-skeleton-number {
+  width: 55px;
+  height: 30px;
+  border-radius: 7px;
+}
+
+/* =========================================
+   PANEL
+========================================= */
+
+.users-skeleton-panel {
+  padding: 24px;
+  border-radius: 12px;
+
+  background: var(--card-bg, #ffffff);
+  border: 1px solid var(--border-color, #e5e7eb);
+}
+
+/* =========================================
+   TOOLBAR
+========================================= */
+
+.users-skeleton-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.users-skeleton-search {
+  width: 280px;
+  height: 42px;
+  border-radius: 8px;
+}
+
+.users-skeleton-filter {
+  width: 180px;
+  height: 42px;
+  border-radius: 8px;
+}
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+
+.users-skeleton-table {
+  width: 100%;
+}
+
+.users-skeleton-table-header {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1fr 1.2fr 1fr;
+  gap: 20px;
+
+  padding: 14px 16px;
+
+  border-bottom: 1px solid
+    var(--border-color, #e5e7eb);
+}
+
+.users-skeleton-table-header div {
+  height: 13px;
+  border-radius: 5px;
+}
+
+/* =========================================
+   TABLE ROWS
+========================================= */
+
+.users-skeleton-row {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1fr 1.2fr 1fr;
+
+  align-items: center;
+  gap: 20px;
+
+  min-height: 75px;
+
+  padding: 12px 16px;
+
+  border-bottom: 1px solid
+    var(--border-color, #e5e7eb);
+}
+
+.users-skeleton-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.users-skeleton-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.users-skeleton-name {
+  width: 120px;
+  height: 14px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+}
+
+.users-skeleton-email {
+  width: 170px;
+  height: 11px;
+  border-radius: 5px;
+}
+
+.users-skeleton-cell {
+  width: 100px;
+  height: 13px;
+  border-radius: 5px;
+}
+
+.users-skeleton-status {
+  width: 65px;
+  height: 25px;
+  border-radius: 20px;
+}
+
+.users-skeleton-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.users-skeleton-actions div {
+  width: 45px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+/* =========================================
+   SHIMMER
+========================================= */
+
+.users-skeleton-title,
+.users-skeleton-subtitle,
+.users-skeleton-button,
+.users-skeleton-small,
+.users-skeleton-number,
+.users-skeleton-search,
+.users-skeleton-filter,
+.users-skeleton-table-header div,
+.users-skeleton-avatar,
+.users-skeleton-name,
+.users-skeleton-email,
+.users-skeleton-cell,
+.users-skeleton-status,
+.users-skeleton-actions div {
+  animation: usersSkeletonPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes usersSkeletonPulse {
+  0% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.45;
+  }
+}
+
+/* =========================================
+   DARK MODE
+========================================= */
+
+[data-theme="dark"] {
+  --skeleton-color: #343a46;
+  --card-bg: #1d222c;
+  --border-color: #303642;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+  .users-skeleton-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .users-skeleton-panel {
+    overflow-x: auto;
+  }
+
+  .users-skeleton-table {
+    min-width: 800px;
+  }
+}
+
+@media (max-width: 600px) {
+  .users-skeleton-page {
+    padding: 20px;
+  }
+
+  .users-skeleton-header {
+    flex-direction: column;
+  }
+
+  .users-skeleton-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .users-skeleton-toolbar {
+    flex-direction: column;
+  }
+
+  .users-skeleton-search,
+  .users-skeleton-filter {
+    width: 100%;
+  }
+}

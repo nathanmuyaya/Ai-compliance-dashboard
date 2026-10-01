@@ -1,72 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import SalesSkeleton from "../components/LoadingSkeleton/SalesSkeleton";
+import { SALES } from "../data/mockData";
 import "./SalesPage.css";
-
-interface Sale {
-  id: string;
-  customer: string;
-  product: string;
-  category: string;
-  amount: number;
-  status: "Completed" | "Pending" | "Flagged";
-  date: string;
-}
-
-const SALES: Sale[] = [
-  {
-    id: "SAL-001",
-    customer: "Kabwe Trading Ltd",
-    product: "Coca-Cola",
-    category: "Soft Drinks",
-    amount: 120,
-    status: "Completed",
-    date: "20 Sep 2026",
-  },
-  {
-    id: "SAL-002",
-    customer: "Mwamba Stores",
-    product: "Fanta",
-    category: "Soft Drinks",
-    amount: 95,
-    status: "Completed",
-    date: "20 Sep 2026",
-  },
-  {
-    id: "SAL-003",
-    customer: "Zambezi Holdings",
-    product: "Pepsi",
-    category: "Soft Drinks",
-    amount: 110,
-    status: "Flagged",
-    date: "19 Sep 2026",
-  },
-  {
-    id: "SAL-004",
-    customer: "Lusaka Finance",
-    product: "Sprite",
-    category: "Soft Drinks",
-    amount: 85,
-    status: "Completed",
-    date: "19 Sep 2026",
-  },
-  {
-    id: "SAL-005",
-    customer: "Copperbelt Mining",
-    product: "Water",
-    category: "Water",
-    amount: 48,
-    status: "Pending",
-    date: "18 Sep 2026",
-  },
-  {
-    id: "SAL-006",
-    customer: "Central Supplies",
-    product: "Coca-Cola",
-    category: "Soft Drinks",
-    amount: 120,
-    status: "Completed",
-    date: "18 Sep 2026",
-  },
-];
 
 interface Handover {
   id: string;
@@ -133,9 +68,45 @@ const HANDOVERS: Handover[] = [
 ];
 
 export default function SalesPage() {
+  /* =========================================================
+     LOADING STATE
+     ========================================================= */
+
+  const [loading, setLoading] = useState(true);
+
+  /* =========================================================
+     FILTER STATE
+     ========================================================= */
+
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
+
+  /* =========================================================
+     CURRENCY
+     ========================================================= */
+
+  const currency = new Intl.NumberFormat("en-ZM", {
+    style: "currency",
+    currency: "ZMW",
+    maximumFractionDigits: 0,
+  });
+
+  /* =========================================================
+     SIMULATED LOADING
+     ========================================================= */
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  /* =========================================================
+     FILTER SALES
+     ========================================================= */
 
   const filteredSales = useMemo(() => {
     const searchValue = search.toLowerCase().trim();
@@ -163,6 +134,10 @@ export default function SalesPage() {
     });
   }, [search, statusFilter, categoryFilter]);
 
+  /* =========================================================
+     SALES STATISTICS
+     ========================================================= */
+
   const totalRevenue = SALES.reduce(
     (total, sale) => total + sale.amount,
     0
@@ -180,6 +155,10 @@ export default function SalesPage() {
     (sale) => sale.status === "Pending"
   ).length;
 
+  /* =========================================================
+     AI HANDOVER STATISTICS
+     ========================================================= */
+
   const verifiedHandovers = HANDOVERS.filter(
     (handover) => handover.status === "Verified"
   ).length;
@@ -196,9 +175,9 @@ export default function SalesPage() {
     ) / HANDOVERS.length
   );
 
-  /* =========================
+  /* =========================================================
      REVENUE CHART
-  ========================= */
+     ========================================================= */
 
   const highestSale = Math.max(
     ...SALES.map((sale) => sale.amount)
@@ -218,9 +197,9 @@ export default function SalesPage() {
     0,
   ];
 
-  /* =========================
+  /* =========================================================
      CATEGORY PERFORMANCE
-  ========================= */
+     ========================================================= */
 
   const categoryPerformance = [
     "Soft Drinks",
@@ -246,6 +225,18 @@ export default function SalesPage() {
       percentage,
     };
   });
+
+  /* =========================================================
+     SHOW SKELETON WHILE LOADING
+     ========================================================= */
+
+  if (loading) {
+    return <SalesSkeleton />;
+  }
+
+  /* =========================================================
+     MAIN SALES PAGE
+     ========================================================= */
 
   return (
     <main className="sales-page">
@@ -280,9 +271,11 @@ export default function SalesPage() {
 
         <div className="sales-kpi-card">
           <span>Total Revenue</span>
+
           <strong>
-            ${totalRevenue.toLocaleString()}
+            {currency.format(totalRevenue)}
           </strong>
+
           <small>
             Across all recorded sales
           </small>
@@ -290,7 +283,11 @@ export default function SalesPage() {
 
         <div className="sales-kpi-card">
           <span>Completed Sales</span>
-          <strong>{completedSales}</strong>
+
+          <strong>
+            {completedSales}
+          </strong>
+
           <small>
             Successfully completed
           </small>
@@ -298,7 +295,11 @@ export default function SalesPage() {
 
         <div className="sales-kpi-card">
           <span>Flagged Sales</span>
-          <strong>{flaggedSales}</strong>
+
+          <strong>
+            {flaggedSales}
+          </strong>
+
           <small>
             Require investigation
           </small>
@@ -306,7 +307,11 @@ export default function SalesPage() {
 
         <div className="sales-kpi-card">
           <span>Pending Sales</span>
-          <strong>{pendingSales}</strong>
+
+          <strong>
+            {pendingSales}
+          </strong>
+
           <small>
             Awaiting completion
           </small>
@@ -336,7 +341,7 @@ export default function SalesPage() {
             <span>Total Revenue</span>
 
             <strong>
-              ${totalRevenue.toLocaleString()}
+              {currency.format(totalRevenue)}
             </strong>
           </div>
 
@@ -348,7 +353,7 @@ export default function SalesPage() {
 
             {chartLabels.map((label) => (
               <span key={label}>
-                ${label.toLocaleString()}
+                {currency.format(label)}
               </span>
             ))}
 
@@ -379,7 +384,7 @@ export default function SalesPage() {
                   >
 
                     <div className="revenue-bar-value">
-                      ${sale.amount}
+                      {currency.format(sale.amount)}
                     </div>
 
                     <div className="revenue-bar-wrapper">
@@ -389,7 +394,9 @@ export default function SalesPage() {
                         style={{
                           height: `${height}%`,
                         }}
-                        title={`${sale.product}: $${sale.amount}`}
+                        title={`${sale.product}: ${currency.format(
+                          sale.amount
+                        )}`}
                       />
 
                     </div>
@@ -447,10 +454,12 @@ export default function SalesPage() {
             >
 
               <div className="category-info">
-                <span>{category.name}</span>
+                <span>
+                  {category.name}
+                </span>
 
                 <strong>
-                  ${category.revenue.toLocaleString()}
+                  {currency.format(category.revenue)}
                 </strong>
               </div>
 
@@ -628,7 +637,9 @@ export default function SalesPage() {
 
                   <td>
                     <strong>
-                      ${handover.amount.toLocaleString()}
+                      {currency.format(
+                        handover.amount
+                      )}
                     </strong>
                   </td>
 
@@ -637,11 +648,13 @@ export default function SalesPage() {
                     <div className="ai-confidence">
 
                       <div className="confidence-bar">
+
                         <span
                           style={{
                             width: `${handover.confidence}%`,
                           }}
                         />
+
                       </div>
 
                       <strong>
@@ -796,6 +809,7 @@ export default function SalesPage() {
             <option value="Water">
               Water
             </option>
+
           </select>
 
         </div>
@@ -843,7 +857,7 @@ export default function SalesPage() {
 
                   <td>
                     <strong>
-                      ${sale.amount.toLocaleString()}
+                      {currency.format(sale.amount)}
                     </strong>
                   </td>
 

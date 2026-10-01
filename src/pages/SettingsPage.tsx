@@ -18,6 +18,8 @@ import {
 } from "lucide-react";
 
 import { useOutletContext } from "react-router-dom";
+import SettingsSkeleton from "../components/LoadingSkeleton/SettingsSkeleton";
+import { useToast } from "../components/Toast/Toast";
 
 
 /* =========================================================
@@ -47,6 +49,9 @@ export default function SettingsPage() {
   } = useOutletContext<SettingsContext>();
 
 
+  const { showToast } = useToast();
+
+
   const [notifications, setNotifications] = useState(true);
   const [twoFactor, setTwoFactor] = useState(true);
   const [autoSave, setAutoSave] = useState(true);
@@ -55,6 +60,23 @@ export default function SettingsPage() {
   const [timeZone, setTimeZone] = useState("Africa/Lusaka");
 
   const [saved, setSaved] = useState(false);
+
+
+  /* =========================================================
+     LOADING
+  ========================================================= */
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+
+  }, []);
 
 
   /* =========================================================
@@ -140,19 +162,52 @@ export default function SettingsPage() {
 
     setSaved(true);
 
+    showToast({
+      type: "success",
+      title: "Settings saved",
+      message: "Your dashboard settings have been updated.",
+    });
+
     setTimeout(() => {
       setSaved(false);
     }, 2500);
+
   };
 
 
   /* =========================================================
-     TOGGLE
+     TOGGLE DARK MODE
   ========================================================= */
 
   const handleDarkMode = () => {
-    setDarkMode((current) => !current);
+
+    setDarkMode((current) => {
+
+      const newMode = !current;
+
+      showToast({
+        type: "info",
+        title: newMode
+          ? "Dark mode enabled"
+          : "Light mode enabled",
+        message: newMode
+          ? "The dashboard is now using the dark interface."
+          : "The dashboard is now using the light interface.",
+      });
+
+      return newMode;
+    });
+
   };
+
+
+  /* =========================================================
+     SHOW SKELETON WHILE LOADING
+  ========================================================= */
+
+  if (loading) {
+    return <SettingsSkeleton />;
+  }
 
 
   return (
@@ -309,9 +364,7 @@ export default function SettingsPage() {
       <div className="settings-grid">
 
 
-        {/* ===================================================
-            APPEARANCE
-        =================================================== */}
+        {/* APPEARANCE */}
 
         <section className="settings-panel appearance-panel">
 
@@ -422,9 +475,7 @@ export default function SettingsPage() {
         </section>
 
 
-        {/* ===================================================
-            BRIGHTNESS
-        =================================================== */}
+        {/* BRIGHTNESS */}
 
         <section className="settings-panel brightness-panel">
 
@@ -512,9 +563,7 @@ export default function SettingsPage() {
         </section>
 
 
-        {/* ===================================================
-            NOTIFICATIONS
-        =================================================== */}
+        {/* NOTIFICATIONS */}
 
         <section className="settings-panel">
 
@@ -568,11 +617,28 @@ export default function SettingsPage() {
               className={`toggle ${
                 notifications ? "active" : ""
               }`}
-              onClick={() =>
-                setNotifications(
-                  (current) => !current
-                )
-              }
+              onClick={() => {
+
+                setNotifications((current) => {
+
+                  const newValue = !current;
+
+                  showToast({
+                    type: newValue
+                      ? "success"
+                      : "warning",
+                    title: newValue
+                      ? "Notifications enabled"
+                      : "Notifications disabled",
+                    message: newValue
+                      ? "You will receive compliance and system alerts."
+                      : "Compliance notifications have been turned off.",
+                  });
+
+                  return newValue;
+                });
+
+              }}
               aria-label="Toggle notifications"
               aria-pressed={notifications}
             >
@@ -584,9 +650,7 @@ export default function SettingsPage() {
         </section>
 
 
-        {/* ===================================================
-            SECURITY
-        =================================================== */}
+        {/* SECURITY */}
 
         <section className="settings-panel security-panel">
 
@@ -644,11 +708,28 @@ export default function SettingsPage() {
               className={`toggle ${
                 twoFactor ? "active" : ""
               }`}
-              onClick={() =>
-                setTwoFactor(
-                  (current) => !current
-                )
-              }
+              onClick={() => {
+
+                setTwoFactor((current) => {
+
+                  const newValue = !current;
+
+                  showToast({
+                    type: newValue
+                      ? "success"
+                      : "warning",
+                    title: newValue
+                      ? "Two-factor authentication enabled"
+                      : "Two-factor authentication disabled",
+                    message: newValue
+                      ? "Your account has an additional security layer."
+                      : "Your account is now using standard protection.",
+                  });
+
+                  return newValue;
+                });
+
+              }}
               aria-label="Toggle two-factor authentication"
               aria-pressed={twoFactor}
             >
@@ -687,11 +768,28 @@ export default function SettingsPage() {
               className={`toggle ${
                 autoSave ? "active" : ""
               }`}
-              onClick={() =>
-                setAutoSave(
-                  (current) => !current
-                )
-              }
+              onClick={() => {
+
+                setAutoSave((current) => {
+
+                  const newValue = !current;
+
+                  showToast({
+                    type: newValue
+                      ? "success"
+                      : "info",
+                    title: newValue
+                      ? "Auto Save enabled"
+                      : "Auto Save disabled",
+                    message: newValue
+                      ? "Dashboard configuration changes will be saved automatically."
+                      : "Dashboard changes will now require manual saving.",
+                  });
+
+                  return newValue;
+                });
+
+              }}
               aria-label="Toggle auto save"
               aria-pressed={autoSave}
             >
@@ -703,9 +801,7 @@ export default function SettingsPage() {
         </section>
 
 
-        {/* ===================================================
-            REGIONAL SETTINGS
-        =================================================== */}
+        {/* REGIONAL SETTINGS */}
 
         <section className="settings-panel regional-panel">
 

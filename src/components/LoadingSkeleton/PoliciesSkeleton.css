@@ -1,0 +1,254 @@
+/* =========================================================
+   POLICIES SKELETON
+   ========================================================= */
+
+.policies-skeleton-page {
+  animation: policies-skeleton-fade 0.2s ease;
+}
+
+.policy-skeleton {
+  position: relative;
+  overflow: hidden;
+
+  background: rgba(148, 163, 184, 0.14);
+
+  border-radius: 6px;
+}
+
+.policy-skeleton::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  transform: translateX(-100%);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+
+  animation: policies-skeleton-shimmer 1.5s infinite;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.skeleton-eyebrow {
+  width: 110px;
+  height: 12px;
+  margin-bottom: 12px;
+}
+
+.skeleton-title {
+  width: 180px;
+  height: 36px;
+  margin-bottom: 14px;
+}
+
+.skeleton-subtitle {
+  width: 470px;
+  height: 15px;
+}
+
+.skeleton-add-button {
+  width: 125px;
+  height: 42px;
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.policy-skeleton-card {
+  min-height: 145px;
+}
+
+.skeleton-card-label {
+  width: 110px;
+  height: 14px;
+  margin-bottom: 18px;
+}
+
+.skeleton-card-value {
+  width: 55px;
+  height: 32px;
+  margin-bottom: 14px;
+}
+
+.skeleton-card-small {
+  width: 150px;
+  height: 12px;
+}
+
+
+/* =========================================================
+   POLICY REGISTER HEADER
+   ========================================================= */
+
+.skeleton-register-title {
+  width: 180px;
+  height: 26px;
+  margin-bottom: 10px;
+}
+
+.skeleton-register-count {
+  width: 150px;
+  height: 13px;
+}
+
+.skeleton-search {
+  width: 230px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   FILTERS
+   ========================================================= */
+
+.skeleton-filter {
+  width: 155px;
+  height: 38px;
+  border-radius: 7px;
+}
+
+
+/* =========================================================
+   POLICY TABLE
+   ========================================================= */
+
+.skeleton-policy-name {
+  width: 170px;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.skeleton-policy-id {
+  width: 65px;
+  height: 11px;
+}
+
+.skeleton-policy-policy {
+  display: flex;
+  flex-direction: column;
+}
+
+.skeleton-table-text {
+  width: 110px;
+  height: 14px;
+}
+
+.skeleton-table-text.owner {
+  width: 120px;
+}
+
+.skeleton-status {
+  width: 85px;
+  height: 26px;
+  border-radius: 20px;
+}
+
+.skeleton-date {
+  width: 100px;
+  height: 14px;
+}
+
+.skeleton-view-button {
+  width: 50px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+
+/* =========================================================
+   TABLE POLICY CELL
+   ========================================================= */
+
+.policy-skeleton-policy {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes policies-skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes policies-skeleton-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .skeleton-subtitle {
+    width: 80%;
+  }
+
+  .skeleton-search {
+    width: 190px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .policies-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .skeleton-title {
+    width: 150px;
+    height: 30px;
+  }
+
+  .skeleton-subtitle {
+    width: 100%;
+  }
+
+  .skeleton-add-button {
+    width: 120px;
+  }
+
+  .policies-panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .skeleton-search {
+    width: 100%;
+  }
+
+  .policy-filters {
+    flex-wrap: wrap;
+  }
+
+}

@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./AlertsPage.css";
+import AlertsSkeleton from "../components/LoadingSkeleton/AlertsSkeleton.tsx";
 
 type AlertSeverity = "Critical" | "High" | "Medium" | "Low";
 type AlertStatus = "Open" | "Under Review" | "Resolved";
@@ -77,6 +78,20 @@ function AlertsPage() {
   const [selectedAlert, setSelectedAlert] =
     useState<Alert | null>(null);
 
+  /* =========================================================
+     LOADING
+  ========================================================= */
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   /*
    * KPI calculations
    */
@@ -148,6 +163,14 @@ function AlertsPage() {
 
     setSelectedAlert(null);
   };
+
+  /* =========================================================
+     LOADING SKELETON
+  ========================================================= */
+
+  if (loading) {
+    return <AlertsSkeleton />;
+  }
 
   return (
     <div className="alerts-page">

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import UsersSkeleton from "../components/LoadingSkeleton/UsersSkeleton.tsx";
 import "./UsersPage.css";
 
 interface User {
@@ -54,9 +55,27 @@ const users: User[] = [
 ];
 
 export default function UsersPage() {
+  const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
   const [roleFilter, setRoleFilter] = useState("All");
   const [showModal, setShowModal] = useState(false);
+
+  /* =========================================
+     LOADING
+  ========================================= */
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  /* =========================================
+     FILTER USERS
+  ========================================= */
 
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
@@ -69,13 +88,25 @@ export default function UsersPage() {
     return matchesSearch && matchesRole;
   });
 
+  /* =========================================
+     LOADING SCREEN
+  ========================================= */
+
+  if (loading) {
+    return <UsersSkeleton />;
+  }
+
   return (
     <div className="users-page">
+
       {/* Header */}
       <div className="users-header">
         <div>
           <h1>Users & Roles</h1>
-          <p>Manage users, roles and permissions across the dashboard.</p>
+
+          <p>
+            Manage users, roles and permissions across the dashboard.
+          </p>
         </div>
 
         <button
@@ -88,6 +119,7 @@ export default function UsersPage() {
 
       {/* Summary */}
       <div className="users-summary">
+
         <div className="users-summary-card">
           <span>Total Users</span>
           <strong>{users.length}</strong>
@@ -95,54 +127,88 @@ export default function UsersPage() {
 
         <div className="users-summary-card">
           <span>Active Users</span>
+
           <strong>
-            {users.filter((user) => user.status === "Active").length}
+            {users.filter(
+              (user) => user.status === "Active"
+            ).length}
           </strong>
         </div>
 
         <div className="users-summary-card">
           <span>Administrators</span>
+
           <strong>
-            {users.filter((user) => user.role === "Administrator").length}
+            {users.filter(
+              (user) => user.role === "Administrator"
+            ).length}
           </strong>
         </div>
 
         <div className="users-summary-card">
           <span>Inactive</span>
+
           <strong>
-            {users.filter((user) => user.status === "Inactive").length}
+            {users.filter(
+              (user) => user.status === "Inactive"
+            ).length}
           </strong>
         </div>
+
       </div>
 
       {/* Users Panel */}
       <div className="users-panel">
+
         <div className="users-toolbar">
+
           <input
             type="text"
             placeholder="Search users..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
           />
 
           <select
             value={roleFilter}
-            onChange={(e) => setRoleFilter(e.target.value)}
+            onChange={(e) =>
+              setRoleFilter(e.target.value)
+            }
           >
-            <option value="All">All Roles</option>
-            <option value="Administrator">Administrator</option>
+            <option value="All">
+              All Roles
+            </option>
+
+            <option value="Administrator">
+              Administrator
+            </option>
+
             <option value="Compliance Manager">
               Compliance Manager
             </option>
-            <option value="Risk Analyst">Risk Analyst</option>
-            <option value="Auditor">Auditor</option>
-            <option value="Viewer">Viewer</option>
+
+            <option value="Risk Analyst">
+              Risk Analyst
+            </option>
+
+            <option value="Auditor">
+              Auditor
+            </option>
+
+            <option value="Viewer">
+              Viewer
+            </option>
           </select>
+
         </div>
 
         {/* Desktop Table */}
         <div className="users-table-wrapper">
+
           <table className="users-table">
+
             <thead>
               <tr>
                 <th>User</th>
@@ -154,10 +220,15 @@ export default function UsersPage() {
             </thead>
 
             <tbody>
+
               {filteredUsers.map((user) => (
+
                 <tr key={user.id}>
+
                   <td>
+
                     <div className="user-info">
+
                       <div className="user-avatar">
                         {user.name
                           .split(" ")
@@ -166,33 +237,59 @@ export default function UsersPage() {
                       </div>
 
                       <div>
-                        <strong>{user.name}</strong>
-                        <span>{user.email}</span>
+                        <strong>
+                          {user.name}
+                        </strong>
+
+                        <span>
+                          {user.email}
+                        </span>
                       </div>
+
                     </div>
+
                   </td>
 
-                  <td>{user.role}</td>
+                  <td>
+                    {user.role}
+                  </td>
 
                   <td>
+
                     <span
                       className={`user-status ${user.status.toLowerCase()}`}
                     >
                       {user.status}
                     </span>
-                  </td>
 
-                  <td>{user.lastActive}</td>
+                  </td>
 
                   <td>
-                    <div className="user-actions">
-                      <button>View</button>
-                      <button>Edit</button>
-                    </div>
+                    {user.lastActive}
                   </td>
+
+                  <td>
+
+                    <div className="user-actions">
+
+                      <button>
+                        View
+                      </button>
+
+                      <button>
+                        Edit
+                      </button>
+
+                    </div>
+
+                  </td>
+
                 </tr>
+
               ))}
+
             </tbody>
+
           </table>
 
           {filteredUsers.length === 0 && (
@@ -200,14 +297,23 @@ export default function UsersPage() {
               No users found.
             </div>
           )}
+
         </div>
 
         {/* Mobile Cards */}
         <div className="mobile-users-list">
+
           {filteredUsers.map((user) => (
-            <div className="mobile-user-card" key={user.id}>
+
+            <div
+              className="mobile-user-card"
+              key={user.id}
+            >
+
               <div className="mobile-user-header">
+
                 <div className="user-info">
+
                   <div className="user-avatar">
                     {user.name
                       .split(" ")
@@ -216,9 +322,17 @@ export default function UsersPage() {
                   </div>
 
                   <div>
-                    <strong>{user.name}</strong>
-                    <span>{user.email}</span>
+
+                    <strong>
+                      {user.name}
+                    </strong>
+
+                    <span>
+                      {user.email}
+                    </span>
+
                   </div>
+
                 </div>
 
                 <span
@@ -226,25 +340,41 @@ export default function UsersPage() {
                 >
                   {user.status}
                 </span>
+
               </div>
 
               <div className="mobile-user-details">
+
                 <div>
                   <span>Role</span>
-                  <strong>{user.role}</strong>
+                  <strong>
+                    {user.role}
+                  </strong>
                 </div>
 
                 <div>
                   <span>Last Active</span>
-                  <strong>{user.lastActive}</strong>
+                  <strong>
+                    {user.lastActive}
+                  </strong>
                 </div>
+
               </div>
 
               <div className="mobile-user-actions">
-                <button>View</button>
-                <button>Edit</button>
+
+                <button>
+                  View
+                </button>
+
+                <button>
+                  Edit
+                </button>
+
               </div>
+
             </div>
+
           ))}
 
           {filteredUsers.length === 0 && (
@@ -252,30 +382,48 @@ export default function UsersPage() {
               No users found.
             </div>
           )}
+
         </div>
+
       </div>
 
       {/* Add User Modal */}
       {showModal && (
+
         <div className="users-modal-overlay">
+
           <div className="users-modal">
+
             <div className="users-modal-header">
+
               <div>
-                <h2>Add New User</h2>
-                <p>Create a new dashboard user.</p>
+
+                <h2>
+                  Add New User
+                </h2>
+
+                <p>
+                  Create a new dashboard user.
+                </p>
+
               </div>
 
               <button
                 className="users-modal-close"
-                onClick={() => setShowModal(false)}
+                onClick={() =>
+                  setShowModal(false)
+                }
               >
                 ×
               </button>
+
             </div>
 
             <div className="users-form">
+
               <label>
                 Full Name
+
                 <input
                   type="text"
                   placeholder="e.g. John Banda"
@@ -284,6 +432,7 @@ export default function UsersPage() {
 
               <label>
                 Email
+
                 <input
                   type="email"
                   placeholder="e.g. john@company.com"
@@ -292,37 +441,66 @@ export default function UsersPage() {
 
               <label>
                 Role
+
                 <select defaultValue="">
                   <option value="" disabled>
                     Select role
                   </option>
-                  <option>Administrator</option>
-                  <option>Compliance Manager</option>
-                  <option>Risk Analyst</option>
-                  <option>Auditor</option>
-                  <option>Viewer</option>
+
+                  <option>
+                    Administrator
+                  </option>
+
+                  <option>
+                    Compliance Manager
+                  </option>
+
+                  <option>
+                    Risk Analyst
+                  </option>
+
+                  <option>
+                    Auditor
+                  </option>
+
+                  <option>
+                    Viewer
+                  </option>
+
                 </select>
+
               </label>
+
             </div>
 
             <div className="users-modal-footer">
+
               <button
                 className="users-secondary-button"
-                onClick={() => setShowModal(false)}
+                onClick={() =>
+                  setShowModal(false)
+                }
               >
                 Cancel
               </button>
 
               <button
                 className="users-primary-button"
-                onClick={() => setShowModal(false)}
+                onClick={() =>
+                  setShowModal(false)
+                }
               >
                 Create User
               </button>
+
             </div>
+
           </div>
+
         </div>
+
       )}
+
     </div>
   );
 }

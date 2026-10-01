@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ReportsSkeleton from "../components/LoadingSkeleton/ReportsSkeleton.tsx";
 import "./ReportsPage.css";
 
 interface Report {
@@ -42,10 +43,23 @@ const REPORTS: Report[] = [
 
 export default function ReportsPage() {
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredReports = REPORTS.filter((report) =>
     report.title.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (loading) {
+    return <ReportsSkeleton />;
+  }
 
   return (
     <main className="reports-page">

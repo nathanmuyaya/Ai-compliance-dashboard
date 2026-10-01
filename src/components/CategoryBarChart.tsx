@@ -1,7 +1,11 @@
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import type { CategorySales } from "../types";
 
-const currency = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+const currency = new Intl.NumberFormat("en-ZM", {
+  style: "currency",
+  currency: "ZMW",
+  maximumFractionDigits: 0,
+});
 
 function CustomTooltip({ active, payload }: any) {
   if (!active || !payload?.length) return null;
@@ -34,7 +38,7 @@ export default function CategoryBarChart({ data }: { data: CategorySales[] }) {
           <CartesianGrid stroke="var(--gridline)" horizontal={false} />
           <XAxis
             type="number"
-            tickFormatter={(v) => `$${Math.round(v / 1000)}k`}
+            tickFormatter={(v) => `ZMW ${Math.round(v / 1000)}k`}
             stroke="var(--baseline)"
             tick={{ fill: "var(--text-muted)", fontSize: 12 }}
             tickLine={false}

@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import SplashScreen from "./components/SplashScreen";
+import { ToastProvider } from "./components/Toast/Toast";
+
 import AppLayout from "./layout/AppLayout";
 import ProfilePage from "./pages/ProfilePage";
 
@@ -17,7 +19,7 @@ import SettingsPage from "./pages/SettingsPage";
 
 export default function App() {
   return (
-    <>
+    <ToastProvider>
       <SplashScreen />
 
       <Routes>
@@ -43,6 +45,6 @@ export default function App() {
           <Route path="profile" element={<ProfilePage />} />
         </Route>
       </Routes>
-    </>
+    </ToastProvider>
   );
 }

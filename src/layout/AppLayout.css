@@ -74,6 +74,30 @@
   padding: 32px 24px 64px;
 
   box-sizing: border-box;
+
+  /*
+     Smooth page entrance animation.
+  */
+  animation: pageEnter 0.35s ease-out;
+}
+
+
+/* =========================================================
+   PAGE TRANSITION
+   ========================================================= */
+
+@keyframes pageEnter {
+
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
 }
 
 
@@ -270,9 +294,79 @@
 
 @media (prefers-reduced-motion: reduce) {
 
+  .app-shell,
   .brightness-overlay,
   .sidebar-backdrop {
+    animation: none;
     transition: none;
   }
 
+}
+
+/* =========================================================
+   APP SHELL
+   ========================================================= */
+
+.shell {
+  --sidebar-width: 250px;
+  --sidebar-collapsed-width: 76px;
+
+  min-height: 100vh;
+  display: flex;
+  background: var(--surface-0);
+}
+
+/* =========================================================
+   SIDEBAR TRANSITION
+   ========================================================= */
+
+.shell > .sidebar {
+  width: var(--sidebar-width);
+  flex: 0 0 var(--sidebar-width);
+
+  transition:
+    width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    flex-basis 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+
+  will-change: width;
+}
+
+/* =========================================================
+   COLLAPSED SIDEBAR
+   ========================================================= */
+
+.shell.sidebar-collapsed > .sidebar {
+  width: var(--sidebar-collapsed-width);
+  flex-basis: var(--sidebar-collapsed-width);
+}
+
+/* =========================================================
+   MAIN CONTENT
+   ========================================================= */
+
+.shell .main {
+  min-width: 0;
+  flex: 1;
+
+  transition:
+    margin-left 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+
+  will-change: margin-left, width;
+}
+
+/* =========================================================
+   SIDEBAR COLLAPSE TRANSITION
+   ========================================================= */
+
+.sidebar {
+  transition:
+    width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    min-width 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Keep the main dashboard in its existing position */
+.main {
+  min-width: 0;
 }

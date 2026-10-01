@@ -1,0 +1,452 @@
+/* =========================================================
+   SALES SKELETON
+   ========================================================= */
+
+.sales-skeleton-page {
+  animation: skeleton-fade-in 0.2s ease;
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(148, 163, 184, 0.14);
+  border-radius: 6px;
+}
+
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  transform: translateX(-100%);
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+
+  animation: skeleton-shimmer 1.5s infinite;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.skeleton-label {
+  width: 130px;
+  height: 12px;
+  margin-bottom: 12px;
+}
+
+.skeleton-title {
+  width: 360px;
+  height: 34px;
+  margin-bottom: 14px;
+}
+
+.skeleton-subtitle {
+  width: 520px;
+  height: 16px;
+}
+
+.skeleton-export-button {
+  width: 130px;
+  height: 42px;
+  border-radius: 8px;
+}
+
+
+/* =========================================================
+   KPI CARDS
+   ========================================================= */
+
+.skeleton-card {
+  min-height: 145px;
+}
+
+.skeleton-kpi-label {
+  width: 110px;
+  height: 14px;
+  margin-bottom: 18px;
+}
+
+.skeleton-kpi-value {
+  width: 125px;
+  height: 32px;
+  margin-bottom: 14px;
+}
+
+.skeleton-kpi-small {
+  width: 180px;
+  height: 12px;
+}
+
+
+/* =========================================================
+   PANELS
+   ========================================================= */
+
+.skeleton-panel-title {
+  width: 210px;
+  height: 26px;
+  margin-bottom: 12px;
+}
+
+.skeleton-panel-subtitle {
+  width: 320px;
+  height: 14px;
+}
+
+.skeleton-revenue-label {
+  width: 90px;
+  height: 12px;
+  margin-bottom: 10px;
+}
+
+.skeleton-revenue-value {
+  width: 110px;
+  height: 28px;
+}
+
+
+/* =========================================================
+   REVENUE CHART
+   ========================================================= */
+
+.sales-revenue-skeleton-chart {
+  display: flex;
+  min-height: 330px;
+  margin-top: 30px;
+}
+
+.skeleton-y-axis {
+  width: 80px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 5px 15px 40px 0;
+}
+
+.skeleton-axis-label {
+  width: 55px;
+  height: 11px;
+}
+
+.skeleton-chart-area {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.skeleton-chart-grid {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.skeleton-chart-grid span {
+  width: 100%;
+  height: 1px;
+  background: rgba(148, 163, 184, 0.12);
+}
+
+.skeleton-bars {
+  position: relative;
+  z-index: 2;
+
+  height: 100%;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-around;
+
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.skeleton-bar-column {
+  flex: 1;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.skeleton-bar-value {
+  width: 45px;
+  height: 11px;
+  margin-bottom: 8px;
+}
+
+.skeleton-bar-wrapper {
+  height: 75%;
+  width: 45px;
+
+  display: flex;
+  align-items: flex-end;
+}
+
+.skeleton-bar {
+  width: 100%;
+  border-radius: 6px 6px 2px 2px;
+}
+
+.skeleton-product-label {
+  width: 55px;
+  height: 10px;
+  margin-top: 12px;
+}
+
+.skeleton-date-label {
+  width: 65px;
+  height: 9px;
+  margin-top: 7px;
+}
+
+
+/* =========================================================
+   CATEGORY PERFORMANCE
+   ========================================================= */
+
+.skeleton-category-name {
+  width: 120px;
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.skeleton-category-value {
+  width: 70px;
+  height: 13px;
+}
+
+.skeleton-progress {
+  width: 100%;
+  height: 10px;
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   AI HANDOVER
+   ========================================================= */
+
+.skeleton-handover-title {
+  width: 350px;
+  height: 28px;
+  margin-bottom: 12px;
+}
+
+.skeleton-handover-subtitle {
+  width: 500px;
+  height: 14px;
+}
+
+.skeleton-ai-status {
+  width: 150px;
+  height: 34px;
+  border-radius: 20px;
+}
+
+.skeleton-handover-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+}
+
+.skeleton-stat-number {
+  width: 45px;
+  height: 23px;
+  margin-bottom: 7px;
+}
+
+.skeleton-stat-label {
+  width: 110px;
+  height: 12px;
+}
+
+
+/* =========================================================
+   TABLES
+   ========================================================= */
+
+.skeleton-table-text {
+  width: 85px;
+  height: 14px;
+}
+
+.skeleton-table-text.medium {
+  width: 110px;
+}
+
+.skeleton-table-text.short {
+  width: 55px;
+}
+
+.skeleton-table-product {
+  width: 100px;
+  height: 14px;
+}
+
+.skeleton-confidence {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.skeleton-confidence-bar {
+  width: 70px;
+  height: 7px;
+  border-radius: 10px;
+}
+
+.skeleton-confidence-value {
+  width: 32px;
+  height: 12px;
+}
+
+.skeleton-badge {
+  width: 60px;
+  height: 25px;
+  border-radius: 20px;
+}
+
+.skeleton-status {
+  width: 75px;
+  height: 25px;
+  border-radius: 20px;
+}
+
+
+/* =========================================================
+   RECENT SALES
+   ========================================================= */
+
+.skeleton-search {
+  width: 220px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.skeleton-filter {
+  width: 75px;
+  height: 36px;
+  border-radius: 7px;
+}
+
+.skeleton-filter.active {
+  width: 55px;
+}
+
+.skeleton-select {
+  width: 140px;
+  height: 36px;
+  border-radius: 7px;
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes skeleton-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .skeleton-title {
+    width: 280px;
+  }
+
+  .skeleton-subtitle {
+    width: 90%;
+  }
+
+  .skeleton-handover-title {
+    width: 280px;
+  }
+
+  .skeleton-handover-subtitle {
+    width: 90%;
+  }
+
+  .sales-revenue-skeleton-chart {
+    min-height: 280px;
+  }
+
+}
+
+
+@media (max-width: 650px) {
+
+  .sales-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .skeleton-export-button {
+    width: 120px;
+  }
+
+  .skeleton-title {
+    width: 230px;
+    height: 28px;
+  }
+
+  .skeleton-subtitle {
+    width: 100%;
+  }
+
+  .sales-revenue-skeleton-chart {
+    min-height: 240px;
+  }
+
+  .skeleton-bars {
+    gap: 8px;
+    padding: 0 5px;
+  }
+
+  .skeleton-bar-wrapper {
+    width: 28px;
+  }
+
+  .skeleton-bar {
+    width: 28px;
+  }
+
+  .skeleton-y-axis {
+    width: 55px;
+  }
+
+  .skeleton-axis-label {
+    width: 40px;
+  }
+
+}

@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import PoliciesSkeleton from "../components/LoadingSkeleton/PoliciesSkeleton";
 import "./PoliciesPage.css";
 
 type PolicyStatus = "Active" | "Under Review" | "Expired";
@@ -62,6 +63,8 @@ const INITIAL_POLICIES: Policy[] = [
 ];
 
 export default function PoliciesPage() {
+  const [loading, setLoading] = useState(true);
+
   const [policies, setPolicies] = useState<Policy[]>(
     INITIAL_POLICIES
   );
@@ -83,6 +86,18 @@ export default function PoliciesPage() {
     lastReviewed: "",
     nextReview: "",
   });
+
+  /* =========================================
+     LOADING
+  ========================================= */
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   /* =========================================
      FILTER OPTIONS
@@ -200,6 +215,14 @@ export default function PoliciesPage() {
 
     setShowAddModal(false);
   };
+
+  /* =========================================
+     SHOW LOADING SKELETON
+  ========================================= */
+
+  if (loading) {
+    return <PoliciesSkeleton />;
+  }
 
   return (
     <main className="policies-page">
@@ -433,6 +456,7 @@ export default function PoliciesPage() {
           >
 
             <div className="policy-modal-header">
+
               <div>
                 <span>POLICY DETAILS</span>
 
@@ -453,6 +477,7 @@ export default function PoliciesPage() {
               >
                 ×
               </button>
+
             </div>
 
             <div className="policy-details-grid">

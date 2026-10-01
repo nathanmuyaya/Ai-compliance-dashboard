@@ -12,7 +12,7 @@ export default function AppLayout() {
   ========================================================= */
 
   const [sidebarCollapsed, setSidebarCollapsed] =
-    useState(false);
+    useState(true);
 
   const toggleSidebar = () => {
     setSidebarCollapsed((current) => !current);

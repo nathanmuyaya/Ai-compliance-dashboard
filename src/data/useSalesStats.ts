@@ -1,19 +1,145 @@
-import { useMemo } from "react";
-import { DAILY_SALES, FLAGGED_RISKS } from "./mockData";
+import { useEffect, useMemo, useState } from "react";
+import {
+  DAILY_SALES,
+  FLAGGED_RISKS,
+  SALES,
+} from "./mockData";
 
 export function useSalesStats() {
-  return useMemo(() => {
+  const [loading, setLoading] = useState(true);
+
+  const stats = useMemo(() => {
+    /* =========================================================
+       SALES SUMMARY
+    ========================================================= */
+
+    const totalRevenue = SALES.reduce(
+      (sum, sale) => sum + sale.amount,
+      0
+    );
+
+    const completedSales = SALES.filter(
+      (sale) => sale.status === "Completed"
+    );
+
+    const pendingSales = SALES.filter(
+      (sale) => sale.status === "Pending"
+    );
+
+    const flaggedSales = SALES.filter(
+      (sale) => sale.status === "Flagged"
+    );
+
+    const completedRevenue = completedSales.reduce(
+      (sum, sale) => sum + sale.amount,
+      0
+    );
+
+    const completedOrders = completedSales.length;
+
+    const avgOrderValue =
+      SALES.length > 0
+        ? totalRevenue / SALES.length
+        : 0;
+
+    const averageCompletedOrder =
+      completedOrders > 0
+        ? completedRevenue / completedOrders
+        : 0;
+
+    /* =========================================================
+       OVERVIEW KPI VALUES
+    ========================================================= */
+
+    // Revenue represents all recorded sales.
+    const revenue30 = totalRevenue;
+
+    // Orders represents completed transactions.
+    const orders30 = completedOrders;
+
+    /* =========================================================
+       REVENUE COMPARISON
+    ========================================================= */
+
     const last30 = DAILY_SALES.slice(-30);
     const prev30 = DAILY_SALES.slice(-60, -30);
-    const revenue30 = last30.reduce((sum, d) => sum + d.revenue, 0);
-    const revenuePrev30 = prev30.reduce((sum, d) => sum + d.revenue, 0);
-    const orders30 = last30.reduce((sum, d) => sum + d.orders, 0);
-    const avgOrderValue = revenue30 / orders30;
-    const revenueDeltaPct = ((revenue30 - revenuePrev30) / revenuePrev30) * 100;
 
-    const openRisks = FLAGGED_RISKS.filter((r) => r.status !== "resolved");
-    const criticalOpen = FLAGGED_RISKS.filter((r) => r.status !== "resolved" && r.severity === "critical");
+    const historicalRevenue30 = last30.reduce(
+      (sum, day) => sum + day.revenue,
+      0
+    );
 
-    return { revenue30, orders30, avgOrderValue, revenueDeltaPct, openRisks, criticalOpen };
+    const historicalRevenuePrev30 = prev30.reduce(
+      (sum, day) => sum + day.revenue,
+      0
+    );
+
+    const revenueDeltaPct =
+      historicalRevenuePrev30 > 0
+        ? ((historicalRevenue30 - historicalRevenuePrev30) /
+            historicalRevenuePrev30) *
+          100
+        : null;
+
+    /* =========================================================
+       RISK SUMMARY
+    ========================================================= */
+
+    const openRisks = FLAGGED_RISKS.filter(
+      (risk) => risk.status !== "resolved"
+    );
+
+    const criticalOpen = FLAGGED_RISKS.filter(
+      (risk) =>
+        risk.status !== "resolved" &&
+        risk.severity === "critical"
+    );
+
+    /* =========================================================
+       RETURN STATS
+    ========================================================= */
+
+    return {
+      // Sales totals
+      totalRevenue,
+      completedRevenue,
+      completedSales,
+      pendingSales,
+      flaggedSales,
+
+      // Orders
+      orders: SALES.length,
+      completedOrders,
+
+      // Average values
+      avgOrderValue,
+      averageCompletedOrder,
+
+      // Overview KPIs
+      revenue30,
+      orders30,
+      revenueDeltaPct,
+
+      // Risks
+      openRisks,
+      criticalOpen,
+    };
   }, []);
+
+  /* =========================================================
+     LOADING
+  ========================================================= */
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  return {
+    ...stats,
+    loading,
+  };
 }

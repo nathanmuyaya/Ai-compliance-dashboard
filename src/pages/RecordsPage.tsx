@@ -1,7 +1,18 @@
-import { useMemo, useState, type FormEvent } from "react";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  type FormEvent,
+} from "react";
 import "./RecordsPage.css";
+import RecordsSkeleton from "../components/LoadingSkeleton/RecordsSkeleton.tsx";
 
-type RecordStatus = "Open" | "Under Review" | "Verified" | "Resolved";
+type RecordStatus =
+  | "Open"
+  | "Under Review"
+  | "Verified"
+  | "Resolved";
+
 type RiskLevel = "High" | "Medium" | "Low";
 
 interface AuditRecord {
@@ -28,7 +39,8 @@ const initialRecords: AuditRecord[] = [
     confidence: 94,
     risk: "High",
     status: "Open",
-    notes: "Product handover detected but no matching sale was found.",
+    notes:
+      "Product handover detected but no matching sale was found.",
   },
   {
     id: "AUD-002",
@@ -40,7 +52,8 @@ const initialRecords: AuditRecord[] = [
     confidence: 97,
     risk: "Low",
     status: "Verified",
-    notes: "Handover matched with a recorded transaction.",
+    notes:
+      "Handover matched with a recorded transaction.",
   },
   {
     id: "AUD-003",
@@ -52,7 +65,8 @@ const initialRecords: AuditRecord[] = [
     confidence: 91,
     risk: "High",
     status: "Under Review",
-    notes: "No matching transaction found in the sales records.",
+    notes:
+      "No matching transaction found in the sales records.",
   },
   {
     id: "AUD-004",
@@ -64,7 +78,8 @@ const initialRecords: AuditRecord[] = [
     confidence: 96,
     risk: "Low",
     status: "Verified",
-    notes: "Transaction successfully matched.",
+    notes:
+      "Transaction successfully matched.",
   },
   {
     id: "AUD-005",
@@ -76,12 +91,14 @@ const initialRecords: AuditRecord[] = [
     confidence: 88,
     risk: "Medium",
     status: "Open",
-    notes: "Possible unrecorded transaction requires investigation.",
+    notes:
+      "Possible unrecorded transaction requires investigation.",
   },
 ];
 
 function RecordsPage() {
-  const [records, setRecords] = useState<AuditRecord[]>(initialRecords);
+  const [records, setRecords] =
+    useState<AuditRecord[]>(initialRecords);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
@@ -91,17 +108,34 @@ function RecordsPage() {
   const [selectedRecord, setSelectedRecord] =
     useState<AuditRecord | null>(null);
 
+  // Loading state
+  const [loading, setLoading] = useState(true);
+
   // New record form
   const [employee, setEmployee] = useState("");
   const [item, setItem] = useState("");
   const [time, setTime] = useState("");
   const [recordedSale, setRecordedSale] = useState(false);
-  const [risk, setRisk] = useState<RiskLevel>("Medium");
+  const [risk, setRisk] =
+    useState<RiskLevel>("Medium");
   const [notes, setNotes] = useState("");
+
+  /*
+   * Loading
+   */
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   /*
    * KPI calculations
    */
+
   const totalActivities = records.length;
 
   const unrecordedSales = records.filter(
@@ -120,7 +154,8 @@ function RecordsPage() {
     records.length > 0
       ? Math.round(
           records.reduce(
-            (total, record) => total + record.confidence,
+            (total, record) =>
+              total + record.confidence,
             0
           ) / records.length
         )
@@ -129,6 +164,7 @@ function RecordsPage() {
   /*
    * Search + filters
    */
+
   const filteredRecords = useMemo(() => {
     return records.filter((record) => {
       const matchesSearch =
@@ -150,13 +186,23 @@ function RecordsPage() {
         riskFilter === "All" ||
         record.risk === riskFilter;
 
-      return matchesSearch && matchesStatus && matchesRisk;
+      return (
+        matchesSearch &&
+        matchesStatus &&
+        matchesRisk
+      );
     });
-  }, [records, searchTerm, statusFilter, riskFilter]);
+  }, [
+    records,
+    searchTerm,
+    statusFilter,
+    riskFilter,
+  ]);
 
   /*
    * Add new record
    */
+
   const handleAddRecord = (event: FormEvent) => {
     event.preventDefault();
 
@@ -165,7 +211,10 @@ function RecordsPage() {
     }
 
     const newRecord: AuditRecord = {
-      id: `AUD-${String(records.length + 1).padStart(3, "0")}`,
+      id: `AUD-${String(records.length + 1).padStart(
+        3,
+        "0"
+      )}`,
       time,
       employee,
       item,
@@ -173,7 +222,9 @@ function RecordsPage() {
       recordedSale,
       confidence: 0,
       risk,
-      status: recordedSale ? "Verified" : "Open",
+      status: recordedSale
+        ? "Verified"
+        : "Open",
       notes:
         notes ||
         (recordedSale
@@ -199,6 +250,7 @@ function RecordsPage() {
   /*
    * Resolve a record
    */
+
   const handleResolve = (id: string) => {
     setRecords((currentRecords) =>
       currentRecords.map((record) =>
@@ -212,21 +264,38 @@ function RecordsPage() {
     );
   };
 
+  /*
+   * Loading skeleton
+   */
+
+  if (loading) {
+    return <RecordsSkeleton />;
+  }
+
   return (
     <div className="audits-page">
-      {/* PAGE HEADER */}
+
+      {/* =====================================================
+          PAGE HEADER
+      ===================================================== */}
+
       <header className="audits-header">
+
         <div>
+
           <span className="audits-eyebrow">
             AI COMPLIANCE MONITORING
           </span>
 
-          <h1>Records & Transaction Monitoring</h1>
+          <h1>
+            Records & Transaction Monitoring
+          </h1>
 
           <p>
-            Monitor product handovers, transaction records, and
-            AI-detected compliance exceptions.
+            Monitor product handovers, transaction records,
+            and AI-detected compliance exceptions.
           </p>
+
         </div>
 
         <button
@@ -235,84 +304,178 @@ function RecordsPage() {
         >
           + Add Record
         </button>
+
       </header>
 
-      {/* KPI CARDS */}
+
+      {/* =====================================================
+          KPI CARDS
+      ===================================================== */}
+
       <section className="audit-kpis">
+
         <div className="audit-kpi-card">
-          <div className="kpi-icon">◉</div>
+
+          <div className="kpi-icon">
+            ◉
+          </div>
 
           <div className="kpi-content">
-            <span>Detected Activities</span>
-            <strong>{totalActivities}</strong>
-            <small>AI-detected handovers</small>
+
+            <span>
+              Detected Activities
+            </span>
+
+            <strong>
+              {totalActivities}
+            </strong>
+
+            <small>
+              AI-detected handovers
+            </small>
+
           </div>
+
         </div>
+
 
         <div className="audit-kpi-card critical">
-          <div className="kpi-icon">!</div>
+
+          <div className="kpi-icon">
+            !
+          </div>
 
           <div className="kpi-content">
-            <span>Unrecorded Sales</span>
-            <strong>{unrecordedSales}</strong>
-            <small>Require investigation</small>
+
+            <span>
+              Unrecorded Sales
+            </span>
+
+            <strong>
+              {unrecordedSales}
+            </strong>
+
+            <small>
+              Require investigation
+            </small>
+
           </div>
+
         </div>
+
 
         <div className="audit-kpi-card success">
-          <div className="kpi-icon">✓</div>
+
+          <div className="kpi-icon">
+            ✓
+          </div>
 
           <div className="kpi-content">
-            <span>Verified Transactions</span>
-            <strong>{verifiedTransactions}</strong>
-            <small>Matched with sales</small>
+
+            <span>
+              Verified Transactions
+            </span>
+
+            <strong>
+              {verifiedTransactions}
+            </strong>
+
+            <small>
+              Matched with sales
+            </small>
+
           </div>
+
         </div>
+
 
         <div className="audit-kpi-card warning">
-          <div className="kpi-icon">▲</div>
+
+          <div className="kpi-icon">
+            ▲
+          </div>
 
           <div className="kpi-content">
-            <span>High Risk</span>
-            <strong>{highRiskRecords}</strong>
-            <small>Need immediate attention</small>
+
+            <span>
+              High Risk
+            </span>
+
+            <strong>
+              {highRiskRecords}
+            </strong>
+
+            <small>
+              Need immediate attention
+            </small>
+
           </div>
+
         </div>
+
       </section>
 
-      {/* MONITORING SUMMARY */}
-      <section className="audit-summary">
-        <div>
-          <span>AI Detection Confidence</span>
 
-          <strong>{averageConfidence}%</strong>
+      {/* =====================================================
+          MONITORING SUMMARY
+      ===================================================== */}
+
+      <section className="audit-summary">
+
+        <div>
+
+          <span>
+            AI Detection Confidence
+          </span>
+
+          <strong>
+            {averageConfidence}%
+          </strong>
 
           <p>
             Average confidence across detected activities
           </p>
+
         </div>
 
         <div className="summary-progress">
+
           <div
             className="summary-progress-fill"
-            style={{ width: `${averageConfidence}%` }}
+            style={{
+              width: `${averageConfidence}%`,
+            }}
           />
+
         </div>
+
       </section>
 
-      {/* RECORDS PANEL */}
+
+      {/* =====================================================
+          RECORDS PANEL
+      ===================================================== */}
+
       <section className="audit-panel">
+
         <div className="audit-panel-header">
+
           <div>
-            <h2>Records</h2>
+
+            <h2>
+              Records
+            </h2>
 
             <p>
               AI-detected product handovers and transaction
               verification results.
             </p>
+
           </div>
 
+
           <div className="audit-controls">
+
             <input
               type="text"
               className="audit-search"
@@ -323,6 +486,7 @@ function RecordsPage() {
               }
             />
 
+
             <select
               className="audit-filter"
               value={statusFilter}
@@ -330,14 +494,29 @@ function RecordsPage() {
                 setStatusFilter(event.target.value)
               }
             >
-              <option value="All">All Status</option>
-              <option value="Open">Open</option>
+
+              <option value="All">
+                All Status
+              </option>
+
+              <option value="Open">
+                Open
+              </option>
+
               <option value="Under Review">
                 Under Review
               </option>
-              <option value="Verified">Verified</option>
-              <option value="Resolved">Resolved</option>
+
+              <option value="Verified">
+                Verified
+              </option>
+
+              <option value="Resolved">
+                Resolved
+              </option>
+
             </select>
+
 
             <select
               className="audit-filter"
@@ -346,18 +525,40 @@ function RecordsPage() {
                 setRiskFilter(event.target.value)
               }
             >
-              <option value="All">All Risk</option>
-              <option value="High">High</option>
-              <option value="Medium">Medium</option>
-              <option value="Low">Low</option>
+
+              <option value="All">
+                All Risk
+              </option>
+
+              <option value="High">
+                High
+              </option>
+
+              <option value="Medium">
+                Medium
+              </option>
+
+              <option value="Low">
+                Low
+              </option>
+
             </select>
+
           </div>
+
         </div>
 
-        {/* TABLE */}
+
+        {/* ===================================================
+            TABLE
+        =================================================== */}
+
         <div className="audit-table-wrapper">
+
           <table className="audit-table">
+
             <thead>
+
               <tr>
                 <th>Record</th>
                 <th>Time</th>
@@ -369,50 +570,82 @@ function RecordsPage() {
                 <th>Status</th>
                 <th>Action</th>
               </tr>
+
             </thead>
 
+
             <tbody>
+
               {filteredRecords.length > 0 ? (
+
                 filteredRecords.map((record) => (
+
                   <tr key={record.id}>
+
                     {/* RECORD */}
+
                     <td>
+
                       <div className="audit-record-info">
-                        <strong>{record.id}</strong>
+
+                        <strong>
+                          {record.id}
+                        </strong>
 
                         <span>
                           {record.recordedSale
                             ? "Sale matched"
                             : "Sale not matched"}
                         </span>
+
                       </div>
+
                     </td>
 
+
                     {/* TIME */}
+
                     <td>
+
                       <span className="audit-time">
                         {record.time}
                       </span>
+
                     </td>
+
 
                     {/* EMPLOYEE */}
+
                     <td>
-                      <strong>{record.employee}</strong>
+
+                      <strong>
+                        {record.employee}
+                      </strong>
+
                     </td>
 
+
                     {/* ITEM */}
+
                     <td>
+
                       <span className="audit-item">
                         {record.item}
                       </span>
+
                     </td>
 
+
                     {/* AI DETECTION */}
+
                     <td>
+
                       <div className="detection-info">
+
                         <span className="detection-dot" />
 
                         <div>
+
                           <strong>
                             {record.activity}
                           </strong>
@@ -422,41 +655,61 @@ function RecordsPage() {
                               ? "Transaction found"
                               : "No matching sale"}
                           </small>
+
                         </div>
+
                       </div>
+
                     </td>
 
+
                     {/* CONFIDENCE */}
+
                     <td>
+
                       <div className="confidence">
+
                         <div className="confidence-value">
+
                           <strong>
                             {record.confidence}%
                           </strong>
+
                         </div>
 
                         <div className="confidence-bar">
+
                           <div
                             className="confidence-progress"
                             style={{
                               width: `${record.confidence}%`,
                             }}
                           />
+
                         </div>
+
                       </div>
+
                     </td>
 
+
                     {/* RISK */}
+
                     <td>
+
                       <span
                         className={`risk-badge ${record.risk.toLowerCase()}`}
                       >
                         {record.risk}
                       </span>
+
                     </td>
 
+
                     {/* STATUS */}
+
                     <td>
+
                       <span
                         className={`status-badge ${record.status
                           .toLowerCase()
@@ -464,11 +717,16 @@ function RecordsPage() {
                       >
                         {record.status}
                       </span>
+
                     </td>
 
+
                     {/* ACTION */}
+
                     <td>
+
                       <div className="audit-actions">
+
                         <button
                           className="view-button"
                           onClick={() =>
@@ -480,6 +738,7 @@ function RecordsPage() {
 
                         {!record.recordedSale &&
                           record.status !== "Resolved" && (
+
                             <button
                               className="resolve-button"
                               onClick={() =>
@@ -488,72 +747,126 @@ function RecordsPage() {
                             >
                               Resolve
                             </button>
+
                           )}
+
                       </div>
+
                     </td>
+
                   </tr>
+
                 ))
+
               ) : (
+
                 <tr>
+
                   <td
                     colSpan={9}
                     className="empty-state"
                   >
                     No records match your filters.
                   </td>
+
                 </tr>
+
               )}
+
             </tbody>
+
           </table>
+
         </div>
+
       </section>
 
-      {/* RECENT EXCEPTIONS */}
+
+      {/* =====================================================
+          RECENT EXCEPTIONS
+      ===================================================== */}
+
       <section className="audit-bottom-grid">
+
         <div className="audit-insight-card">
+
           <div className="insight-header">
+
             <div>
+
               <span className="card-label">
                 AI INSIGHT
               </span>
 
-              <h3>Transaction Exceptions</h3>
+              <h3>
+                Transaction Exceptions
+              </h3>
+
             </div>
+
           </div>
+
 
           <p>
             The AI system detected{" "}
-            <strong>{unrecordedSales}</strong> product
-            handovers without a corresponding recorded sale.
+            <strong>
+              {unrecordedSales}
+            </strong>{" "}
+            product handovers without a corresponding
+            recorded sale.
           </p>
 
+
           <div className="insight-stat">
-            <strong>{highRiskRecords}</strong>
-            <span>high-risk exceptions</span>
+
+            <strong>
+              {highRiskRecords}
+            </strong>
+
+            <span>
+              high-risk exceptions
+            </span>
+
           </div>
+
         </div>
 
+
         <div className="audit-exceptions-card">
+
           <div className="insight-header">
+
             <div>
+
               <span className="card-label">
                 RECENT ACTIVITY
               </span>
 
-              <h3>Latest Exceptions</h3>
+              <h3>
+                Latest Exceptions
+              </h3>
+
             </div>
+
           </div>
 
+
           <div className="exception-list">
+
             {records
-              .filter((record) => !record.recordedSale)
+              .filter(
+                (record) => !record.recordedSale
+              )
               .slice(0, 3)
               .map((record) => (
+
                 <div
                   className="exception-item"
                   key={record.id}
                 >
+
                   <div>
+
                     <strong>
                       {record.item} — {record.employee}
                     </strong>
@@ -561,7 +874,9 @@ function RecordsPage() {
                     <span>
                       {record.time} · {record.risk} risk
                     </span>
+
                   </div>
+
 
                   <button
                     onClick={() =>
@@ -570,50 +885,77 @@ function RecordsPage() {
                   >
                     View
                   </button>
+
                 </div>
+
               ))}
+
           </div>
+
         </div>
+
       </section>
 
-      {/* ADD RECORD MODAL */}
+
+      {/* =====================================================
+          ADD RECORD MODAL
+      ===================================================== */}
+
       {showForm && (
+
         <div
           className="audit-modal-overlay"
           onClick={() => setShowForm(false)}
         >
+
           <div
             className="audit-modal"
             onClick={(event) =>
               event.stopPropagation()
             }
           >
+
             <div className="audit-modal-header">
+
               <div>
+
                 <span className="card-label">
                   RECORD
                 </span>
 
-                <h2>Add Record</h2>
+                <h2>
+                  Add Record
+                </h2>
 
                 <p>
                   Add a transaction or product handover
                   for monitoring.
                 </p>
+
               </div>
+
 
               <button
                 className="close-modal"
-                onClick={() => setShowForm(false)}
+                onClick={() =>
+                  setShowForm(false)
+                }
               >
                 ×
               </button>
+
             </div>
 
+
             <form onSubmit={handleAddRecord}>
+
               <div className="form-row">
+
                 <div className="form-group">
-                  <label>Employee</label>
+
+                  <label>
+                    Employee
+                  </label>
 
                   <input
                     type="text"
@@ -624,10 +966,15 @@ function RecordsPage() {
                     }
                     required
                   />
+
                 </div>
 
+
                 <div className="form-group">
-                  <label>Product / Item</label>
+
+                  <label>
+                    Product / Item
+                  </label>
 
                   <input
                     type="text"
@@ -638,12 +985,19 @@ function RecordsPage() {
                     }
                     required
                   />
+
                 </div>
+
               </div>
 
+
               <div className="form-row">
+
                 <div className="form-group">
-                  <label>Handover Time</label>
+
+                  <label>
+                    Handover Time
+                  </label>
 
                   <input
                     type="time"
@@ -653,10 +1007,15 @@ function RecordsPage() {
                     }
                     required
                   />
+
                 </div>
 
+
                 <div className="form-group">
-                  <label>Risk Level</label>
+
+                  <label>
+                    Risk Level
+                  </label>
 
                   <select
                     value={risk}
@@ -666,17 +1025,31 @@ function RecordsPage() {
                       )
                     }
                   >
-                    <option value="Low">Low</option>
+
+                    <option value="Low">
+                      Low
+                    </option>
+
                     <option value="Medium">
                       Medium
                     </option>
-                    <option value="High">High</option>
+
+                    <option value="High">
+                      High
+                    </option>
+
                   </select>
+
                 </div>
+
               </div>
 
+
               <div className="form-group">
-                <label>Transaction Status</label>
+
+                <label>
+                  Transaction Status
+                </label>
 
                 <select
                   value={
@@ -686,10 +1059,12 @@ function RecordsPage() {
                   }
                   onChange={(event) =>
                     setRecordedSale(
-                      event.target.value === "recorded"
+                      event.target.value ===
+                        "recorded"
                     )
                   }
                 >
+
                   <option value="recorded">
                     Sale Recorded
                   </option>
@@ -697,11 +1072,17 @@ function RecordsPage() {
                   <option value="unrecorded">
                     Sale Not Recorded
                   </option>
+
                 </select>
+
               </div>
 
+
               <div className="form-group">
-                <label>Notes</label>
+
+                <label>
+                  Notes
+                </label>
 
                 <textarea
                   rows={4}
@@ -711,16 +1092,22 @@ function RecordsPage() {
                     setNotes(event.target.value)
                   }
                 />
+
               </div>
 
+
               <div className="form-actions">
+
                 <button
                   type="button"
                   className="cancel-button"
-                  onClick={() => setShowForm(false)}
+                  onClick={() =>
+                    setShowForm(false)
+                  }
                 >
                   Cancel
                 </button>
+
 
                 <button
                   type="submit"
@@ -728,36 +1115,56 @@ function RecordsPage() {
                 >
                   Add Record
                 </button>
+
               </div>
+
             </form>
+
           </div>
+
         </div>
+
       )}
 
-      {/* RECORD DETAILS MODAL */}
+
+      {/* =====================================================
+          RECORD DETAILS MODAL
+      ===================================================== */}
+
       {selectedRecord && (
+
         <div
           className="audit-modal-overlay"
-          onClick={() => setSelectedRecord(null)}
+          onClick={() =>
+            setSelectedRecord(null)
+          }
         >
+
           <div
             className="audit-modal detail-modal"
             onClick={(event) =>
               event.stopPropagation()
             }
           >
+
             <div className="audit-modal-header">
+
               <div>
+
                 <span className="card-label">
                   RECORD DETAILS
                 </span>
 
-                <h2>{selectedRecord.id}</h2>
+                <h2>
+                  {selectedRecord.id}
+                </h2>
 
                 <p>
                   AI transaction monitoring result
                 </p>
+
               </div>
+
 
               <button
                 className="close-modal"
@@ -767,49 +1174,84 @@ function RecordsPage() {
               >
                 ×
               </button>
+
             </div>
 
+
             <div className="record-details">
+
               <div className="detail-item">
-                <span>Employee</span>
+
+                <span>
+                  Employee
+                </span>
+
                 <strong>
                   {selectedRecord.employee}
                 </strong>
+
               </div>
 
+
               <div className="detail-item">
-                <span>Product</span>
+
+                <span>
+                  Product
+                </span>
+
                 <strong>
                   {selectedRecord.item}
                 </strong>
+
               </div>
 
+
               <div className="detail-item">
-                <span>Time</span>
+
+                <span>
+                  Time
+                </span>
+
                 <strong>
                   {selectedRecord.time}
                 </strong>
+
               </div>
 
+
               <div className="detail-item">
-                <span>AI Confidence</span>
+
+                <span>
+                  AI Confidence
+                </span>
+
                 <strong>
                   {selectedRecord.confidence}%
                 </strong>
+
               </div>
 
+
               <div className="detail-item">
-                <span>Risk</span>
+
+                <span>
+                  Risk
+                </span>
 
                 <span
                   className={`risk-badge ${selectedRecord.risk.toLowerCase()}`}
                 >
                   {selectedRecord.risk}
                 </span>
+
               </div>
 
+
               <div className="detail-item">
-                <span>Status</span>
+
+                <span>
+                  Status
+                </span>
 
                 <span
                   className={`status-badge ${selectedRecord.status
@@ -818,33 +1260,50 @@ function RecordsPage() {
                 >
                   {selectedRecord.status}
                 </span>
+
               </div>
+
             </div>
 
+
             <div className="detail-note">
-              <span>AI Analysis</span>
+
+              <span>
+                AI Analysis
+              </span>
 
               <p>
                 {selectedRecord.notes ||
                   "No additional notes available."}
               </p>
+
             </div>
+
 
             {!selectedRecord.recordedSale &&
               selectedRecord.status !== "Resolved" && (
+
                 <button
                   className="save-audit-button full-width"
                   onClick={() => {
-                    handleResolve(selectedRecord.id);
+                    handleResolve(
+                      selectedRecord.id
+                    );
+
                     setSelectedRecord(null);
                   }}
                 >
                   Mark as Resolved
                 </button>
+
               )}
+
           </div>
+
         </div>
+
       )}
+
     </div>
   );
 }

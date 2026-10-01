@@ -5,10 +5,26 @@ import {
   ShieldCheck,
   User,
 } from "lucide-react";
+import { useEffect, useState } from "react";
 
+import ProfileSkeleton from "../components/LoadingSkeleton/ProfileSkeleton.tsx";
 import "./ProfilePage.css";
 
 export default function ProfilePage() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 900);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <ProfileSkeleton />;
+  }
+
   return (
     <main className="profile-page">
 
@@ -97,57 +113,28 @@ export default function ProfilePage() {
           <div className="profile-details">
 
             <div className="profile-detail-item">
-
-              <span>
-                Full Name
-              </span>
-
-              <strong>
-                UserAdmin
-              </strong>
-
+              <span>Full Name</span>
+              <strong>UserAdmin</strong>
             </div>
 
             <div className="profile-detail-item">
-
-              <span>
-                Email Address
-              </span>
-
-              <strong>
-                admin@compliance.local
-              </strong>
-
+              <span>Email Address</span>
+              <strong>admin@compliance.local</strong>
             </div>
 
             <div className="profile-detail-item">
-
-              <span>
-                Role
-              </span>
-
-              <strong>
-                Compliance Officer
-              </strong>
-
+              <span>Role</span>
+              <strong>Compliance Officer</strong>
             </div>
 
             <div className="profile-detail-item">
-
-              <span>
-                Department
-              </span>
-
-              <strong>
-                Compliance & Risk
-              </strong>
-
+              <span>Department</span>
+              <strong>Compliance & Risk</strong>
             </div>
 
           </div>
 
         </div>
-
 
         {/* ACCOUNT SECURITY */}
         <div className="profile-card">
@@ -241,7 +228,6 @@ export default function ProfilePage() {
         </div>
 
       </section>
-
 
       {/* ACCOUNT ACTIVITY */}
       <section className="profile-card activity-card">

@@ -16,9 +16,9 @@ const RANGES = [
   { label: "90D", days: 90 },
 ] as const;
 
-const currency = new Intl.NumberFormat("en-US", {
+const currency = new Intl.NumberFormat("en-ZM", {
   style: "currency",
-  currency: "USD",
+  currency: "ZMW",
   maximumFractionDigits: 0,
 });
 
@@ -228,7 +228,7 @@ export default function SalesTrendChart({
 
             <YAxis
               tickFormatter={(value) =>
-                `$${Math.round(value / 1000)}k`
+                `ZMW ${Math.round(value / 1000)}k`
               }
               tick={{
                 fill: "var(--text-muted)",
@@ -236,7 +236,7 @@ export default function SalesTrendChart({
               }}
               tickLine={false}
               axisLine={false}
-              width={48}
+              width={60}
             />
 
             <Tooltip

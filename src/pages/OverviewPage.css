@@ -1337,3 +1337,109 @@
     transition: none;
   }
 }
+
+/* =========================================================
+   PRODUCT PERFORMANCE
+   ========================================================= */
+
+.product-performance-card {
+  margin-bottom: 24px;
+}
+
+.product-performance-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  padding: 22px;
+}
+
+.product-performance-item {
+  position: relative;
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-2);
+  box-sizing: border-box;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-performance-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  border-radius: 0 0 4px 4px;
+  background: var(--series-1);
+  opacity: 0.75;
+}
+
+.product-performance-item:hover {
+  transform: translateY(-2px);
+  border-color: rgba(42, 120, 214, 0.24);
+  background: var(--surface-1);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+}
+
+.product-performance-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.product-performance-info strong {
+  overflow: hidden;
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.product-performance-info span {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.product-performance-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.product-performance-stats strong {
+  color: var(--text-primary);
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.product-performance-stats span {
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 600;
+}
+
+/* =========================================================
+   PRODUCT PERFORMANCE - DARK MODE
+   ========================================================= */
+
+:root[data-theme="dark"] .product-performance-item {
+  box-shadow: none;
+}
+
+:root[data-theme="dark"] .product-performance-item:hover {
+  background: var(--surface-1);
+  border-color: rgba(42, 120, 214, 0.3);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+}
