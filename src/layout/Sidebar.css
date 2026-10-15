@@ -397,7 +397,6 @@
   align-items: center;
 
   margin-bottom: 4px;
-
   padding: 0 12px;
 
   gap: 13px;
@@ -405,12 +404,15 @@
   border-radius: 9px;
 
   color: var(--text-secondary);
+  background-color: transparent;
 
   text-decoration: none;
-
   white-space: nowrap;
 
   overflow: hidden;
+
+  opacity: 1;
+  visibility: visible;
 
   transition:
     background-color 0.2s ease,
@@ -419,20 +421,49 @@
     padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Hover */
 .sidebar-link:hover {
-  background: var(--bg-tertiary);
+  background-color: var(--bg-tertiary);
   color: var(--text-primary);
 
   transform: translateX(2px);
 }
 
+/* Active link - default */
 .sidebar-link.active {
-  background: var(--accent-primary);
+  background-color: var(--accent-primary);
+  color: #ffffff;
+
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Active link hover */
+.sidebar-link.active:hover {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+
+  transform: none;
+}
+
+/* Light mode active link */
+:root:not([data-theme="dark"]) .sidebar-link.active {
+  background-color: #2563eb;
   color: #ffffff;
 }
 
-.sidebar-link.active:hover {
-  transform: none;
+/* Dark mode active link */
+:root[data-theme="dark"] .sidebar-link.active {
+  background-color: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* Ensure active icons remain visible */
+.sidebar-link.active .sidebar-link-icon,
+.sidebar-link.active .sidebar-link-label {
+  color: #ffffff;
+  opacity: 1;
+  visibility: visible;
 }
 
 /* =========================================================
@@ -449,6 +480,8 @@
   align-items: center;
   justify-content: center;
 
+  color: inherit;
+
   transition:
     transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -456,9 +489,9 @@
 .sidebar-link-icon svg {
   width: 19px;
   height: 19px;
+  color: inherit;
 
-  transition:
-    transform 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .sidebar-link:hover .sidebar-link-icon {
@@ -479,7 +512,10 @@
   font-size: 13px;
   font-weight: 500;
 
+  color: inherit;
+
   opacity: 1;
+  visibility: visible;
   transform: translateX(0);
 
   transition:
@@ -487,8 +523,10 @@
     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Hide labels only when sidebar is collapsed */
 .sidebar.collapsed .sidebar-link-label {
   opacity: 0;
+  visibility: hidden;
   transform: translateX(-12px);
   pointer-events: none;
 }
@@ -499,11 +537,14 @@
 
 .sidebar.collapsed .sidebar-link {
   justify-content: center;
-
   padding: 0;
-
   gap: 0;
 }
+
+.sidebar.collapsed .sidebar-link-icon {
+  margin: 0;
+}
+
 
 .sidebar.collapsed .sidebar-link-icon {
   margin: 0;
