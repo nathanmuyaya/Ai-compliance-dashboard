@@ -26,21 +26,9 @@
   will-change: width;
 }
 
-/* =========================================================
-   DARK MODE
-   ========================================================= */
-
 :root[data-theme="dark"] .sidebar {
   background-color: #111827;
   border-right-color: #273244;
-}
-
-/* =========================================================
-   COLLAPSED SIDEBAR
-   ========================================================= */
-
-.sidebar.collapsed {
-  width: 72px;
 }
 
 /* =========================================================
@@ -49,7 +37,6 @@
 
 .sidebar-brand {
   position: relative;
-
   height: 76px;
   min-height: 76px;
 
@@ -57,19 +44,13 @@
   align-items: center;
 
   padding: 0 50px 0 16px;
-
   gap: 12px;
 
   overflow: hidden;
 }
 
-/* =========================================================
-   CD LOGO
-   ========================================================= */
-
 .sidebar-brand-mark {
   position: relative;
-
   flex-shrink: 0;
 
   width: 40px;
@@ -80,16 +61,8 @@
   justify-content: center;
 
   border-radius: 11px;
-
-  background: linear-gradient(
-    135deg,
-    #2563eb 0%,
-    #4f46e5 55%,
-    #7c3aed 100%
-  );
-
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 55%, #7c3aed 100%);
   color: #ffffff;
-
   overflow: hidden;
 
   box-shadow:
@@ -103,116 +76,66 @@
 
 .sidebar-brand-mark::before {
   content: "";
-
   position: absolute;
-
   top: -45%;
   left: -20%;
-
   width: 65%;
   height: 170%;
-
   background: rgba(255, 255, 255, 0.16);
-
   transform: rotate(25deg);
-
   pointer-events: none;
 }
 
 .sidebar-brand-mark::after {
   content: "";
-
   position: absolute;
-
   inset: 1px;
-
   border: 1px solid rgba(255, 255, 255, 0.18);
-
   border-radius: 10px;
-
   pointer-events: none;
 }
 
-/* C */
-
 .logo-c {
   position: absolute;
-
   left: 7px;
   top: 8px;
-
-  font-family:
-    Inter,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
   font-size: 21px;
   font-weight: 800;
-
   line-height: 1;
-
   letter-spacing: -2px;
-
   color: #ffffff;
-
   z-index: 2;
 }
 
-/* D */
-
 .logo-d {
   position: absolute;
-
   right: 7px;
   bottom: 7px;
-
-  font-family:
-    Inter,
-    "Segoe UI",
-    Arial,
-    sans-serif;
-
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
   font-size: 18px;
   font-weight: 800;
-
   line-height: 1;
-
   letter-spacing: -1.5px;
-
   color: #ffffff;
-
   opacity: 0.9;
-
   transform: translateX(-1px);
-
   z-index: 2;
 }
 
 .sidebar:hover .sidebar-brand-mark {
   transform: scale(1.04);
-
   box-shadow:
     0 8px 20px rgba(37, 99, 235, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 :root[data-theme="dark"] .sidebar-brand-mark {
-  background: linear-gradient(
-    135deg,
-    #3b82f6 0%,
-    #6366f1 55%,
-    #8b5cf6 100%
-  );
-
+  background: linear-gradient(135deg, #3b82f6 0%, #6366f1 55%, #8b5cf6 100%);
   box-shadow:
     0 6px 18px rgba(59, 130, 246, 0.25),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
-
-/* =========================================================
-   BRAND TEXT
-   ========================================================= */
 
 .sidebar-brand-text {
   min-width: 0;
@@ -220,7 +143,6 @@
 
   display: flex;
   flex-direction: column;
-
   gap: 2px;
 
   white-space: nowrap;
@@ -236,22 +158,13 @@
 .sidebar-brand-text strong {
   font-size: 14px;
   font-weight: 700;
-
   color: var(--text-primary);
 }
 
 .sidebar-brand-text span {
   font-size: 10px;
-
   color: var(--text-secondary);
-
   white-space: nowrap;
-}
-
-.sidebar.collapsed .sidebar-brand-text {
-  opacity: 0;
-  transform: translateX(-12px);
-  pointer-events: none;
 }
 
 /* =========================================================
@@ -260,7 +173,6 @@
 
 .sidebar-collapse-button {
   position: absolute;
-
   top: 8px;
   right: 8px;
 
@@ -280,7 +192,6 @@
   color: var(--text-secondary);
 
   cursor: pointer;
-
   z-index: 20;
 
   transition:
@@ -294,45 +205,22 @@
 .sidebar-collapse-button:hover {
   background: var(--bg-tertiary);
   color: var(--text-primary);
-
   border-color: var(--accent-primary);
-
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.08);
-
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transform: scale(1.04);
 }
-
-/* Collapsed button */
-
-.sidebar.collapsed .sidebar-collapse-button {
-  top: 21px;
-  right: 21px;
-}
-
-/* =========================================================
-   COLLAPSE ICONS
-   ========================================================= */
 
 .desktop-collapse-icon,
 .mobile-close-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-
   transition:
     opacity 0.2s ease,
     transform 0.25s ease;
 }
 
-.mobile-close-icon {
-  display: none;
-}
-
-/* =========================================================
-   MOBILE CLOSE BUTTON
-   ========================================================= */
-
+.mobile-close-icon,
 .sidebar-mobile-close {
   display: none;
 }
@@ -343,7 +231,6 @@
 
 .sidebar-nav {
   flex: 1;
-
   padding: 18px 10px;
 
   overflow-y: auto;
@@ -351,10 +238,6 @@
 
   scrollbar-width: thin;
 }
-
-/* =========================================================
-   SECTION TITLE
-   ========================================================= */
 
 .sidebar-section-title {
   height: 28px;
@@ -365,11 +248,9 @@
   padding: 0 12px;
 
   overflow: hidden;
-
   white-space: nowrap;
 
   color: var(--text-tertiary);
-
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -379,26 +260,24 @@
     transform 0.25s ease;
 }
 
-.sidebar.collapsed .sidebar-section-title {
-  opacity: 0;
-  transform: translateX(-10px);
-}
-
 /* =========================================================
-   SIDEBAR LINKS
+   SIDEBAR LINKS (expanded by default)
    ========================================================= */
 
 .sidebar-link {
   position: relative;
 
+  /* FIX: links always fill the nav width unless collapsed on desktop */
+  box-sizing: border-box;
+  width: 100%;
   height: 44px;
 
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 
-  margin-bottom: 4px;
+  margin: 0 0 4px;
   padding: 0 12px;
-
   gap: 13px;
 
   border-radius: 9px;
@@ -411,9 +290,6 @@
 
   overflow: hidden;
 
-  opacity: 1;
-  visibility: visible;
-
   transition:
     background-color 0.2s ease,
     color 0.2s ease,
@@ -421,49 +297,36 @@
     padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hover */
 .sidebar-link:hover {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
-
   transform: translateX(2px);
 }
 
-/* Active link - default */
 .sidebar-link.active {
   background-color: var(--accent-primary);
   color: #ffffff;
-
-  opacity: 1;
-  visibility: visible;
 }
 
-/* Active link hover */
 .sidebar-link.active:hover {
   background-color: var(--accent-primary);
   color: #ffffff;
-
   transform: none;
 }
 
-/* Light mode active link */
 :root:not([data-theme="dark"]) .sidebar-link.active {
   background-color: #2563eb;
   color: #ffffff;
 }
 
-/* Dark mode active link */
 :root[data-theme="dark"] .sidebar-link.active {
   background-color: var(--accent-primary);
   color: #ffffff;
 }
 
-/* Ensure active icons remain visible */
 .sidebar-link.active .sidebar-link-icon,
 .sidebar-link.active .sidebar-link-label {
   color: #ffffff;
-  opacity: 1;
-  visibility: visible;
 }
 
 /* =========================================================
@@ -482,15 +345,13 @@
 
   color: inherit;
 
-  transition:
-    transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-link-icon svg {
   width: 19px;
   height: 19px;
   color: inherit;
-
   transition: transform 0.2s ease;
 }
 
@@ -507,11 +368,14 @@
    ========================================================= */
 
 .sidebar-link-label {
+  flex: 1;
   min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   font-size: 13px;
   font-weight: 500;
-
   color: inherit;
 
   opacity: 1;
@@ -523,39 +387,13 @@
     transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Hide labels only when sidebar is collapsed */
-.sidebar.collapsed .sidebar-link-label {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateX(-12px);
-  pointer-events: none;
-}
-
-/* =========================================================
-   COLLAPSED LINK ALIGNMENT
-   ========================================================= */
-
-.sidebar.collapsed .sidebar-link {
-  justify-content: center;
-  padding: 0;
-  gap: 0;
-}
-
-.sidebar.collapsed .sidebar-link-icon {
-  margin: 0;
-}
-
-
-.sidebar.collapsed .sidebar-link-icon {
-  margin: 0;
-}
-
 /* =========================================================
    BADGES
    ========================================================= */
 
 .sidebar-badge {
   margin-left: auto;
+  flex-shrink: 0;
 
   min-width: 20px;
   height: 20px;
@@ -586,12 +424,6 @@
   background: #ef4444;
 }
 
-.sidebar.collapsed .sidebar-badge {
-  opacity: 0;
-  transform: scale(0.5);
-  pointer-events: none;
-}
-
 /* =========================================================
    SYSTEM STATUS
    ========================================================= */
@@ -599,7 +431,6 @@
 .sidebar-status {
   display: flex;
   align-items: center;
-
   gap: 10px;
 
   margin: 10px 10px 12px;
@@ -609,7 +440,6 @@
   border-radius: 10px;
 
   background: var(--bg-primary);
-
   overflow: hidden;
 
   transition:
@@ -626,11 +456,8 @@
   height: 8px;
 
   border-radius: 50%;
-
   background: #22c55e;
-
-  box-shadow:
-    0 0 0 4px rgba(34, 197, 94, 0.1);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
 
   transition:
     transform 0.25s ease,
@@ -646,7 +473,6 @@
 
   display: flex;
   flex-direction: column;
-
   gap: 2px;
 
   white-space: nowrap;
@@ -662,29 +488,12 @@
 .sidebar-status-text strong {
   font-size: 11px;
   font-weight: 700;
-
   color: var(--text-primary);
 }
 
 .sidebar-status-text span {
   font-size: 9px;
-
   color: var(--text-secondary);
-}
-
-.sidebar.collapsed .sidebar-status {
-  justify-content: center;
-
-  padding: 12px 0;
-
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.sidebar.collapsed .sidebar-status-text {
-  opacity: 0;
-  transform: translateX(-12px);
-  pointer-events: none;
 }
 
 /* =========================================================
@@ -695,7 +504,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   gap: 8px;
 
   padding: 12px 14px;
@@ -703,7 +511,6 @@
   border-top: 1px solid var(--border-color);
 
   white-space: nowrap;
-
   overflow: hidden;
 
   opacity: 1;
@@ -716,14 +523,7 @@
 
 .sidebar-footer span {
   font-size: 9px;
-
   color: var(--text-tertiary);
-}
-
-.sidebar.collapsed .sidebar-footer {
-  opacity: 0;
-  transform: translateY(6px);
-  pointer-events: none;
 }
 
 /* =========================================================
@@ -738,10 +538,9 @@
 
   opacity: 0;
   visibility: hidden;
-
   pointer-events: none;
 
-  z-index: 90;
+  z-index: 999; /* just under .sidebar (1000) so it covers the page */
 
   transition:
     opacity 0.28s ease,
@@ -755,10 +554,77 @@
 }
 
 /* =========================================================
+   DESKTOP + TABLET: COLLAPSED (icon-only) STATE
+   Scoped to 801px+ so it can never leak into the mobile drawer.
+   ========================================================= */
+
+@media (min-width: 801px) {
+  .sidebar.collapsed {
+    width: 72px;
+  }
+
+  .sidebar.collapsed .sidebar-brand-text {
+    opacity: 0;
+    transform: translateX(-12px);
+    pointer-events: none;
+  }
+
+  .sidebar.collapsed .sidebar-collapse-button {
+    top: 21px;
+    right: 21px;
+  }
+
+  .sidebar.collapsed .sidebar-section-title {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  .sidebar.collapsed .sidebar-link {
+    justify-content: center;
+    padding: 0;
+    gap: 0;
+  }
+
+  .sidebar.collapsed .sidebar-link-icon {
+    margin: 0;
+  }
+
+  .sidebar.collapsed .sidebar-link-label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-12px);
+    pointer-events: none;
+  }
+
+  .sidebar.collapsed .sidebar-badge {
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+
+  .sidebar.collapsed .sidebar-status {
+    justify-content: center;
+    padding: 12px 0;
+  }
+
+  .sidebar.collapsed .sidebar-status-text {
+    opacity: 0;
+    transform: translateX(-12px);
+    pointer-events: none;
+  }
+
+  .sidebar.collapsed .sidebar-footer {
+    opacity: 0;
+    transform: translateY(6px);
+    pointer-events: none;
+  }
+}
+
+/* =========================================================
    TABLET
    ========================================================= */
 
-@media (max-width: 1000px) {
+@media (min-width: 801px) and (max-width: 1000px) {
   .sidebar {
     width: 235px;
   }
@@ -769,87 +635,37 @@
 }
 
 /* =========================================================
-   MOBILE
+   MOBILE: slide-in drawer (always fully expanded when open)
    ========================================================= */
 
 @media (max-width: 800px) {
   .sidebar {
     width: 270px;
-
     transform: translateX(0);
-
-    box-shadow:
-      8px 0 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 8px 0 30px rgba(0, 0, 0, 0.12);
 
     transition:
       transform 0.32s cubic-bezier(0.4, 0, 0.2, 1),
       box-shadow 0.3s ease;
   }
 
+  /* On mobile, "collapsed" means "drawer closed" */
   .sidebar.collapsed {
-    width: 270px;
-
     transform: translateX(-100%);
-
     box-shadow: none;
   }
-
-  /* Mobile brand */
 
   .sidebar-brand {
     padding: 0 16px;
   }
 
-  /* Mobile logo */
-
-  .sidebar-brand-mark {
-    width: 40px;
-    height: 40px;
-  }
-
-  /* Mobile expanded content */
-
-  .sidebar.collapsed .sidebar-brand-text,
-  .sidebar.collapsed .sidebar-link-label,
-  .sidebar.collapsed .sidebar-status-text,
-  .sidebar.collapsed .sidebar-footer,
-  .sidebar.collapsed .sidebar-section-title {
-    opacity: 1;
-
-    transform: translateX(0);
-
-    pointer-events: auto;
-  }
-
-  .sidebar.collapsed .sidebar-link {
-    justify-content: flex-start;
-
-    padding: 0 12px;
-
-    gap: 13px;
-  }
-
-  .sidebar.collapsed .sidebar-badge {
-    opacity: 1;
-
-    transform: scale(1);
-
-    pointer-events: auto;
-  }
-
-  .sidebar.collapsed .sidebar-status {
-    justify-content: flex-start;
-
-    padding: 12px;
-  }
-
-  .desktop-collapse-button {
+  .desktop-collapse-button,
+  .sidebar-collapse-button {
     display: none;
   }
 
   .sidebar-mobile-close {
     position: absolute;
-
     top: 21px;
     right: 14px;
 
@@ -861,15 +677,12 @@
     justify-content: center;
 
     border: 1px solid var(--border-color);
-
     border-radius: 8px;
 
     background: var(--bg-primary);
-
     color: var(--text-secondary);
 
     cursor: pointer;
-
     z-index: 20;
 
     transition:
@@ -880,9 +693,7 @@
 
   .sidebar-mobile-close:hover {
     background: var(--bg-tertiary);
-
     color: var(--text-primary);
-
     transform: scale(1.04);
   }
 }
@@ -898,61 +709,4 @@
     transition: none !important;
     animation: none !important;
   }
-}
-
-/* Sidebar navigation links */
-.sidebar a,
-.sidebar .nav-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  margin: 6px auto;
-  border-radius: 10px;
-  color: #475569;
-  background: transparent;
-  text-decoration: none;
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-/* Hover state in light mode */
-.sidebar a:hover,
-.sidebar .nav-link:hover {
-  background: #eff4ff;
-  color: #2563eb;
-}
-
-/* Active page indicator in light mode */
-.sidebar a.active,
-.sidebar .nav-link.active,
-.sidebar a[aria-current="page"],
-.sidebar .nav-link[aria-current="page"] {
-  background: #2563eb;
-  color: #ffffff;
-  border-radius: 10px;
-}
-
-/* Keep active icons white */
-.sidebar a.active svg,
-.sidebar .nav-link.active svg,
-.sidebar a[aria-current="page"] svg,
-.sidebar .nav-link[aria-current="page"] svg {
-  color: #ffffff;
-  stroke: #ffffff;
-}
-
-/* Dark mode */
-.dark .sidebar a.active,
-.dark .sidebar .nav-link.active,
-.dark .sidebar a[aria-current="page"],
-.dark .sidebar .nav-link[aria-current="page"] {
-  background: #3b82f6;
-  color: #ffffff;
-}
-
-/* Smooth icon transitions */
-.sidebar svg {
-  flex-shrink: 0;
-  transition: color 0.2s ease, stroke 0.2s ease;
 }
