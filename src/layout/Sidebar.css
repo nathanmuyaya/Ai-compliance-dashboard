@@ -899,3 +899,60 @@
     animation: none !important;
   }
 }
+
+/* Sidebar navigation links */
+.sidebar a,
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin: 6px auto;
+  border-radius: 10px;
+  color: #475569;
+  background: transparent;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Hover state in light mode */
+.sidebar a:hover,
+.sidebar .nav-link:hover {
+  background: #eff4ff;
+  color: #2563eb;
+}
+
+/* Active page indicator in light mode */
+.sidebar a.active,
+.sidebar .nav-link.active,
+.sidebar a[aria-current="page"],
+.sidebar .nav-link[aria-current="page"] {
+  background: #2563eb;
+  color: #ffffff;
+  border-radius: 10px;
+}
+
+/* Keep active icons white */
+.sidebar a.active svg,
+.sidebar .nav-link.active svg,
+.sidebar a[aria-current="page"] svg,
+.sidebar .nav-link[aria-current="page"] svg {
+  color: #ffffff;
+  stroke: #ffffff;
+}
+
+/* Dark mode */
+.dark .sidebar a.active,
+.dark .sidebar .nav-link.active,
+.dark .sidebar a[aria-current="page"],
+.dark .sidebar .nav-link[aria-current="page"] {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+/* Smooth icon transitions */
+.sidebar svg {
+  flex-shrink: 0;
+  transition: color 0.2s ease, stroke 0.2s ease;
+}
